@@ -29,7 +29,6 @@ export const useValidateToken = (
 ): UseQueryResult<ServerResponse<UserType>, AxiosError> => {
   return useRequest<UserType>('/auth/validation-jwt', {
     method: 'GET',
-    headers: accessCode ? { Authorization: `Bearer ${accessCode}` } : undefined,
     queryOptions: {
       queryKey: ['validateToken', accessCode],
       enabled: !!accessCode,

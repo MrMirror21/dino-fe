@@ -8,6 +8,8 @@ import {
 } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
+import { tokenUtils } from '@/utils/tokenUtils';
+
 export interface ServerResponse<T = any> {
   isSuccess: boolean;
   code: string;
@@ -44,12 +46,14 @@ const request = async <TData = any, TVariables = any>(
   }: RequestOptions<TData, TVariables> = {},
 ): Promise<ServerResponse<TData>> => {
   try {
+    const token = tokenUtils.getToken();
+    const tokenHeaders = token ? { Authorization: `Bearer ${token}` } : {};
     const response = await api.request<ServerResponse<TData>>({
       url: path,
       method,
       data,
       params,
-      headers,
+      headers: { ...tokenHeaders, ...headers },
       ...config,
     });
     return response.data;
