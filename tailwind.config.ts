@@ -23,8 +23,11 @@ const config: Config = {
         'pretendard-200': ['Pretendard-ExtraLight'],
         'pretendard-100': ['Pretendard-Thin'],
       },
+      dropShadow: {
+        'custom': '0px 2px 16px rgba(68, 68, 68, 0.12)',
+      },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
 export default config;
