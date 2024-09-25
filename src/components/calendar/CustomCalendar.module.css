@@ -1,0 +1,185 @@
+/* 전체 캘린더 컨테이너에 대한 스타일 */
+.customCalendar {
+  @apply font-pretendard-200 w-full;
+  font-size: 12px;
+}
+
+/* react-calendar 컴포넌트에 대한 기본 스타일 */
+.reactCalendar {
+  @apply border-none bg-transparent w-full; 
+}
+
+/* 캘린더 상단의 네비게이션 (년도, 월 선택) 영역 스타일 */
+.reactCalendar :global(.react-calendar__navigation) {
+  @apply flex justify-center w-full mt-[28px] mb-[22px];
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.60);
+  line-height: 28px;
+}
+
+.reactCalendar :global(.react-calendar__navigation__next-button) {
+  @apply w-5 text-[#999];
+}
+
+.reactCalendar :global(.react-calendar__navigation__prev-button) {
+  @apply w-5 text-[#999];
+}
+
+/* 캘린더의 메인 뷰 컨테이너 스타일 */
+.reactCalendar :global(.react-calendar__viewContainer) {
+  @apply w-full flex items-center justify-center;
+}
+
+/* 년, 10년, 100년 뷰 스타일 */
+.reactCalendar :global(.react-calendar__year-view),
+.reactCalendar :global(.react-calendar__decade-view),
+.reactCalendar :global(.react-calendar__century-view) {
+  @apply w-full;
+}
+
+/* 년, 10년, 100년 뷰의 각 셀 스타일 */
+.reactCalendar :global(.react-calendar__year-view__months__month),
+.reactCalendar :global(.react-calendar__decade-view__years__year),
+.reactCalendar :global(.react-calendar__century-view__decades__decade) {
+  @apply flex justify-center items-center h-[60px] text-[14px];
+}
+
+/* 월별 뷰 스타일 */
+.reactCalendar :global(.react-calendar__month-view) {
+  @apply w-full;
+}
+
+/* 월별 뷰의 요일 표시 영역 스타일 */
+.reactCalendar :global(.react-calendar__month-view__weekdays) {
+  @apply uppercase text-[12px] text-center h-[40px] items-center;
+  width: calc(100% - 40px) !important;
+  margin: 0 auto;
+  line-height: normal;
+}
+
+/* 개별 요일 셀 스타일 */
+.reactCalendar :global(.react-calendar__month-view__weekdays__weekday) {
+  @apply p-[0.5em];
+  text-decoration: none;
+}
+
+/* 일요일(첫 번째 요일) 스타일 */
+.reactCalendar :global(.react-calendar__month-view__weekdays__weekday:nth-child(1)) {
+  @apply text-[#FF3D3D];
+}
+
+/* 토요일(마지막 요일) 스타일 */
+.reactCalendar :global(.react-calendar__month-view__weekdays__weekday:nth-child(7)) {
+  @apply text-[#999];
+}
+
+/* 요일 약어 스타일 */
+.reactCalendar :global(.react-calendar__month-view__weekdays__weekday abbr) {
+  text-decoration: none;
+  @apply border-b-0;
+}
+
+/* 월별 뷰의 날짜 컨테이너 스타일 */
+.reactCalendar :global(.react-calendar__month-view__days) {
+  @apply w-[calc(100%-40px)] font-pretendard-300;
+  margin: 0 auto;
+}
+
+/* 캘린더의 각 날짜 셀 스타일 */
+.reactCalendar :global(.react-calendar__tile) {
+  @apply flex flex-col justify-center items-center border-none relative bg-transparent h-[60px]; 
+}
+
+/* 날짜 셀 호버 및 포커스 스타일 */
+.reactCalendar :global(.react-calendar__tile:enabled:hover),
+.reactCalendar :global(.react-calendar__tile:enabled:focus) {
+  @apply bg-transparent
+}
+
+/* 오늘 날짜 셀 스타일 */
+.reactCalendar :global(.react-calendar__tile--now) {
+  @apply bg-transparent;
+}
+
+/* 오늘 날짜 셀 배경 스타일 */
+.reactCalendar :global(.react-calendar__tile--now::before) {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* 선택된 날짜 셀 스타일 */
+.reactCalendar :global(.react-calendar__tile--active::after) {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: #000;
+  color: #fff;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.reactCalendar :global(.react-calendar__tile--active abbr) {
+  color: #fff;
+  z-index: 2;
+  position: relative;
+}
+
+/* 날짜 텍스트 스타일 */
+.reactCalendar :global(.react-calendar__tile abbr) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 타일 컨텐츠 래퍼 스타일 */
+.tileContentWrapper {
+  @apply flex justify-center absolute items-center bottom-[8px] left-0 right-0; 
+}
+
+.twinkleIconWrapper {
+  margin-right: -3px; /* 아이콘들을 겹치게 만듦 */
+  z-index: 1;
+}
+
+/* 마지막 TwinkleIcon 래퍼에는 오른쪽 마진 제거 */
+.twinkleIconWrapper:last-child {
+  margin-right: 0;
+}
+
+/* 두 번째 아이콘부터 z-index 증가 */
+.twinkleIconWrapper:nth-child(2) {
+  z-index: 2;
+}
+
+.twinkleIconWrapper:nth-child(3) {
+  z-index: 3;
+}
+
+/* 일요일 텍스트 색상 */
+.sunday {
+  color: #FF3D3D;
+}
+
+/* 토요일 텍스트 색상 */
+.saturday {
+  color: #999;
+}
+
+/* 공휴일 텍스트 색상 */
+.holiday {
+  color: #FF3D3D !important;
+}

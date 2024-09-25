@@ -25,7 +25,8 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
 
         if (code) {
           setAccessCode(code);
-          tokenUtils.setToken(code); // 쿠키에 저장 (nookies 라이브러리 사용)
+          tokenUtils.setToken(code);
+          router.push('/'); // OAuth 로그인 후 루트로 리다이렉트
         } else {
           console.error('No access code received');
           router.push('/login?error=no_access_code');
@@ -45,15 +46,23 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     if (data && data.isSuccess && !hasRedirected.current) {
       console.log('Token validated:', data);
       hasRedirected.current = true;
-      router.push('/');
+
+      // 현재 경로가 '/login'이고 유효한 토큰이 있는 경우에만 루트로 리다이렉트
+      if (router.pathname === '/login') {
+        router.push('/');
+      }
     }
   }, [data, router]);
 
+  // 토큰이 유효하지 않고 현재 경로가 '/login'이 아닌 경우 로그인 페이지로 리다이렉트
+  useEffect(() => {
+    if (isError && router.pathname !== '/login') {
+      tokenUtils.removeToken();
+      router.push('/login');
+    }
+  }, [isError, router]);
+
   if (isLoading) return <div>Loading...</div>;
-  if (isError) {
-    tokenUtils.removeToken();
-    return <div>Error validating token</div>;
-  }
 
   return <>{children}</>;
 }
