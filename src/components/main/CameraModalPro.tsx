@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 import { Camera } from 'react-camera-pro';
 
 interface CameraRef {
@@ -6,10 +6,16 @@ interface CameraRef {
 }
 
 interface CameraModalProps {
+  selectImage: Dispatch<SetStateAction<string | null>>;
+  closeCameraSelect: () => void;
   onClose: () => void;
 }
 
-const CameraModalPro = ({ onClose }: CameraModalProps) => {
+const CameraModalPro = ({
+  selectImage,
+  closeCameraSelect,
+  onClose,
+}: CameraModalProps) => {
   const camera = useRef<CameraRef | null>(null);
   const [image, setImage] = useState<string | undefined>(undefined);
   const [isFlashing, setIsFlashing] = useState(false);
@@ -24,6 +30,8 @@ const CameraModalPro = ({ onClose }: CameraModalProps) => {
   };
 
   const handleUsePhoto = () => {
+    image !== undefined && selectImage(image);
+    closeCameraSelect();
     setImage(undefined);
     setIsPreview(false);
     onClose();
@@ -39,7 +47,7 @@ const CameraModalPro = ({ onClose }: CameraModalProps) => {
   }, [isFlashing]);
 
   return (
-    <div className={'fixed top-0 w-screen h-screen bg-black'}>
+    <div className={'fixed left-0 top-0 w-screen h-screen bg-black'}>
       {isPreview ? (
         <div>
           <img

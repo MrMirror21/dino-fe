@@ -1,12 +1,20 @@
-import React, { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import PlayButtonIcon from '@/assets/icon/PlayButtonIcon.svg';
 import ResetButtonIcon from '@/assets/icon/ResetIcon.svg';
+import ApproveIcon from '@/assets/icon/ApproveIcon.svg';
 
 interface WaveformProps {
   url: string;
   toggleListening: () => void;
   setAudioUrl: Dispatch<SetStateAction<string | null>>;
+  closeModal: () => void;
 }
 
 export const formatTime = (seconds: number): string => {
@@ -15,7 +23,12 @@ export const formatTime = (seconds: number): string => {
   return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 };
 
-const Waveform = ({ url, toggleListening, setAudioUrl }: WaveformProps) => {
+const Waveform = ({
+  url,
+  toggleListening,
+  setAudioUrl,
+  closeModal,
+}: WaveformProps) => {
   const [playing, setPlaying] = useState<boolean>(false);
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurfer = useRef<WaveSurfer | null>(null);
@@ -57,7 +70,7 @@ const Waveform = ({ url, toggleListening, setAudioUrl }: WaveformProps) => {
       toggleListening();
       setAudioUrl(null);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col items-center w-full bg-transparent">
@@ -71,6 +84,7 @@ const Waveform = ({ url, toggleListening, setAudioUrl }: WaveformProps) => {
         <div className={'flex flex-row gap-3 items-center justify-center'}>
           <PlayButtonIcon onClick={handlePlay} />
           <ResetButtonIcon onClick={handleReset} />
+          <ApproveIcon onClick={closeModal} />
         </div>
       </div>
     </div>

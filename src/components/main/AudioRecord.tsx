@@ -1,9 +1,19 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import 'regenerator-runtime';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
 import RecordIcon from '@/assets/icon/RecordIcon.svg';
+import CameraIcon from '@/assets/icon/CameraIcon.svg';
+import DeleteIcon from '@/assets/icon/DeleteIcon.svg';
+import ApproveIcon from '@/assets/icon/ApproveIcon.svg';
 import RecordingGIF from '@/assets/gif/pulse.gif';
 import Image from 'next/image';
 import Waveform from './Waveform';
@@ -14,7 +24,19 @@ const onRecordingComplete = (blob: Blob) => {
   console.log('녹음 완료:', blob);
 };
 
-const AudioRecord = () => {
+interface AudioRecordProps {
+  onCameraClick: () => void;
+  selectedImage: string | null;
+  setSelectedImage: Dispatch<SetStateAction<string | null>>;
+  closeModal: () => void;
+}
+
+const AudioRecord = ({
+  onCameraClick,
+  selectedImage,
+  setSelectedImage,
+  closeModal,
+}: AudioRecordProps) => {
   const {
     transcript,
     listening,
@@ -22,6 +44,7 @@ const AudioRecord = () => {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
   const [currentMode, setCurrentMode] = useState<string>('text');
+  const [isDeleteImage, setIsDeleteImage] = useState(false);
   const [userInput, setUserInput] = useState<string>('');
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -74,6 +97,10 @@ const AudioRecord = () => {
     }
   };
 
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedImage('');
+  };
   return (
     <>
       <div className="flex items-center flex-col bg-white px-3 py-4 w-[calc(100vw-40px)] rounded-[10px] shadow-lg">
@@ -90,7 +117,10 @@ const AudioRecord = () => {
                 onChange={(e) => setUserInput(e.target.value)}
               />
             )}
-            <RecordIcon onClick={() => setCurrentMode('record')} />
+            <div className="flex gap-2">
+              <RecordIcon onClick={() => setCurrentMode('record')} />
+              <CameraIcon onClick={onCameraClick} />
+            </div>
           </div>
         </div>
         {listening && <Image src={RecordingGIF} alt="alt" />}
@@ -99,24 +129,52 @@ const AudioRecord = () => {
             url={audioUrl}
             toggleListening={toggleListening}
             setAudioUrl={setAudioUrl}
+            closeModal={closeModal}
           />
         )}
-      {currentMode === 'record' && audioUrl == null && (
-        <button
-          className="w-[42px] h-[42px] rounded-full bg-gray-200 flex items-center justify-center"
-          onClick={toggleListening}
-        >
-          <div className="w-[36px] h-[36px] rounded-full bg-white flex items-center justify-center">
-            <div
-              className={
-                listening
-                  ? 'bg-red-500 w-[22px] h-[22px] rounded-[4px]'
-                  : 'bg-red-500 w-[36px] h-[36px] rounded-full'
-              }
-            />
+        {currentMode === 'record' && audioUrl == null && (
+          <button
+            className="w-[42px] h-[42px] rounded-full bg-gray-200 flex items-center justify-center"
+            onClick={toggleListening}
+          >
+            <div className="w-[36px] h-[36px] rounded-full bg-white flex items-center justify-center">
+              <div
+                className={
+                  listening
+                    ? 'bg-red-500 w-[22px] h-[22px] rounded-[4px]'
+                    : 'bg-red-500 w-[36px] h-[36px] rounded-full'
+                }
+              />
+            </div>
+          </button>
+        )}
+        {selectedImage && (
+          <>
+            <div className={'relative'}>
+              <img
+                src={selectedImage}
+                alt="selectedImage"
+                style={{ width: '300px' }}
+                onClick={() => setIsDeleteImage(true)}
+              />
+              {isDeleteImage && (
+                <div
+                  className={
+                    'absolute top-0 w-[300px] h-full flex items-center justify-center bg-black bg-opacity-50'
+                  }
+                  onClick={() => setIsDeleteImage(false)}
+                >
+                  <DeleteIcon onClick={handleDelete} />
+                </div>
+              )}
+            </div>
+          </>
+        )}
+        {((userInput !== '' || selectedImage) && audioUrl == null) && (
+          <div className={'flex items-center justify-center w-full mt-3'}>
+            <ApproveIcon onClick={closeModal} />
           </div>
-        </button>
-      )}
+        )}
       </div>
     </>
   );
