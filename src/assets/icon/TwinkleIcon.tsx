@@ -1,4 +1,4 @@
-import { Emotion } from '@/pages/calendar';
+import { Emotion } from '@/pages/dream';
 import React from 'react';
 
 interface Props {

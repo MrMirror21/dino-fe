@@ -1,4 +1,4 @@
-import { EventContent } from '@/pages/calendar';
+import { EventContent } from '@/pages/dream';
 
 interface Props {
   events: EventContent[];

@@ -1,11 +1,11 @@
-import { EventContent, MonthEventType } from '@/pages/calendar';
+import { EventContent, MonthEventType } from '@/pages/dream';
 import React, { useEffect, useState } from 'react';
 import { holidays, months } from '@/utils/calendar';
 
 import Calendar from 'react-calendar';
 import TwinkleIcon from '@/assets/icon/TwinkleIcon';
 import moment from 'moment';
-import styles from '@/components/calendar/CustomCalendar.module.css';
+import styles from '@/components/dream/CustomCalendar.module.css';
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];

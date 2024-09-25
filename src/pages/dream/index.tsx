@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import CustomCalendar from '@/components/calendar/CustomCalendar';
-import EventListShow from '@/components/calendar/EventListShow';
+import CustomCalendar from '@/components/dream/CustomCalendar';
+import EventListShow from '@/components/dream/EventListShow';
 import Header from '@/components/main/Header';
 import NavBar from '@/components/common/NavBar';
 import SlideMenu from '@/components/main/SideMenu';
@@ -35,7 +35,7 @@ export interface EventContent {
   isPriority: boolean;
 }
 
-const CalendarPage = () => {
+const DreamPage = () => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const [eventList, setEventList] = useState<MonthEventType[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | string>(
@@ -264,4 +264,4 @@ const CalendarPage = () => {
   );
 };
 
-export default CalendarPage;
+export default DreamPage;
