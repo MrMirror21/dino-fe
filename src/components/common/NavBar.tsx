@@ -30,7 +30,7 @@ const NavBar: FunctionComponent = () => {
       <NavBarIcon goTo="/calendar">
         <MoonIcon fill={pathName === '/' ? '#111111' : '#999999'} />
       </NavBarIcon>
-      <NavBarIcon goTo="/calendar">
+      <NavBarIcon goTo="/ing">
         <DiaryIcon fill={pathName === '/diary' ? '#111111' : '#999999'} />
       </NavBarIcon>
     </div>

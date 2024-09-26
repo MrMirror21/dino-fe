@@ -23,6 +23,7 @@
     "react-calendar": "^5.0.0",
     "react-camera-pro": "^1.4.0",
     "react-dom": "^18",
+    "react-draggable": "^4.4.6",
     "react-speech-recognition": "^3.10.0",
     "react-wavesurfer": "^0.8.6",
     "tailwind-scrollbar-hide": "^1.1.7",
