@@ -12,14 +12,21 @@ export interface MonthEventType {
   eventContent: EventContent[];
 }
 
-export enum Emotion {
-  JOY = 'JOY',
-  HAPPINESS = 'HAPPINESS',
-  LOVE = 'LOVE',
-  SATISFACTION = 'SATISFACTION',
-  HOPE = 'HOPE',
-  EXPECTATION = 'EXPECTATION',
-}
+export type EmotionType =
+  | 'JOY'
+  | 'HAPPINESS'
+  | 'LOVE'
+  | 'SATISFACTION'
+  | 'HOPE'
+  | 'EXPECTATION';
+// export enum Emotion {
+//   JOY = 'JOY',
+//   HAPPINESS = 'HAPPINESS',
+//   LOVE = 'LOVE',
+//   SATISFACTION = 'SATISFACTION',
+//   HOPE = 'HOPE',
+//   EXPECTATION = 'EXPECTATION',
+// }
 
 export interface EventContent {
   eventId: number;
@@ -27,7 +34,7 @@ export interface EventContent {
   content: string; // 질문
   category: string;
   step: string;
-  emotion: Emotion;
+  emotion: EmotionType;
   eventStatus: string;
   questionId: number;
   isAnswer: boolean;
@@ -53,7 +60,7 @@ const DreamPage = () => {
           content: '아침 요가가 당신의 정신 건강에 어떤 영향을 미치나요?',
           category: '운동',
           step: 'level2',
-          emotion: Emotion.JOY,
+          emotion: 'JOY',
           eventStatus: 'execution',
           questionId: 101,
           isAnswer: true,
@@ -66,7 +73,7 @@ const DreamPage = () => {
           content: '오늘의 팀 미팅에서 가장 중요하게 다룬 주제는 무엇이었나요?',
           category: '업무',
           step: 'level3',
-          emotion: Emotion.SATISFACTION,
+          emotion: 'SATISFACTION',
           eventStatus: 'termination',
           questionId: 102,
           isAnswer: false,
@@ -84,7 +91,7 @@ const DreamPage = () => {
           content: '친구와의 저녁 식사가 당신의 기분에 어떤 영향을 주었나요?',
           category: '사회생활',
           step: 'level1',
-          emotion: Emotion.HAPPINESS,
+          emotion: 'HAPPINESS',
           eventStatus: 'execution',
           questionId: 103,
           isAnswer: true,
@@ -102,7 +109,7 @@ const DreamPage = () => {
           content: '새 프로젝트에서 가장 기대되는 부분은 무엇인가요?',
           category: '업무',
           step: 'level4',
-          emotion: Emotion.EXPECTATION,
+          emotion: 'EXPECTATION',
           eventStatus: 'execution',
           questionId: 104,
           isAnswer: true,
@@ -115,7 +122,7 @@ const DreamPage = () => {
           content: '저녁 조깅이 당신의 하루 일과에 어떤 변화를 주나요?',
           category: '운동',
           step: 'level2',
-          emotion: Emotion.SATISFACTION,
+          emotion: 'SATISFACTION',
           eventStatus: 'termination',
           questionId: 105,
           isAnswer: false,
@@ -134,7 +141,7 @@ const DreamPage = () => {
             '이번 독서 클럽 모임에서 가장 인상 깊었던 의견은 무엇인가요?',
           category: '취미',
           step: 'level3',
-          emotion: Emotion.SATISFACTION,
+          emotion: 'SATISFACTION',
           eventStatus: 'execution',
           questionId: 106,
           isAnswer: true,
@@ -152,7 +159,7 @@ const DreamPage = () => {
           content: '가족 소풍에서 가장 기억에 남는 순간은 무엇인가요?',
           category: '가족',
           step: 'level1',
-          emotion: Emotion.LOVE,
+          emotion: 'LOVE',
           eventStatus: 'execution',
           questionId: 107,
           isAnswer: true,
@@ -165,7 +172,7 @@ const DreamPage = () => {
           content: '대청소 후 가장 큰 변화를 느낀 공간은 어디인가요?',
           category: '집안일',
           step: 'level2',
-          emotion: Emotion.SATISFACTION,
+          emotion: 'SATISFACTION',
           eventStatus: 'termination',
           questionId: 108,
           isAnswer: false,
@@ -183,7 +190,7 @@ const DreamPage = () => {
           content: '온라인 강의를 통해 새롭게 깨달은 점은 무엇인가요?',
           category: '학습',
           step: 'level3',
-          emotion: Emotion.SATISFACTION,
+          emotion: 'SATISFACTION',
           eventStatus: 'execution',
           questionId: 109,
           isAnswer: true,
@@ -201,7 +208,7 @@ const DreamPage = () => {
           content: '이번 달 목표 중 가장 도전적인 것은 무엇인가요?',
           category: '자기계발',
           step: 'level4',
-          emotion: Emotion.HOPE,
+          emotion: 'HOPE',
           eventStatus: 'execution',
           questionId: 110,
           isAnswer: true,
@@ -214,7 +221,7 @@ const DreamPage = () => {
           content: '명상 세션 후 당신의 마음 상태는 어떻게 변화했나요?',
           category: '건강',
           step: 'level1',
-          emotion: Emotion.SATISFACTION,
+          emotion: 'SATISFACTION',
           eventStatus: 'termination',
           questionId: 111,
           isAnswer: false,
@@ -253,12 +260,21 @@ const DreamPage = () => {
     <div className="flex flex-col w-full h-screen">
       <Header onClick={() => setIsSideMenuOpen(true)} />
       <SlideMenu isOpen={isSideMenuOpen} setIsOpen={setIsSideMenuOpen} />
-      <CustomCalendar
-        eventList={eventList}
-        setSelectedDate={handleDateSelect}
-      />
-      {/* <span className="text-slate-500">{selectedDate.toString()}</span> */}
-      <EventListShow events={filteredEvents} />
+      <div
+        style={{
+          background:
+            'linear-gradient(168deg, rgba(251, 243, 231, 0.20) 0%, rgba(185, 206, 215, 0.20) 47.11%, rgba(235, 219, 244, 0.20) 100%), #FFF',
+          boxShadow: '0px 2px 32px 0px rgba(136, 136, 136, 0.12)',
+        }}
+        className="flex-1 overflow-y-auto pb-[68px]"
+      >
+        <CustomCalendar
+          eventList={eventList}
+          setSelectedDate={handleDateSelect}
+        />
+        {/* <span className="text-slate-500">{selectedDate.toString()}</span> */}
+        <EventListShow events={filteredEvents} />
+      </div>
       <NavBar />
     </div>
   );

@@ -20,7 +20,7 @@ const EventListShow = ({ events }: Props) => {
           </div>
 
           <div
-            className="w-[calc(100%-40px)] h-[80px] mb-[25px] rounded-[10px] bg-white"
+            className="w-[calc(100%-40px)] h-[80px] mb-[25px] rounded-[10px]  bg-white"
             style={{ boxShadow: '0px 2px 16px 0px rgba(68, 68, 68, 0.12)' }}
           >
             <div className="w-full h-[80px] flex flex-col items-center justify-center px-[10px]">

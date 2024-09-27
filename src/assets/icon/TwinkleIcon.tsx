@@ -1,30 +1,13 @@
-import { Emotion } from '@/pages/dream';
-import React from 'react';
+import { EmotionType } from '@/pages/dream';
+import { getEmotionColor } from '@/utils/emotionColor';
 
 interface Props {
-  emotion: Emotion;
+  emotion: EmotionType;
   isAnswer: boolean;
 }
 
 const TwinkleIcon: React.FC<Props> = ({ emotion, isAnswer }) => {
-  const getHexColor = (emotion: Props['emotion']) => {
-    switch (emotion) {
-      case 'JOY':
-        return '#FFF861';
-      case 'HAPPINESS':
-        return '#A3D8FF';
-      case 'LOVE':
-        return '#FFCDCD';
-      case 'SATISFACTION':
-        return '#FFD18A';
-      case 'HOPE':
-        return '#C9FFB7';
-      case 'EXPECTATION':
-        return '#E1CDFF';
-    }
-  };
-
-  const color = getHexColor(emotion);
+  const color = getEmotionColor(emotion);
 
   const pathData = isAnswer
     ? 'M0 4.24268C2.41962 3.5391 3.40468 2.62927 4.24264 3.51667e-05C4.80285 2.50461 5.73259 3.39999 8.48528 4.24268C6.10466 5.03597 5.25471 5.96808 4.24264 8.48532C3.36084 6.06815 2.4755 5.11019 0 4.24268Z'
