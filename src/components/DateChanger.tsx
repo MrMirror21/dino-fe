@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { motion, PanInfo, useMotionValue } from 'framer-motion';
+import DDayCounter from './Day/DDayCounter';
 
 const DRAG_BUFFER = 10; // 페이지 이동을 유발하는 드래그 길이
 
@@ -36,12 +37,12 @@ function getDateRange(today: Date) {
       isToday: i === 0, // 오늘 날짜 여부
     });
   }
-  console.log(dateRange);
   return dateRange;
 }
 
 export default function DateChanger() {
   const today = new Date();
+  const dDay = getDateRange(today)[14].date;
   const [currentDay, setCurrentDay] = useState(today);
   const dateArr = useMemo(() => getDateRange(currentDay), [currentDay]);
   const [dragStartX, setDragStartX] = useState(0);
@@ -68,24 +69,22 @@ export default function DateChanger() {
   // 마우스 드래그를 통한 슬라이드 이동 함수
   const onDragEnd = () => {
     const x = dragX.get();
-
     if (x <= -DRAG_BUFFER && page < dateArr.length - 1) {
       const tomorrow = new Date(currentDay);
       tomorrow.setDate(currentDay.getDate() + 1);
       setCurrentDay(tomorrow);
       setPage((page) => page + 1);
-      console.log('increase');
     }
     if (x >= 10) {
       const yesterday = new Date(currentDay);
       yesterday.setDate(currentDay.getDate() - 1);
       setCurrentDay(yesterday);
       setPage((page) => page - 1);
-      console.log('decrease');
     }
   };
   return (
-    <div className=" w-[400px] overflow-hidden border border-white">
+    <div className=" w-[400px] overflow-hidden">
+      <DDayCounter today={today} dDay={dDay} />
       <div className="flex items-center justify-center overflow-hidden">
         <motion.div
           drag="x"
@@ -102,30 +101,31 @@ export default function DateChanger() {
         >
           {dateArr.map((day) => (
             <motion.div
-              className={`flex flex-col m-2 items-center justify-center w-[46px] min-w-11 h-[46px] bg-white ${
+              className={`flex flex-col m-2 items-center justify-center w-[46px] min-w-11 h-[46px] ${
                 currentDay.getDate() === day.day
-                  ? 'rounded-full drop-shadow-md'
+                  ? 'rounded-full drop-shadow-md bg-[#A7D2C1]'
                   : ''
               }`}
               transition={SPRING_OPTIONS}
             >
               <div
-                className={`text-[8px] font-normal
+                className={`text-center font-pretendard text-[8px] font-light tracking-[-0.32px]
                   ${getDayDiff(today, day.date) > 0 ? 'text-black' : ''}
                   ${getDayDiff(today, day.date) < 0 ? 'text-[#DDDDDD]' : ''}
+                  ${getDayDiff(today, day.date) == 0 ? 'text-white' : ''}
                   `}
               >
                 {day.dayOfWeek}
               </div>
               <div
-                className={`text-base
+                className={`text-center font-pretendard text-base font-light tracking-[-0.64px]
                   ${getDayDiff(today, day.date) > 0 ? 'font-normal' : ''}
                   ${
                     getDayDiff(today, day.date) < 0
                       ? 'text-[#DDDDDD] font-normal'
                       : ''
                   }
-                  ${getDayDiff(today, day.date) == 0 ? 'font-bold' : ''}
+                  ${getDayDiff(today, day.date) == 0 ? 'text-white' : ''}
                   `}
               >
                 {day.day}

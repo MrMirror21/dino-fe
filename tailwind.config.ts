@@ -22,6 +22,7 @@ const config: Config = {
         'pretendard-300': ['Pretendard-Light'],
         'pretendard-200': ['Pretendard-ExtraLight'],
         'pretendard-100': ['Pretendard-Thin'],
+        'edensor': ['Edensor-Bold'],
       },
       dropShadow: {
         'custom': '0px 2px 16px rgba(68, 68, 68, 0.12)',

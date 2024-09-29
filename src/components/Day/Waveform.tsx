@@ -37,14 +37,18 @@ const Waveform = ({
   useEffect(() => {
     if (waveformRef.current) {
       wavesurfer.current = WaveSurfer.create({
-        barWidth: 3,
+        barWidth: 2,
         cursorWidth: 1,
         container: '#waveform',
         backend: 'WebAudio',
-        height: 80,
-        progressColor: '#2D5BFF',
+        height: 65,
+        progressColor: '#8ABADD',
         waveColor: '#EFEFEF',
-        cursorColor: 'transparent',
+        cursorColor: 'black',
+        barRadius: 100,
+        barGap: 2,
+        autoScroll: true,
+        autoCenter: true,
       });
 
       wavesurfer.current.load(url);
@@ -74,8 +78,8 @@ const Waveform = ({
 
   return (
     <div className="flex flex-col items-center w-full bg-transparent">
-      <div id="waveform" className="w-full" ref={waveformRef} />
-      <div>{formatTime(currentTime)}</div>
+      <div id="waveform" className="w-full px-[38px]" ref={waveformRef} />
+      <div className="text-[#444] text-center font-pretendard text-base font-extralight leading-[20px] pb-4">{formatTime(currentTime)}</div>
       <div
         className={
           'flex justify-center items-center w-[60px] border-none outline-none cursor-pointer pb-[3px]'

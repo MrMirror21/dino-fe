@@ -105,13 +105,13 @@ const AudioRecord = ({
     <>
       <div className="flex items-center flex-col bg-white px-3 py-4 w-[calc(100vw-40px)] rounded-[10px] shadow-lg">
         <div className="flex items-center w-full">
-          <h2 className="text-[24px] font-bold text-[#EEEEEE] pr-2">A.</h2>
+          <h2 className="text-[#BAD7EC] font-['edensor'] text-2xl leading-[20px] tracking-[-1px] pr-2">A.</h2>
           <div className="flex w-full justify-between">
             {listening ? (
               <div className={'w-full text-[14px] text-wrap'}>{transcript}</div>
             ) : (
               <textarea
-                className="w-full outline-none resize-none text-[14px] text-wrap"
+                className="w-full outline-none resize-none text-[#000] font-pretendard text-sm font-extralight leading-[20px] tracking-[-1px] text-wrap"
                 value={userInput}
                 placeholder="답변 기록하기"
                 onChange={(e) => setUserInput(e.target.value)}

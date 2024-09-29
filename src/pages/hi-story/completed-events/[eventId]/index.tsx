@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { CompleteEventType } from '@/types/hiStory';
-import Header from '@/components/main/Header';
+import Header from '@/components/Day/Header';
 import NavBar from '@/components/common/NavBar';
 import NextTriButtonIcon from '@/assets/icon/NextTriButtonIcon';
 import PrevTriButtonIcon from '@/assets/icon/PrevTriButtonIcon';
 import QuestionAndAnswer from '@/components/hiStory/CompltedEvents/QuestionAndAnswer';
-import SlideMenu from '@/components/main/SideMenu';
+import SlideMenu from '@/components/Day/SideMenu';
 import { useRouter } from 'next/router';
 
 const mockCompletedEventList: CompleteEventType[] = [

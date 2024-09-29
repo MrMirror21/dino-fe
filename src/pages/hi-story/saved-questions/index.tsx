@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import Header from '@/components/main/Header';
+import Header from '@/components/Day/Header';
 import { MonthAllEventsType } from '@/types/hiStory';
 import MonthlyEventGroup from '@/components/hiStory/CompltedEvents/MonthlyEventGroup';
 import NavBar from '@/components/common/NavBar';
-import SlideMenu from '@/components/main/SideMenu';
+import SlideMenu from '@/components/Day/SideMenu';
 
 const mockAllEventList: MonthAllEventsType[] = [
   {

@@ -1,7 +1,7 @@
 import NavBar from '@/components/common/NavBar';
 import FunnelDispenser from '@/components/ing/create/FunnelDispenser';
-import Header from '@/components/main/Header';
-import SlideMenu from '@/components/main/SideMenu';
+import Header from '@/components/Day/Header';
+import SlideMenu from '@/components/Day/SideMenu';
 import { EventPostRequest } from '@/types/event';
 import React, { createContext, useContext, useState } from 'react';
 
@@ -10,12 +10,16 @@ export interface EventContextType {
   setEventInfo: React.Dispatch<React.SetStateAction<EventPostRequest>>;
 }
 
-export const EventContext = React.createContext<EventContextType | undefined>(undefined);
+export const EventContext = React.createContext<EventContextType | undefined>(
+  undefined,
+);
 
 export function useEventContext() {
   const context = useContext(EventContext);
   if (!context) {
-    throw new Error('useEventContext must be used within an EventContext.Provider');
+    throw new Error(
+      'useEventContext must be used within an EventContext.Provider',
+    );
   }
   return context;
 }
@@ -34,14 +38,11 @@ const EventCreatePage = () => {
   });
   return (
     <>
-      <EventContext.Provider value={{ eventInfo, setEventInfo} }>
+      <EventContext.Provider value={{ eventInfo, setEventInfo }}>
         <div className="flex flex-col items-center justify-start w-full h-screen">
-          <Header onClick={() => console.log('/')} />
+          <Header onClick={() => setIsSideMenuOpen(true)} />
           <SlideMenu isOpen={isSideMenuOpen} setIsOpen={setIsSideMenuOpen} />
-          <FunnelDispenser
-            step={step}
-            setStep={setStep}
-          />
+          <FunnelDispenser step={step} setStep={setStep} />
           <NavBar />
         </div>
       </EventContext.Provider>

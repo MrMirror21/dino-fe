@@ -1,8 +1,8 @@
 import { CompleteEventType } from '@/types/hiStory';
 import CompletedEventThumbnail from '@/components/hiStory/CompletedEventThumbnail';
-import Header from '@/components/main/Header';
+import Header from '@/components/Day/Header';
 import NavBar from '@/components/common/NavBar';
-import SlideMenu from '@/components/main/SideMenu';
+import SlideMenu from '@/components/Day/SideMenu';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 

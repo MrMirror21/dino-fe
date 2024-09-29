@@ -7,10 +7,10 @@ import { useEffect, useState } from 'react';
 
 import ChevronRightIcon from '@/assets/icon/ChevronRightIcon.svg';
 import CompletedEventThumbnail from '@/components/hiStory/CompletedEventThumbnail';
-import Header from '@/components/main/Header';
+import Header from '@/components/Day/Header';
 import NavBar from '@/components/common/NavBar';
 import SavedQuestionThumbnail from '@/components/hiStory/SavedQuestionThumbnail';
-import SlideMenu from '@/components/main/SideMenu';
+import SlideMenu from '@/components/Day/SideMenu';
 import { useRouter } from 'next/router';
 
 const mockAllEventList: MonthAllEventsType[] = [

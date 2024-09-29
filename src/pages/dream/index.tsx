@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import CustomCalendar from '@/components/dream/CustomCalendar';
 import EventListShow from '@/components/dream/EventListShow';
-import Header from '@/components/main/Header';
+import Header from '@/components/Day/Header';
 import NavBar from '@/components/common/NavBar';
-import SlideMenu from '@/components/main/SideMenu';
+import SlideMenu from '@/components/Day/SideMenu';
 import moment from 'moment';
 
 export interface MonthEventType {

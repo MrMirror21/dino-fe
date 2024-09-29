@@ -12,7 +12,7 @@ const QuestionNumSelectSlider: React.FC = () => {
   today.setHours(0, 0, 0, 0);
 
   useEffect(() => {
-    setPosition({ x: Number(sliderRef.current?.offsetWidth) - 23, y: -23 });
+    setPosition({ x: Number(sliderRef.current?.offsetWidth) - 19, y: -19 });
     setEventInfo({
       ...eventInfo,
       questionSize: calculateQuestionSize(eventInfo.endDate, 4),
@@ -20,7 +20,7 @@ const QuestionNumSelectSlider: React.FC = () => {
   }, []);
 
   const handleDrag = (e: any, data: { x: number; y: number }) => {
-    setPosition({ x: data.x, y: -23 });
+    setPosition({ x: data.x, y: -19 });
   };
 
   const handleDragStop = () => {
@@ -29,7 +29,7 @@ const QuestionNumSelectSlider: React.FC = () => {
       const sectionWidth = sliderWidth / 4;
       const nearestSection = Math.round(position.x / sectionWidth);
       const newX = nearestSection * sectionWidth;
-      setPosition({ x: newX - 23, y: -23 });
+      setPosition({ x: newX - 19, y: -19 });
       setEventInfo({
         ...eventInfo,
         questionSize: calculateQuestionSize(eventInfo.endDate, nearestSection),
@@ -57,7 +57,7 @@ const QuestionNumSelectSlider: React.FC = () => {
           onDrag={handleDrag}
           onStop={handleDragStop}
         >
-          <div className="absolute -translate-y-1/2 w-12 h-12 rounded-full cursor-pointer flex items-center justify-center">
+          <div className="absolute -translate-y-1/2 w-10 h-10 rounded-full cursor-pointer flex items-center justify-center">
             <StarIcon />
           </div>
         </Draggable>

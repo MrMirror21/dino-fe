@@ -41,11 +41,11 @@ const QuestionModal = ({ isOpen, setIsOpen }: QuestionModalProps) => {
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex flew-row gap-1 bg-white px-3 py-4 w-[calc(100vw-40px)] rounded-[10px] shadow-lg mb-4">
-            <h2 className="text-[24px] leading-6 font-bold text-[#EEEEEE] flex justify-start">
+          <div className="flex flew-row gap-2 bg-white px-3 py-4 w-[calc(100vw-40px)] rounded-[10px] shadow-lg mb-4">
+            <h2 className="text-[#BAD7EC] font-['edensor'] text-2xl leading-[20px] tracking-[-1px] flex justify-start">
               Q.
             </h2>
-            <p>
+            <p className="text-[#000] font-pretendard text-sm font-extralight leading-[20px] tracking-[-1px]">
               ( ) 하고 싶은 것을 이룬다면, 가장 먼저 알리고 싶은 사람은
               누구인가요?
             </p>
@@ -73,19 +73,19 @@ const QuestionModal = ({ isOpen, setIsOpen }: QuestionModalProps) => {
           >
             <div
               onClick={() => setIsCameraSelectOn(false)}
-              className="flex items-center justify-center bg-white px-5 py-5 mb-10 w-[calc(100vw-40px)] rounded-[10px] shadow-lg text-[18px]"
+              className="flex items-center justify-center bg-white px-5 py-5 mb-10 w-[calc(100vw-40px)] rounded-[10px] shadow-lg text-[var(--0-Black-Color)] text-center font-['Pretendard-Regular'] text-base leading-[120%] tracking-[-0.64px]"
             >
               취소하기
             </div>
             <div className="flex flex-col items-center bg-white px-5 w-[calc(100vw-40px)] rounded-[10px] shadow-lg mb-4">
               <div
                 onClick={() => setIsCameraOn(true)}
-                className="flex items-center justify-center w-full py-5 text-[18px] border-b border-b-gray-300"
+                className="flex items-center justify-center w-full py-5 text-[var(--0-Black-Color)] text-center font-['Pretendard-Regular'] text-base leading-[120%] tracking-[-0.64px] border-b border-b-gray-300"
               >
                 사진 찍기
               </div>
               <label
-                className="flex items-center justify-center w-full py-5 text-[18px]"
+                className="flex items-center justify-center w-full py-5 text-[var(--0-Black-Color)] text-center font-['Pretendard-Regular'] text-base leading-[120%] tracking-[-0.64px]"
                 htmlFor="imgfile"
               >
                 앨범에서 불러오기
