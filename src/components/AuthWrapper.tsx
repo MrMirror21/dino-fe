@@ -7,6 +7,7 @@ import { useValidateToken } from '@/hooks/api/useAuth';
 export function AuthWrapper({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [accessCode, setAccessCode] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
   const { data, isLoading, isError } = useValidateToken(accessCode);
   const hasRedirected = useRef(false);
 
@@ -23,8 +24,9 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
         const code = params.get('access-code');
         const nickname = params.get('nickname');
 
-        if (code) {
+        if (code && nickname) {
           setAccessCode(code);
+          setUserName(nickname);
           tokenUtils.setToken(code);
           router.push('/'); // OAuth 로그인 후 루트로 리다이렉트
         } else {

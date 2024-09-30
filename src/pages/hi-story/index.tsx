@@ -178,6 +178,9 @@ const mockCompletedEventList: CompleteEventType[] = [
     startDate: '2023-09-01',
     endDate: '2023-09-01',
     fileUrl: 'https://example.com/event1.jpg',
+    emotion: 'JOY',
+    totalQuestionCount: 5,
+    totalAnswerCount: 5,
     representativeQuestion: {
       questionId: 201,
       content: '이벤트를 통해 무엇을 배웠나요?',
@@ -193,6 +196,9 @@ const mockCompletedEventList: CompleteEventType[] = [
     startDate: '2023-09-02',
     endDate: '2023-09-03',
     fileUrl: 'https://example.com/event2.jpg',
+    emotion: 'HAPPINESS',
+    totalQuestionCount: 7,
+    totalAnswerCount: 6,
     representativeQuestion: {
       questionId: 202,
       content: '가장 인상 깊었던 순간은?',
@@ -208,6 +214,9 @@ const mockCompletedEventList: CompleteEventType[] = [
     startDate: '2023-09-04',
     endDate: '2023-09-04',
     fileUrl: 'https://example.com/event3.jpg',
+    emotion: 'SATISFACTION',
+    totalQuestionCount: 4,
+    totalAnswerCount: 4,
     representativeQuestion: {
       questionId: 203,
       content: '새롭게 알게 된 사실이 있나요?',
@@ -223,6 +232,9 @@ const mockCompletedEventList: CompleteEventType[] = [
     startDate: '2023-10-01',
     endDate: '2023-10-31',
     fileUrl: 'https://example.com/event4.jpg',
+    emotion: 'EXPECTATION',
+    totalQuestionCount: 10,
+    totalAnswerCount: 8,
     representativeQuestion: {
       questionId: 204,
       content: '이번 달 가장 인상 깊었던 책은?',
@@ -238,6 +250,9 @@ const mockCompletedEventList: CompleteEventType[] = [
     startDate: '2023-11-01',
     endDate: '2023-11-30',
     fileUrl: 'https://example.com/event5.jpg',
+    emotion: 'HOPE',
+    totalQuestionCount: 30,
+    totalAnswerCount: 28,
     representativeQuestion: {
       questionId: 205,
       content: '한 달간의 변화 중 가장 큰 것은?',
@@ -254,6 +269,9 @@ const mockCompletedEventList: CompleteEventType[] = [
     startDate: '2023-12-20',
     endDate: '2023-12-24',
     fileUrl: 'https://example.com/event6.jpg',
+    emotion: 'LOVE',
+    totalQuestionCount: 6,
+    totalAnswerCount: 6,
     representativeQuestion: {
       questionId: 206,
       content: '봉사활동을 통해 느낀 점은?',
@@ -311,8 +329,10 @@ const HiStoryPage = () => {
         <div className="flex flex-col gap-8 mt-8">
           <div>
             <div className="flex items-center justify-center w-full">
-              <div className="w-[calc(100%-40px)] flex justify-between mb-1.5">
-                <span>뭐라고 적을까용</span>
+              <div className="w-[calc(100%-40px)] flex justify-between mb-3">
+                <span className="font-pretendard-500 text-[#8ABADD] text-[20px]">
+                  Moments
+                </span>
 
                 <div onClick={() => handleRoute('saved-questions')}>
                   <ChevronRightIcon />
@@ -326,8 +346,10 @@ const HiStoryPage = () => {
 
           <div>
             <div className="flex items-center justify-center w-full">
-              <div className="w-[calc(100%-40px)] flex justify-between mb-1.5">
-                <span>뭐라고 적을까용</span>
+              <div className="w-[calc(100%-40px)] flex justify-between mb-3">
+                <span className="font-pretendard-500 text-[#8ABADD] text-[20px]">
+                  Growths
+                </span>
                 <div onClick={() => handleRoute('completed-events')}>
                   <ChevronRightIcon />
                 </div>

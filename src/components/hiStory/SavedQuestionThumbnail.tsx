@@ -17,7 +17,7 @@ const SavedQuestionThumbnail = ({ questionList }: Props) => {
               <span className="font-pretendard-300 text-[#BAD7EC] text-[24px]">
                 Q.
               </span>
-              <span className="ml-[10px] font-pretendard-200 text-[14px]">
+              <span className="ml-2 font-pretendard-200 text-[14px]">
                 {question.content}
               </span>
             </div>

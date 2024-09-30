@@ -5,10 +5,10 @@ import EventElement from '@/components/eventManage/EventElement';
 import EventList from '@/components/Day/EventList';
 import Header from '../../components/Day/Header';
 import NavBar from '@/components/common/NavBar';
+import ProgressBar from '@/components/Day/ProgressBar';
 import QuestionModal from '@/components/Day/QuestionModal';
 import SlideMenu from '@/components/Day/SideMenu';
 import { useState } from 'react';
-import ProgressBar from '@/components/Day/ProgressBar';
 
 interface Props {}
 
@@ -25,12 +25,7 @@ export default function MainPage<Props>({}) {
         <Header onClick={() => setIsSideMenuOpen(true)} />
         <SlideMenu isOpen={isSideMenuOpen} setIsOpen={setIsSideMenuOpen} />
         <EventElement />
-        <ProgressBar
-          answerNum={16}
-          totalNum={22}
-          startColor="#F8F8BD" // 노란색
-          endColor="#A5D1C0"
-        />
+        <ProgressBar answerNum={16} totalNum={22} endColor="#A5D1C0" />
         <DateChanger />
         <EventList setChosenEvent={setIsQuestionModalOpen} />
         <NavBar />

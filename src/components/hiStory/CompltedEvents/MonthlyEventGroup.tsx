@@ -16,11 +16,9 @@ const MonthlyEventGroup = ({ event }: Props) => {
         {moment(event.eventDate.toString()).format('MMM, yyyy')}
       </div>
 
-      <div className="w-[calc(100%-40px)]">
-        {event.questionContent.map((question) => (
-          <QuestionAndAnswer key={question.questionId} question={question} />
-        ))}
-      </div>
+      {event.questionContent.map((question) => (
+        <QuestionAndAnswer key={question.questionId} question={question} />
+      ))}
     </div>
   );
 };

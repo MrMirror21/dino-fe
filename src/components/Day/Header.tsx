@@ -1,18 +1,50 @@
+import ChevronLeftIcon from '@/assets/icon/ChevronLeftIcon.svg';
 import MenuIcon from '@/assets/icon/Menu.svg';
-import { useRouter } from 'next/router';
 import React from 'react';
+import { useRouter } from 'next/router';
 
 interface HeaderProps {
   onClick: () => void;
 }
-const Header = ({ onClick }: HeaderProps) => {
+
+const Header: React.FC<HeaderProps> = ({ onClick }) => {
   const router = useRouter();
-  const pageName = router.pathname.split('/')[1][0].toUpperCase() + router.pathname.split('/')[1].slice(1);
+
+  const getPageName = () => {
+    const path = router.pathname.split('/')[1];
+    return path.charAt(0).toUpperCase() + path.slice(1);
+  };
+
+  const getBackPath = (): string | null => {
+    const pathSegments = router.pathname.split('/');
+    if (pathSegments.length <= 2) return null;
+    return '/' + pathSegments.slice(0, -1).join('/');
+  };
+
+  const renderHeaderContent = () => {
+    const pageName = getPageName();
+    const backPath = getBackPath();
+
+    if (pageName === 'Hi-story') {
+      if (router.pathname === '/hi-story') return 'Hi Story';
+      if (backPath) {
+        return (
+          <div onClick={() => router.push(backPath)}>
+            <ChevronLeftIcon />
+          </div>
+        );
+      }
+    }
+
+    return pageName;
+  };
+
   return (
     <div className="flex items-center justify-between w-full h-[52px] px-5">
       <div className="text-black/40 font-['edensor'] text-[22px] font-bold">
-        {pageName}
+        {renderHeaderContent()}
       </div>
+
       <button
         onClick={onClick}
         className="flex items-center justify-center"

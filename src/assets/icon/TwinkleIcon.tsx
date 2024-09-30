@@ -1,4 +1,4 @@
-import { EmotionType } from '@/pages/dream';
+import { EmotionType } from '@/types/emotion';
 import { getEmotionColor } from '@/utils/emotionColor';
 
 interface Props {

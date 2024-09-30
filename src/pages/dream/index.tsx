@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import CustomCalendar from '@/components/dream/CustomCalendar';
+import { EmotionType } from '@/types/emotion';
 import EventListShow from '@/components/dream/EventListShow';
 import Header from '@/components/Day/Header';
 import NavBar from '@/components/common/NavBar';
@@ -11,22 +12,6 @@ export interface MonthEventType {
   eventDate: Date | string;
   eventContent: EventContent[];
 }
-
-export type EmotionType =
-  | 'JOY'
-  | 'HAPPINESS'
-  | 'LOVE'
-  | 'SATISFACTION'
-  | 'HOPE'
-  | 'EXPECTATION';
-// export enum Emotion {
-//   JOY = 'JOY',
-//   HAPPINESS = 'HAPPINESS',
-//   LOVE = 'LOVE',
-//   SATISFACTION = 'SATISFACTION',
-//   HOPE = 'HOPE',
-//   EXPECTATION = 'EXPECTATION',
-// }
 
 export interface EventContent {
   eventId: number;
