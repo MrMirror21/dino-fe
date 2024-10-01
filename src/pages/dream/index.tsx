@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import CustomCalendar from '@/components/dream/CustomCalendar';
 import { EmotionType } from '@/types/emotion';
-import EventListShow from '@/components/dream/EventListShow';
 import Header from '@/components/Day/Header';
 import NavBar from '@/components/common/NavBar';
+import QuestionAndAnswer from '@/components/hiStory/CompltedEvents/QuestionAndAnswer';
 import SlideMenu from '@/components/Day/SideMenu';
 import moment from 'moment';
 
@@ -257,8 +257,15 @@ const DreamPage = () => {
           eventList={eventList}
           setSelectedDate={handleDateSelect}
         />
-        {/* <span className="text-slate-500">{selectedDate.toString()}</span> */}
-        <EventListShow events={filteredEvents} />
+        <div className="mt-[50px] w-full gap-5 flex flex-col">
+          {filteredEvents.map((event) => (
+            <QuestionAndAnswer
+              key={event.title}
+              question={event}
+              title={event.title}
+            />
+          ))}
+        </div>
       </div>
       <NavBar />
     </div>

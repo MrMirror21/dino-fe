@@ -439,6 +439,11 @@ const EventDetailPage = () => {
               totalNum={event.totalQuestionCount}
               endColor={getProgressAndButtonColor(event.emotion as EmotionType)}
             />
+            <div>
+              <span className="text-[#969A9C] text-[12px] font-pre leading-normal">
+                {event.totalAnswerCount}/{event.totalQuestionCount}
+              </span>
+            </div>
           </div>
 
           <div className="my-1 flex justify-start">
