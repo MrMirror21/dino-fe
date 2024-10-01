@@ -13,7 +13,7 @@ const MonthlyEventGroup = ({ event }: Props) => {
         className="text-center font-pretendard-300 text-[20px] mb-5 mt-8"
         style={{ color: 'rgba(0, 0, 0, 0.60)' }}
       >
-        {moment(event.eventDate.toString()).format('MMM, yyyy')}
+        {moment(event.groupByDate.toString()).format('MMM, yyyy')}
       </div>
 
       {event.questionContent.map((question) => (

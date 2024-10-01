@@ -1,18 +1,16 @@
-import NavBar from '@/components/common/NavBar';
-import EventCard from '@/components/ing/EventCard';
-import Header from '@/components/Day/Header';
-import SlideMenu from '@/components/Day/SideMenu';
-import mockEventData from '@/store/mockData';
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
+import EventCard from '@/components/ing/EventCard';
+import Header from '@/components/Day/Header';
+import NavBar from '@/components/common/NavBar';
+import mockEventData from '@/store/mockData';
+import { useRouter } from 'next/router';
+
 const IngPage = () => {
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const router = useRouter();
   return (
     <div className="w-full h-screen items-center`">
-      <Header onClick={() => setIsSideMenuOpen(true)} />
-      <SlideMenu isOpen={isSideMenuOpen} setIsOpen={setIsSideMenuOpen} />
+      <Header />
       <div className="flex flex-col w-full px-5 gap-3 items-center">
         {mockEventData.data.map((element) => (
           <EventCard {...element} />

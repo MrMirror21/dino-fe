@@ -68,7 +68,7 @@
 
 @font-face {
   font-family: 'Edensor-Bold';
-  src: url('/src/assets/font/EdensorBold.ttf') format('truetype');
+  src: url('/fonts/EdensorBold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

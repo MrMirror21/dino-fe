@@ -8,3 +8,5 @@ export interface EventPostRequest {
   emotion: string;
   questionSize: number;
 }
+
+export type EventStatus = 'termination' | 'execution';

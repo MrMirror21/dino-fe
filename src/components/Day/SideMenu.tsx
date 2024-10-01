@@ -1,15 +1,25 @@
-import MenuIcon from '@/assets/icon/Menu.svg';
+import { useEffect, useState } from 'react';
+
 import CloseIcon from '@/assets/icon/CloseIcon.svg';
 import Image from 'next/image';
+import MenuIcon from '@/assets/icon/Menu.svg';
+import { tokenUtils } from '@/utils/tokenUtils';
 
 interface SlideMenuProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 const SlideMenu = ({ isOpen, setIsOpen }: SlideMenuProps) => {
+  const [userName, setUserName] = useState<string | null>(null);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    if (!tokenUtils.getUserName()) window.location.reload();
+    setUserName(tokenUtils.getUserName());
+  }, []);
 
   return (
     <div className="z-10">
@@ -34,29 +44,29 @@ const SlideMenu = ({ isOpen, setIsOpen }: SlideMenuProps) => {
         </div>
         <div className="flex justify-between pb-8">
           <div className="text-[#333] font-pretendard text-2xl font-normal tracking-[-0.3px]">
-            ##님
+            {userName ? `${userName}님` : ''}
           </div>
-          <div className="flex justify-between items-center gap-2">
+          {/* <div className="flex justify-between items-center gap-2">
             <div className="text-[#888] font-pretendard-300 text-xs leading-5 tracking-[-0.48px]">
               로그인
             </div>
             <div className="text-[#888] font-pretendard-300 text-xs leading-5 tracking-[-0.48px]">
               카카오계정
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="w-full h-[1px] mb-8 bg-gray-300" />
         <div className="">
           <ul className="space-y-2">
             <div className="flex h-14 px-5 py-3 rounded bg-white justify-between items-center self-stretch">
               <div className="text-[#888] font-pretendard-300 text-xs leading-5 tracking-[-0.48px]">
-                내 정보 수정하기
+                이름 변경하기
               </div>
               <Image alt="penImg" width={32} height={32} src="/image/pen.png" />
             </div>
             <div className="flex h-14 px-5 py-3 rounded bg-white justify-between items-center self-stretch">
               <div className="text-[#888] font-pretendard-300 text-xs leading-5 tracking-[-0.48px]">
-                질문 알람받기
+                질문 알람 받기
               </div>
               <Image
                 alt="penImg"

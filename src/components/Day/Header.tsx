@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 interface HeaderProps {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ onClick }) => {
@@ -41,17 +41,19 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
 
   return (
     <div className="flex items-center justify-between w-full h-[52px] px-5">
-      <div className="text-black/40 font-['edensor'] text-[22px] font-bold">
+      <div className="text-black/40 font-edensor text-[22px] font-bold">
         {renderHeaderContent()}
       </div>
 
-      <button
-        onClick={onClick}
-        className="flex items-center justify-center"
-        aria-label="Toggle menu"
-      >
-        <MenuIcon className="w-6 h-6" />
-      </button>
+      {onClick && (
+        <button
+          onClick={onClick}
+          className="flex items-center justify-center"
+          aria-label="Toggle menu"
+        >
+          <MenuIcon className="w-6 h-6" />
+        </button>
+      )}
     </div>
   );
 };

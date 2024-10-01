@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { tokenUtils } from '@/utils/tokenUtils';
 import { useRouter } from 'next/router';
@@ -8,15 +8,34 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [accessCode, setAccessCode] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
-  const { data, isLoading, isError } = useValidateToken(accessCode);
-  const hasRedirected = useRef(false);
+  const { data, isLoading, isError, refetch } = useValidateToken(accessCode);
 
   useEffect(() => {
-    const storedToken = tokenUtils.getToken();
-    if (storedToken && tokenUtils.isTokenValid(storedToken)) {
-      setAccessCode(storedToken);
-    }
+    const checkToken = () => {
+      const storedToken = tokenUtils.getToken();
+      const storedUserName = tokenUtils.getUserName();
 
+      if (storedToken && tokenUtils.isTokenValid(storedToken)) {
+        setAccessCode(storedToken);
+        setUserName(storedUserName);
+        refetch(); // 토큰 유효성 재검사
+      } else if (router.pathname !== '/login') {
+        tokenUtils.removeTokenAndUserName();
+        router.push('/login');
+      }
+    };
+
+    checkToken();
+
+    // 라우트 변경 시 토큰 체크
+    router.events.on('routeChangeComplete', checkToken);
+
+    return () => {
+      router.events.off('routeChangeComplete', checkToken);
+    };
+  }, [router, refetch]);
+
+  useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
       if (hash.startsWith('#/oauth2/login')) {
@@ -27,8 +46,8 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
         if (code && nickname) {
           setAccessCode(code);
           setUserName(nickname);
-          tokenUtils.setToken(code);
-          router.push('/'); // OAuth 로그인 후 루트로 리다이렉트
+          tokenUtils.setTokenAndUserName(code, nickname);
+          router.push('/');
         } else {
           console.error('No access code received');
           router.push('/login?error=no_access_code');
@@ -45,24 +64,19 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   }, [router]);
 
   useEffect(() => {
-    if (data && data.isSuccess && !hasRedirected.current) {
+    if (data && data.isSuccess) {
+      if (!tokenUtils.getUserName()) {
+        tokenUtils.setUserName(data.data.nickname);
+      }
       console.log('Token validated:', data);
-      hasRedirected.current = true;
-
-      // 현재 경로가 '/login'이고 유효한 토큰이 있는 경우에만 루트로 리다이렉트
       if (router.pathname === '/login') {
         router.push('/');
       }
-    }
-  }, [data, router]);
-
-  // 토큰이 유효하지 않고 현재 경로가 '/login'이 아닌 경우 로그인 페이지로 리다이렉트
-  useEffect(() => {
-    if (isError && router.pathname !== '/login') {
-      tokenUtils.removeToken();
+    } else if (isError && router.pathname !== '/login') {
+      tokenUtils.removeTokenAndUserName();
       router.push('/login');
     }
-  }, [isError, router]);
+  }, [data, isError, router]);
 
   if (isLoading) return <div>Loading...</div>;
 

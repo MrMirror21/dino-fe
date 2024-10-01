@@ -1,3 +1,5 @@
+import 'regenerator-runtime';
+
 import {
   Dispatch,
   SetStateAction,
@@ -6,16 +8,16 @@ import {
   useRef,
   useState,
 } from 'react';
-import 'regenerator-runtime';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
-import RecordIcon from '@/assets/icon/RecordIcon.svg';
+
+import ApproveIcon from '@/assets/icon/ApproveIcon.svg';
 import CameraIcon from '@/assets/icon/CameraIcon.svg';
 import DeleteIcon from '@/assets/icon/DeleteIcon.svg';
-import ApproveIcon from '@/assets/icon/ApproveIcon.svg';
-import RecordingGIF from '@/assets/gif/pulse.gif';
 import Image from 'next/image';
+import RecordIcon from '@/assets/icon/RecordIcon.svg';
+import RecordingGIF from '@/assets/gif/pulse.gif';
 import Waveform from './Waveform';
 
 const onRecordingComplete = (blob: Blob) => {
@@ -105,7 +107,9 @@ const AudioRecord = ({
     <>
       <div className="flex items-center flex-col bg-white px-3 py-4 w-[calc(100vw-40px)] rounded-[10px] shadow-lg">
         <div className="flex items-center w-full">
-          <h2 className="text-[#BAD7EC] font-['edensor'] text-2xl leading-[20px] tracking-[-1px] pr-2">A.</h2>
+          <h2 className="text-[#BAD7EC] font-edensor text-2xl leading-[20px] tracking-[-1px] pr-2">
+            A.
+          </h2>
           <div className="flex w-full justify-between">
             {listening ? (
               <div className={'w-full text-[14px] text-wrap'}>{transcript}</div>
@@ -170,7 +174,7 @@ const AudioRecord = ({
             </div>
           </>
         )}
-        {((userInput !== '' || selectedImage) && audioUrl == null) && (
+        {(userInput !== '' || selectedImage) && audioUrl == null && (
           <div className={'flex items-center justify-center w-full mt-3'}>
             <ApproveIcon onClick={closeModal} />
           </div>

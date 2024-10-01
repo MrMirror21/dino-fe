@@ -11,18 +11,20 @@
 
 /* 캘린더 상단의 네비게이션 (년도, 월 선택) 영역 스타일 */
 .reactCalendar :global(.react-calendar__navigation) {
-  @apply flex justify-center w-full mt-[28px] mb-[22px];
+  @apply flex justify-center w-full mt-[28px] mb-[17px];
   font-size: 20px;
   color: rgba(0, 0, 0, 0.60);
   line-height: 28px;
 }
 
+/* 다음 달 넘어가는 버튼 */
 .reactCalendar :global(.react-calendar__navigation__next-button) {
-  @apply w-5 text-[#999];
+  @apply w-7 text-[#999];
 }
 
+/* 이전 달 넘어가는 버튼 */
 .reactCalendar :global(.react-calendar__navigation__prev-button) {
-  @apply w-5 text-[#999];
+  @apply w-7 text-[#999];
 }
 
 /* 캘린더의 메인 뷰 컨테이너 스타일 */
@@ -51,8 +53,8 @@
 
 /* 월별 뷰의 요일 표시 영역 스타일 */
 .reactCalendar :global(.react-calendar__month-view__weekdays) {
-  @apply uppercase text-[12px] text-center h-[40px] items-center;
-  width: calc(100% - 40px) !important;
+  @apply uppercase text-[12px] text-center h-[43px] items-center;
+  width: calc(100% - 52px) !important;
   margin: 0 auto;
   line-height: normal;
 }
@@ -81,13 +83,13 @@
 
 /* 월별 뷰의 날짜 컨테이너 스타일 */
 .reactCalendar :global(.react-calendar__month-view__days) {
-  @apply w-[calc(100%-40px)] font-pretendard-300;
+  @apply w-[calc(100%-52px)] font-pretendard-300;
   margin: 0 auto;
 }
 
 /* 캘린더의 각 날짜 셀 스타일 */
 .reactCalendar :global(.react-calendar__tile) {
-  @apply flex flex-col justify-center items-center border-none relative bg-transparent h-[60px]; 
+  @apply flex flex-col justify-center items-center border-none relative bg-transparent h-[58px]; 
 }
 
 /* 날짜 셀 호버 및 포커스 스타일 */

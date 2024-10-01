@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import AudioRecord from './AudioRecord';
 import CameraModalPro from './CameraModalPro';
 interface QuestionModalProps {
@@ -42,7 +43,7 @@ const QuestionModal = ({ isOpen, setIsOpen }: QuestionModalProps) => {
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flew-row gap-2 bg-white px-3 py-4 w-[calc(100vw-40px)] rounded-[10px] shadow-lg mb-4">
-            <h2 className="text-[#BAD7EC] font-['edensor'] text-2xl leading-[20px] tracking-[-1px] flex justify-start">
+            <h2 className="text-[#BAD7EC] font-edensor text-2xl leading-[20px] tracking-[-1px] flex justify-start">
               Q.
             </h2>
             <p className="text-[#000] font-pretendard text-sm font-extralight leading-[20px] tracking-[-1px]">

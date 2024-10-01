@@ -1,12 +1,13 @@
 import { FunctionComponent, ReactElement } from 'react';
-import { useRouter } from 'next/router';
+
 import CalendarIcon from '@/assets/icon/CalendarIcon.svg';
-import MoonIcon from '@/assets/icon/MoonIcon.svg';
-import DiaryIcon from '@/assets/icon/DiaryIcon.svg';
 import DayIcon from '@/assets/icon/navBar/dayIcon';
+import DiaryIcon from '@/assets/icon/DiaryIcon.svg';
 import DreamIcon from '@/assets/icon/navBar/dreamIcon';
 import HiStoryIcon from '@/assets/icon/navBar/hiStoryIcon';
 import IngIcon from '@/assets/icon/navBar/ingIcon';
+import MoonIcon from '@/assets/icon/MoonIcon.svg';
+import { useRouter } from 'next/router';
 
 interface NavBarIconProps {
   goTo: string;
@@ -38,7 +39,7 @@ const NavBar: FunctionComponent = () => {
           <div
             className={`${
               router.pathname === '/day' ? 'text-[#8ABADD]' : 'text-[#CCC]'
-            } text-center font-['edensor'] text-xs font-bold`}
+            } text-center font-edensor text-xs font-bold`}
           >
             Day
           </div>
@@ -50,7 +51,7 @@ const NavBar: FunctionComponent = () => {
           <div
             className={`${
               router.pathname === '/dream' ? 'text-[#8ABADD]' : 'text-[#CCC]'
-            } text-center font-['edensor'] text-xs font-bold`}
+            } text-center font-edensor text-xs font-bold`}
           >
             Dream
           </div>
@@ -62,7 +63,7 @@ const NavBar: FunctionComponent = () => {
           <div
             className={`${
               router.pathname === '/hi-story' ? 'text-[#8ABADD]' : 'text-[#CCC]'
-            } text-center font-['edensor'] text-xs font-bold`}
+            } text-center font-edensor text-xs font-bold`}
           >
             Hi, story
           </div>
@@ -74,7 +75,7 @@ const NavBar: FunctionComponent = () => {
           <div
             className={`${
               router.pathname === '/ing' ? 'text-[#8ABADD]' : 'text-[#CCC]'
-            } text-center font-['edensor'] text-xs font-bold`}
+            } text-center font-edensor text-xs font-bold`}
           >
             ~ ing
           </div>

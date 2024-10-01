@@ -1,3 +1,5 @@
+import { QuestionContentType } from './question';
+
 export interface CompleteEventType {
   eventId: number;
   title: string;
@@ -9,31 +11,10 @@ export interface CompleteEventType {
   fileUrl: string;
   totalQuestionCount: number;
   totalAnswerCount: number;
-  representativeQuestion: {
-    questionId: number;
-    content: string;
-    isAnswer: boolean;
-    myAnswer: string;
-    fileUrl?: string;
-    type?: AnswerType;
-  };
-}
-
-export type AnswerType = 'TEXT' | 'VOICE' | 'IMAGE';
-
-export interface QuestionContentType {
-  eventId: number;
-  title: string;
-  questionId: number;
-  content: string;
-  isAnswer: boolean;
-  myAnswer: string;
-  isPriority: boolean;
-  fileUrl: string;
-  type: AnswerType;
+  representativeQuestion: QuestionContentType;
 }
 
 export interface MonthAllEventsType {
-  eventDate: string | Date;
+  groupByDate: string | Date;
   questionContent: QuestionContentType[];
 }
