@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import AudioPlayer from '@/components/AudioPlayer';
-import BookMarkIcon from '@/assets/icon/BookMarkIcon';
+import BookmarkIcon from '@/assets/icon/BookmarkIcon';
 import ChevronRightIcon from '@/assets/icon/ChevronRightIcon.svg';
 import { EmotionType } from '@/types/emotion';
 import Image from 'next/image';
@@ -138,7 +137,7 @@ const QuestionAndAnswer = ({
                   className="absolute bottom-[11px] right-4"
                   onClick={toggleIsBookmark}
                 >
-                  <BookMarkIcon isMarked={isBookmark} />
+                  <BookmarkIcon isMarked={isBookmark} />
                 </div>
               ) : (
                 <div
