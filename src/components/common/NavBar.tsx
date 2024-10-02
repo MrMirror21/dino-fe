@@ -20,7 +20,7 @@ const NavBarIcon = ({ goTo, children }: NavBarIconProps) => {
   return (
     <div className="w-1/3 h-70 flex justify-center items-center">
       <div
-        className="w-[50px] h-[81px] flex flex-col gap-[7px] justify-center items-center"
+        className="w-[50px] h-[81px] flex flex-col justify-center items-center"
         onClick={() => router.push(goTo)}
       >
         {children}
@@ -30,8 +30,8 @@ const NavBarIcon = ({ goTo, children }: NavBarIconProps) => {
 };
 
 const NavBar: FunctionComponent = () => {
-  const pathName = useRouter().pathname;
   const router = useRouter();
+  const pathName = router.pathname;
 
   if (
     pathName === '/hi-story/completed-events/[eventId]' ||
@@ -39,14 +39,17 @@ const NavBar: FunctionComponent = () => {
     pathName === '/hi-story/saved-questions'
   )
     return null;
+
+  const isIngActive = pathName.startsWith('/ing');
+
   return (
     <div className="flex justify-self-center justify-between w-full shadow-[0_-2px_12px_rgba(68,68,68,0.08)] rounded-t-[20px] bg-white h-[81px] absolute bottom-1">
       <NavBarIcon goTo="/day">
         <>
-          <DayIcon active={router.pathname === '/day'} />
+          <DayIcon active={pathName === '/day'} />
           <div
             className={`${
-              router.pathname === '/day' ? 'text-[#8ABADD]' : 'text-[#CCC]'
+              pathName === '/day' ? 'text-[#8ABADD]' : 'text-[#CCC]'
             } text-center font-edensor text-xs font-bold`}
           >
             Day
@@ -55,10 +58,10 @@ const NavBar: FunctionComponent = () => {
       </NavBarIcon>
       <NavBarIcon goTo="/dream">
         <>
-          <DreamIcon active={router.pathname === '/dream'} />
+          <DreamIcon active={pathName === '/dream'} />
           <div
             className={`${
-              router.pathname === '/dream' ? 'text-[#8ABADD]' : 'text-[#CCC]'
+              pathName === '/dream' ? 'text-[#8ABADD]' : 'text-[#CCC]'
             } text-center font-edensor text-xs font-bold`}
           >
             Dream
@@ -67,10 +70,10 @@ const NavBar: FunctionComponent = () => {
       </NavBarIcon>
       <NavBarIcon goTo="/hi-story">
         <>
-          <HiStoryIcon active={router.pathname === '/hi-story'} />
+          <HiStoryIcon active={pathName === '/hi-story'} />
           <div
             className={`${
-              router.pathname === '/hi-story' ? 'text-[#8ABADD]' : 'text-[#CCC]'
+              pathName === '/hi-story' ? 'text-[#8ABADD]' : 'text-[#CCC]'
             } text-center font-edensor text-xs font-bold`}
           >
             Hi, story
@@ -79,10 +82,10 @@ const NavBar: FunctionComponent = () => {
       </NavBarIcon>
       <NavBarIcon goTo="/ing">
         <>
-          <IngIcon active={router.pathname === '/ing'} />
+          <IngIcon active={isIngActive} />
           <div
             className={`${
-              router.pathname === '/ing' ? 'text-[#8ABADD]' : 'text-[#CCC]'
+              isIngActive ? 'text-[#8ABADD]' : 'text-[#CCC]'
             } text-center font-edensor text-xs font-bold`}
           >
             ~ ing

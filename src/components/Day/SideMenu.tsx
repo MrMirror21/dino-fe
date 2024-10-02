@@ -11,11 +11,25 @@ interface SlideMenuProps {
 }
 const SlideMenu = ({ isOpen, setIsOpen }: SlideMenuProps) => {
   const [userName, setUserName] = useState<string | null>(null);
+  const [onAlarm, setOnAlarm] = useState<boolean>(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const toggleAlarm = () => {
+    setOnAlarm(!onAlarm);
+  };
+
+  const handleSupport = () => {
+    const email = 'xum58@khu.ac.kr';
+    const subject = encodeURIComponent('고객 지원 문의');
+    const body = encodeURIComponent(
+      '안녕하세요, 다음과 관련하여 문의드립니다:',
+    );
+
+    window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_blank');
+  };
   useEffect(() => {
     if (!tokenUtils.getUserName()) window.location.reload();
     setUserName(tokenUtils.getUserName());
@@ -64,18 +78,38 @@ const SlideMenu = ({ isOpen, setIsOpen }: SlideMenuProps) => {
               </div>
               <Image alt="penImg" width={32} height={32} src="/image/pen.png" />
             </div>
-            <div className="flex h-14 px-5 py-3 rounded bg-white justify-between items-center self-stretch">
+            <div
+              className="flex h-14 px-5 py-3 rounded bg-white justify-between items-center self-stretch ease-in-out duration-700"
+              onClick={toggleAlarm}
+            >
               <div className="text-[#888] font-pretendard-300 text-xs leading-5 tracking-[-0.48px]">
                 질문 알람 받기
               </div>
-              <Image
-                alt="penImg"
-                width={32}
-                height={32}
-                src="/image/clock.png"
-              />
+              <div className="relative w-8 h-8">
+                <Image
+                  alt="clockOffImg"
+                  width={32}
+                  height={32}
+                  src="/image/clock.png"
+                  className={`absolute top-0 left-0 transition-opacity duration-300 ease-in-out ${
+                    onAlarm ? 'opacity-0' : 'opacity-100'
+                  }`}
+                />
+                <Image
+                  alt="clockOnImg"
+                  width={32}
+                  height={32}
+                  src="/image/clockOn.png"
+                  className={`absolute top-0 left-0 transition-opacity duration-300 ease-in-out ${
+                    onAlarm ? 'opacity-100' : 'opacity-0'
+                  }`}
+                />
+              </div>
             </div>
-            <div className="flex h-14 px-5 py-3 rounded bg-white justify-between items-center self-stretch">
+            <div
+              className="flex h-14 px-5 py-3 rounded bg-white justify-between items-center self-stretch"
+              onClick={handleSupport}
+            >
               <div className="text-[#888] font-pretendard-300 text-xs leading-5 tracking-[-0.48px]">
                 고객센터 문의하기
               </div>
