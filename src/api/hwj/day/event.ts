@@ -1,11 +1,7 @@
 import { ServerResponse } from '@/api/apiHandler';
 import { api } from '@/api/hwj/index';
 import {
-  EventGetResponse,
-  EventListGetResponse,
-  EventListType,
   EventPostRequest,
-  EventType,
 } from '@/types/event';
 // 이벤트
 export async function getEvents(): Promise<ServerResponse> {

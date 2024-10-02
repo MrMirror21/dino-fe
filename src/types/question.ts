@@ -1,4 +1,4 @@
-import { AnswerType } from './answerType';
+import { AnswerType } from './event';
 
 export interface QuestionContentType {
   questionId: number;

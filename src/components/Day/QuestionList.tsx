@@ -1,12 +1,12 @@
 import { QuestionType } from '@/types/event';
-import React, { ReactElement } from 'react';
+import React, { Dispatch, ReactElement, SetStateAction } from 'react';
 
 interface EventCardProps {
   children: ReactElement;
 }
 
 interface EventListProps {
-  setChosenEvent: (isOpen: boolean) => void;
+  setChosenEvent: Dispatch<SetStateAction<QuestionType | undefined>>;
   questionList: Array<QuestionType>;
 }
 
@@ -18,13 +18,13 @@ const QuestionList = ({ setChosenEvent, questionList }: EventListProps) => {
   return (
     <div className="max-h-60 overflow-scroll">
       {questionList.map((question) => (
-        <div className="" onClick={() => setChosenEvent(true)}>
+        <div className="" onClick={() => setChosenEvent(question)}>
           <EventCard>
-            <div className="flex gap-2 px-3 py-4 w-full rounded-[10px] shadow-[0_2px_16px_rgba(68,68,68,0.12)]">
+            <div className="flex gap-2 px-3 py-4 w-full rounded-[10px] shadow-[0_2px_16px_rgba(68,68,68,0.12)] break-keep">
               <p className="text-[#BAD7EC] font-['edensor'] text-2xl leading-[20px] tracking-[-1px] flex justify-start">
                 Q.
               </p>
-              <p className="text-[#000] font-pretendard text-sm font-extralight leading-[20px] tracking-[-1px]">
+              <p className="text-[#000] font-pretendard text-sm font-extralight leading-[20px] tracking-[-1px] text-left">
                 {question.content}
               </p>
             </div>

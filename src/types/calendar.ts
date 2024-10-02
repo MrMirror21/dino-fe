@@ -1,6 +1,5 @@
-import { AnswerType } from './answerType';
 import { EmotionType } from './emotion';
-import { EventStatus } from './event';
+import { AnswerType, EventStatus } from './event';
 
 export interface MonthEventType {
   eventDate: Date | string;

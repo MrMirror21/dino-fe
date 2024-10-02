@@ -1,14 +1,18 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { motion, PanInfo, useMotionValue } from 'framer-motion';
 import DDayCounter from './Day/DDayCounter';
 import { EventType } from '../types/event';
 import { EmotionType } from '@/types/emotion';
 import { getProgressAndButtonColor } from '@/utils/emotionColor';
+import { stringToDate } from '@/utils/event';
 
 interface DateChangerProps {
   event: EventType;
+  today: Date;
+  currentDay: Date;
+  setCurrentDay: Dispatch<SetStateAction<Date>>;
 }
 
 const DRAG_BUFFER = 10; // 페이지 이동을 유발하는 드래그 길이
@@ -27,14 +31,14 @@ function getDayDiff(date1: Date, date2: Date) {
   return Math.round(timeDiff / oneDay);
 }
 
-function getDateRange(today: Date) {
+function getDateRange(today: Date, period: number) {
   const oneDay = 24 * 60 * 60 * 1000; // 밀리초 단위의 하ß루
   const dateRange = [];
   // Intl.DateTimeFormat을 사용하여 요일 포맷터 생성
   const weekdayFormatter = new Intl.DateTimeFormat('en', { weekday: 'short' });
 
-  // 현재 날짜로부터 1주일 전부터 1주일 후까지의 날짜를 계산
-  for (let i = -7; i <= 7; i++) {
+  // 이벤트 기간의 2배 길이의 날짜 범위 생성
+  for (let i = -period; i <= period; i++) {
     const date = new Date(today.getTime() + i * oneDay);
 
     dateRange.push({
@@ -47,11 +51,16 @@ function getDateRange(today: Date) {
   return dateRange;
 }
 
-export default function DateChanger({ event }: DateChangerProps) {
-  const today = new Date();
-  const dDay = getDateRange(today)[14].date;
-  const [currentDay, setCurrentDay] = useState(today);
-  const dateArr = useMemo(() => getDateRange(currentDay), [currentDay]);
+export default function DateChanger({
+  event,
+  today,
+  currentDay,
+  setCurrentDay,
+}: DateChangerProps) {
+  const period =
+    stringToDate(event?.endDate).getDate() -
+    stringToDate(event?.startDate).getDate();
+  const dateArr = getDateRange(currentDay, period);
   const [dragStartX, setDragStartX] = useState(0);
   const [page, setPage] = useState(0);
   const [width, setWidth] = useState<number>(0);
@@ -62,8 +71,6 @@ export default function DateChanger({ event }: DateChangerProps) {
   ): void => {
     setDragStartX(info.point.x);
   };
-
-  console.log(currentDay.getDate());
 
   const onDrag = (
     event: MouseEvent | TouchEvent | PointerEvent,
@@ -79,12 +86,18 @@ export default function DateChanger({ event }: DateChangerProps) {
     if (x <= -DRAG_BUFFER && page < dateArr.length - 1) {
       const tomorrow = new Date(currentDay);
       tomorrow.setDate(currentDay.getDate() + 1);
+      if (tomorrow > stringToDate(event?.endDate)) {
+        return;
+      }
       setCurrentDay(tomorrow);
       setPage((page) => page + 1);
     }
     if (x >= 10) {
       const yesterday = new Date(currentDay);
       yesterday.setDate(currentDay.getDate() - 1);
+      if (yesterday <= stringToDate(event?.startDate)) {
+        return;
+      }
       setCurrentDay(yesterday);
       setPage((page) => page - 1);
     }
@@ -92,6 +105,7 @@ export default function DateChanger({ event }: DateChangerProps) {
   return (
     <div className=" w-[400px] overflow-hidden">
       <DDayCounter
+        currentDay={currentDay}
         dDay={event?.endDate}
         emotion={event?.emotion as EmotionType}
       />
@@ -111,17 +125,39 @@ export default function DateChanger({ event }: DateChangerProps) {
         >
           {dateArr.map((day) => (
             <motion.div
+              style={
+                currentDay.getDate() === day.day
+                  ? {
+                      backgroundColor: getProgressAndButtonColor(
+                        event?.emotion as EmotionType,
+                      ),
+                    }
+                  : {}
+              }
               className={`flex flex-col m-2 items-center justify-center w-[46px] min-w-11 h-[46px] ${
                 currentDay.getDate() === day.day
-                  ? 'rounded-full drop-shadow-md bg-[#A7D2C1]'
+                  ? `rounded-full drop-shadow-md`
                   : ''
               }`}
               transition={SPRING_OPTIONS}
             >
               <div
                 className={`text-center font-pretendard text-[8px] font-light tracking-[-0.32px]
-                  ${getDayDiff(today, day.date) > 0 ? 'text-black' : ''}
-                  ${getDayDiff(today, day.date) < 0 ? 'text-[#DDDDDD]' : ''}
+                  ${
+                    getDayDiff(today, day.date) > 0
+                      ? stringToDate(event?.endDate) < day.date
+                        ? 'text-transparent'
+                        : 'text-black'
+                      : ''
+                  }
+
+                  ${
+                    getDayDiff(today, day.date) < 0
+                      ? stringToDate(event?.startDate) > day.date
+                        ? 'text-transparent'
+                        : 'text-[#DDDDDD]'
+                      : ''
+                  }
                   ${getDayDiff(today, day.date) == 0 ? 'text-white' : ''}
                   `}
               >
@@ -129,10 +165,18 @@ export default function DateChanger({ event }: DateChangerProps) {
               </div>
               <div
                 className={`text-center font-pretendard text-base font-light tracking-[-0.64px]
-                  ${getDayDiff(today, day.date) > 0 ? 'font-normal' : ''}
+                  ${
+                    getDayDiff(today, day.date) > 0
+                      ? stringToDate(event?.endDate) < day.date
+                        ? 'text-transparent'
+                        : 'font-normal'
+                      : ''
+                  }
                   ${
                     getDayDiff(today, day.date) < 0
-                      ? 'text-[#DDDDDD] font-normal'
+                      ? stringToDate(event?.startDate) > day.date
+                        ? 'text-transparent'
+                        : 'text-[#DDDDDD] font-normal'
                       : ''
                   }
                   ${getDayDiff(today, day.date) == 0 ? 'text-white' : ''}

@@ -1,14 +1,16 @@
 // main/index
 import React, { Suspense } from 'react';
-
-import { EmotionType } from '@/types/emotion';
-import EventPage from '@/components/Day/EventPage';
 import Header from '../../components/Day/Header';
 import NavBar from '@/components/common/NavBar';
+import EventPage from '@/components/Day/EventPage';
+import {
+  getBackGroundStyle,
+  getProgressAndButtonColor,
+} from '@/utils/emotionColor';
+import { EmotionType } from '@/types/emotion';
 import NextTriButtonIcon from '@/assets/icon/NextTriButtonIcon';
 import PrevTriButtonIcon from '@/assets/icon/PrevTriButtonIcon';
 import SlideMenu from '@/components/Day/SideMenu';
-import { getBackGroundStyle } from '@/utils/emotionColor';
 import { useGetEvents } from '@/hooks/api/useEvent';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -20,7 +22,6 @@ export default function MainPage<Props>({}) {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log(data?.data);
 
   const prevEventId =
     currentIndex > 0 ? data?.data[currentIndex - 1].eventId : null;
@@ -49,7 +50,12 @@ export default function MainPage<Props>({}) {
         <div className="w-[calc(100%-40px)] max-w-2xl">
           <div className="flex items-center justify-between my-4">
             <button onClick={handlePrevClick} disabled={!prevEventId}>
-              <PrevTriButtonIcon inactive={!prevEventId} />
+              <PrevTriButtonIcon
+                inactive={!prevEventId}
+                color={getProgressAndButtonColor(
+                  data?.data?.[currentIndex].emotion as EmotionType,
+                )}
+              />
             </button>
 
             <div className="flex flex-col items-center">
@@ -64,9 +70,13 @@ export default function MainPage<Props>({}) {
                 {data?.data?.[currentIndex]?.endDate.toString()}
               </span>
             </div>
-
             <button onClick={handleNextClick} disabled={!nextEventId}>
-              <NextTriButtonIcon inactive={!nextEventId} />
+              <NextTriButtonIcon
+                inactive={!nextEventId}
+                color={getProgressAndButtonColor(
+                  data?.data?.[currentIndex].emotion as EmotionType,
+                )}
+              />
             </button>
           </div>
         </div>
