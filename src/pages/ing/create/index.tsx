@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
-
+import React, { useContext, useState } from 'react';
 import { EventPostRequest } from '@/types/event';
 import FunnelDispenser from '@/components/ing/create/FunnelDispenser';
 import Header from '@/components/Day/Header';
@@ -28,7 +27,6 @@ const EventCreatePage = () => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const [eventInfo, setEventInfo] = useState<EventPostRequest>({
     title: '',
-    category: '', //테마 (카테고리)
     startDate: '',
     endDate: '',
     memo: '', //추가 메모

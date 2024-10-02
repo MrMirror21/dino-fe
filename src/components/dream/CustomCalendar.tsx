@@ -1,4 +1,4 @@
-import { EventContent, MonthEventType } from '@/pages/dream';
+import { EventContent, MonthEventType } from '@/types/calendar';
 import React, { useEffect, useState } from 'react';
 import { holidays, months } from '@/utils/calendar';
 
@@ -13,6 +13,7 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 interface Props {
   eventList: MonthEventType[];
   setSelectedDate: (date: string) => void;
+  onMonthChange: (date: Date) => void;
 }
 
 interface EventInfo {
@@ -20,7 +21,11 @@ interface EventInfo {
   events: EventContent[];
 }
 
-const CustomCalendar = ({ eventList, setSelectedDate }: Props) => {
+const CustomCalendar = ({
+  eventList,
+  setSelectedDate,
+  onMonthChange,
+}: Props) => {
   const [value, setValue] = useState<Value>(new Date());
   const [events, setEvents] = useState<EventInfo[]>([]);
 
@@ -43,6 +48,7 @@ const CustomCalendar = ({ eventList, setSelectedDate }: Props) => {
       console.log(
         `Month changed to: ${moment(activeStartDate).format('MMMM YYYY')}`,
       );
+      onMonthChange(activeStartDate);
     }
   };
 

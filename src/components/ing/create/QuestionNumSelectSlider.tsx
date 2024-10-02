@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Draggable from 'react-draggable';
 import StarIcon from '@/assets/icon/starIcon.svg';
 import { useEventContext } from '@/pages/ing/create';
-import { calculateQuestionSize } from '@/utils/event';
+import { calculateQuestionSize, formatDate } from '@/utils/event';
 
 const QuestionNumSelectSlider: React.FC = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -16,6 +16,7 @@ const QuestionNumSelectSlider: React.FC = () => {
     setEventInfo({
       ...eventInfo,
       questionSize: calculateQuestionSize(eventInfo.endDate, 4),
+      startDate: formatDate(today),
     });
   }, []);
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 import { Camera } from 'react-camera-pro';
 

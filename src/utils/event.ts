@@ -3,17 +3,17 @@ export const cycleCalculator = (date: string, questionSize: number) => {
   const daysPerQuestion = Days / questionSize;
   switch (daysPerQuestion) {
     case 1:
-      return '하루 한 번';
+      return '하루 한 번 질문이';
     case 2:
-      return '이틀에 한 번';
+      return '이틀에 한 번 질문이';
     case 3:
-      return '3일에 한 번';
+      return '3일에 한 번 질문이';
     case 7:
-      return '일주일에 한 번';
+      return '일주일에 한 번 질문이';
     case 10:
-      return '10일에 한 번';
+      return '10일에 한 번 질문이';
     case 30:
-      return '한 달에 한 번';
+      return '한 달에 한 번 질문이';
     default:
       return `${Days}일 동안 ${questionSize}개의 질문이`;
   }
@@ -22,7 +22,7 @@ export const cycleCalculator = (date: string, questionSize: number) => {
 export const calculateDiffDays = (date: string) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  const [year, month, day] = date.split('/').map(Number);
+  const [year, month, day] = date.split('-').map(Number);
   const inputDate = new Date(year, month - 1, day); // 월은 0-indexed
 
   const diffTime = inputDate.getTime() - today.getTime();
@@ -58,3 +58,11 @@ export const calculateQuestionSize = (date: string, step: number) => {
 
   return result;
 };
+
+export function formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}

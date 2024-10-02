@@ -6,7 +6,7 @@ interface EventCardProps {
   category: string; // 테마 (카테고리)
   eventStatus: string; // 이벤트 상태(종료/진행)
   startDate: string; // 'yyyy-MM-dd' 형식
-  memo: string;
+  memo?: string;
   endDate: string; // 'yyyy-MM-dd' 형식
   fileUrl: string; // 성장 파일 CDN 주소 반환
   step: string;
@@ -32,11 +32,16 @@ const EventCard: React.FC<EventCardProps> = ({
       <div className="flex flex-col justify-between h-full flex-grow mr-4">
         <div>
           <div className="text-[#000] font-pretendard text-sm font-extralight tracking-[-0.56px]">
-            {startDate.replace(/-/g, '.')} - {endDate.slice(5).replace(/-/g, '.')}
+            {startDate.replace(/-/g, '.')} -{' '}
+            {endDate.slice(5).replace(/-/g, '.')}
           </div>
-          <h2 className="text-[#000] font-pretendard text-xl font-light tracking-[-0.8px] break-keep">{title}</h2>
+          <h2 className="text-[#000] font-pretendard text-xl font-light tracking-[-0.8px] break-keep">
+            {title}
+          </h2>
         </div>
-        <p className="max-w-40 text-[10px] font-pretendard font-extralight tracking-[-0.4px] break-keep">{memo}</p>
+        <p className="max-w-40 text-[10px] font-pretendard font-extralight tracking-[-0.4px] break-keep">
+          {memo || ''}
+        </p>
       </div>
       <img
         src={fileUrl}

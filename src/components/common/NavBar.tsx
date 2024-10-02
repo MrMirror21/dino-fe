@@ -1,4 +1,5 @@
 import { FunctionComponent, ReactElement } from 'react';
+import React, { useEffect } from 'react';
 
 import CalendarIcon from '@/assets/icon/CalendarIcon.svg';
 import DayIcon from '@/assets/icon/navBar/dayIcon';
@@ -31,6 +32,13 @@ const NavBarIcon = ({ goTo, children }: NavBarIconProps) => {
 const NavBar: FunctionComponent = () => {
   const pathName = useRouter().pathname;
   const router = useRouter();
+
+  if (
+    pathName === '/hi-story/completed-events/[eventId]' ||
+    pathName === '/hi-story/completed-events' ||
+    pathName === '/hi-story/saved-questions'
+  )
+    return null;
   return (
     <div className="flex justify-self-center justify-between w-full shadow-[0_-2px_12px_rgba(68,68,68,0.08)] rounded-t-[20px] bg-white h-[81px] absolute bottom-1">
       <NavBarIcon goTo="/day">

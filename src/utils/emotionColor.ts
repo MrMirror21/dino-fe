@@ -3,17 +3,17 @@ import { EmotionType } from '@/types/emotion';
 export const getEmotionColor = (emotion: EmotionType) => {
   switch (emotion) {
     case 'JOY':
-      return '#FFF861';
+      return '#E8D27A';
     case 'HAPPINESS':
-      return '#A3D8FF';
+      return '#98C4E3';
     case 'LOVE':
-      return '#FFCDCD';
+      return '#ED9797';
     case 'SATISFACTION':
-      return '#FFD18A';
+      return '#F5AC80';
     case 'HOPE':
-      return '#C9FFB7';
+      return '#9BC984';
     case 'EXPECTATION':
-      return '#E1CDFF';
+      return '#BE92CB';
   }
 };
 

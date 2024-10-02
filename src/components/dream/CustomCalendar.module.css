@@ -149,7 +149,7 @@
 
 /* 타일 컨텐츠 래퍼 스타일 */
 .tileContentWrapper {
-  @apply flex justify-center absolute items-center bottom-[8px] left-0 right-0; 
+  @apply flex justify-center absolute items-center bottom-[6px] left-0 right-0; 
 }
 
 .twinkleIconWrapper {

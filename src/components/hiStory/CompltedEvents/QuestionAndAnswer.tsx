@@ -1,4 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import {
+  useDeleteQuestionBookmark,
+  useSetQuestionBookmark,
+} from '@/hooks/api/useBookmark';
 
 import BookmarkIcon from '@/assets/icon/BookmarkIcon';
 import ChevronRightIcon from '@/assets/icon/ChevronRightIcon.svg';
@@ -28,9 +32,47 @@ const QuestionAndAnswer = ({
   const [showAnswer, setShowAnswer] = useState(false);
   const [isBookmark, setIsBookmark] = useState(false);
 
+  const {
+    mutate: setBookmark,
+    isPending: isSetBookmarkPending,
+    isSuccess: isSetBookmarkSuccess,
+    isError: isSetBookmarkError,
+  } = useSetQuestionBookmark(question.questionId);
+
+  const {
+    mutate: deleteBookmark,
+    isPending: isDeleteBookmarkPending,
+    isSuccess: isDeleteBookmarkSuccess,
+    isError: isDeleteBookmarkError,
+  } = useDeleteQuestionBookmark(question.questionId);
+
   const toggleIsBookmark = (e: React.MouseEvent) => {
     e.stopPropagation(); // 이벤트 전파 중지
-    setIsBookmark(!isBookmark);
+
+    if (isBookmark) {
+      deleteBookmark(undefined, {
+        onSuccess: (data) => {
+          console.log('Success to delete bookmark', data);
+          setIsBookmark(false);
+        },
+        onError: (error) => {
+          console.error('Failed to delete bookmark', error);
+          setIsBookmark(true);
+        },
+      });
+    } // if(!isBookmark)
+    else {
+      setBookmark(undefined, {
+        onSuccess: (data) => {
+          console.log('Success to set bookmark', data);
+          setIsBookmark(true);
+        },
+        onError: (error) => {
+          console.error('Failed to set bookmark', error);
+          setIsBookmark(false);
+        },
+      });
+    }
   };
 
   useEffect(() => {
@@ -118,7 +160,7 @@ const QuestionAndAnswer = ({
           {question.isAnswer && (showAnswer || !!title) && (
             <>
               <div
-                className={`w-full flex ${isAvailBookmark ? 'mb-2' : 'mb-1.5'}`}
+                className={`w-full flex ${isAvailBookmark ? 'mb-2' : 'mb-3.5'}`}
               >
                 <div className="flex-shrink-0 w-[28px]">
                   <Image

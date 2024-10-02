@@ -7,7 +7,7 @@ interface StepProps {
 
 const BasicInfoForm = ({ setStep }: StepProps) => {
   const { eventInfo, setEventInfo } = useEventContext();
-  const dateRegex = /^\d{4}\/(?:0[1-9]|1[0-2])\/(?:0[1-9]|[12]\d|3[01])$/;
+  const dateRegex = /^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/;
 
   const isValidDateFormat = (dateString: string): boolean => {
     // 형식 검사
@@ -16,7 +16,7 @@ const BasicInfoForm = ({ setStep }: StepProps) => {
     }
 
     // 날짜 파싱
-    const [year, month, day] = dateString.split('/').map(Number);
+    const [year, month, day] = dateString.split('-').map(Number);
     const inputDate = new Date(year, month - 1, day); // 월은 0-indexed
 
     // 유효한 날짜인지 확인 (예: 2023/02/31 같은 날짜 방지)
@@ -91,7 +91,7 @@ const BasicInfoForm = ({ setStep }: StepProps) => {
             id="eventDate"
             type="text"
             value={eventInfo.endDate}
-            placeholder="YYYY/MM/DD"
+            placeholder="YYYY-MM-DD"
             onChange={(e) =>
               setEventInfo({ ...eventInfo, endDate: e.target.value })
             }

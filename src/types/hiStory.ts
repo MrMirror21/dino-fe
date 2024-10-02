@@ -5,6 +5,7 @@ export interface CompleteEventType {
   title: string;
   emotion: string;
   category: string;
+  memo?: string;
   eventStatus: string; // termination 고정
   startDate: string | Date;
   endDate: string | Date;

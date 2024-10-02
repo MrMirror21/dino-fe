@@ -29,8 +29,19 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
       if (router.pathname === '/hi-story') return 'Hi Story';
       if (backPath) {
         return (
-          <div onClick={() => router.push(backPath)}>
+          <div
+            onClick={() => router.push(backPath)}
+            className="flex items-center gap-2 text-[#8ABADD] text-[20px] font-pretendard-500"
+          >
             <ChevronLeftIcon />
+            {router.pathname === '/hi-story/saved-questions' && (
+              <span>Moments</span>
+            )}
+
+            {(router.pathname === '/hi-story/completed-events' ||
+              router.pathname.startsWith('/hi-story/completed-events/')) && (
+              <span>Growths</span>
+            )}
           </div>
         );
       }

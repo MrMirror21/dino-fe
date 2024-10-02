@@ -3,6 +3,13 @@
 import { useMemo, useState } from 'react';
 import { motion, PanInfo, useMotionValue } from 'framer-motion';
 import DDayCounter from './Day/DDayCounter';
+import { EventType } from '../types/event';
+import { EmotionType } from '@/types/emotion';
+import { getProgressAndButtonColor } from '@/utils/emotionColor';
+
+interface DateChangerProps {
+  event: EventType;
+}
 
 const DRAG_BUFFER = 10; // 페이지 이동을 유발하는 드래그 길이
 
@@ -40,7 +47,7 @@ function getDateRange(today: Date) {
   return dateRange;
 }
 
-export default function DateChanger() {
+export default function DateChanger({ event }: DateChangerProps) {
   const today = new Date();
   const dDay = getDateRange(today)[14].date;
   const [currentDay, setCurrentDay] = useState(today);
@@ -84,7 +91,10 @@ export default function DateChanger() {
   };
   return (
     <div className=" w-[400px] overflow-hidden">
-      <DDayCounter today={today} dDay={dDay} />
+      <DDayCounter
+        dDay={event?.endDate}
+        emotion={event?.emotion as EmotionType}
+      />
       <div className="flex items-center justify-center overflow-hidden">
         <motion.div
           drag="x"

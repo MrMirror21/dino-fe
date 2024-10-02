@@ -4,6 +4,7 @@ import Header from '@/components/Day/Header';
 import { MonthAllEventsType } from '@/types/hiStory';
 import MonthlyEventGroup from '@/components/hiStory/CompltedEvents/MonthlyEventGroup';
 import NavBar from '@/components/common/NavBar';
+import { useGetSavedQuestions } from '@/hooks/api/useHiStory';
 
 const eventTitles = [
   '완료된 첫 번째 이벤트',
@@ -188,15 +189,13 @@ const mockAllEventList: MonthAllEventsType[] = [
 
 const SavedQuestionsPage = () => {
   const [allEventList, setAllEventList] = useState<MonthAllEventsType[]>([]);
-
-  const fetchData = async () => {
-    // API Call
-    setAllEventList(mockAllEventList);
-  };
+  const { data, isLoading, isSuccess, isError } = useGetSavedQuestions();
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (data?.isSuccess && data.data.length > 0) {
+      setAllEventList(data.data);
+    }
+  }, [data]);
 
   return (
     <div

@@ -32,7 +32,9 @@ const QuestionInfoForm = ({ setStep }: QuestionInfoFormProps) => {
           className="appearance-none border border-[rgba(136,136,136,0.4)] rounded-lg w-full p-[18px] text-lg tracking-tighter leading-tight font-extralight font-['Pretendard'] text-black/60 text-left focus:outline-none"
           id="eventName"
           type="time"
+          value={eventInfo.occurrenceTime}
           placeholder="S 디자인 에이전시 최종면접일"
+          onChange={(e) => setEventInfo({...eventInfo, occurrenceTime: e.target.value})}
         />
       </div>
       <div className="w-full mb-7 px-5">
@@ -45,8 +47,8 @@ const QuestionInfoForm = ({ setStep }: QuestionInfoFormProps) => {
         <div className="flex flex-row gap-1">
           <div>{eventInfo.questionSize + '개'}</div>
           <div>
-            | {cycleCalculator(eventInfo.endDate, eventInfo.questionSize)}{' '}
-            질문이 생성됩니다.
+            | {cycleCalculator(eventInfo.endDate, eventInfo.questionSize)}
+            생성됩니다.
           </div>
         </div>
         <QuestionNumSelectSlider />
