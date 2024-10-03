@@ -40,7 +40,13 @@ const EventPage = ({ eventId, setStep }: FunnelDispenserProps) => {
 
   return (
     <>
-      <Image src={data.data.fileUrl} alt="growth" width={220} height={300} />
+      <Image
+        src={data.data.fileUrl}
+        alt="growth"
+        width={220}
+        height={300}
+        className="mb-6"
+      />
       <ProgressBar
         answerNum={data.data.totalAnswerCount}
         totalNum={data.data.totalQuestionCount}

@@ -1,5 +1,7 @@
+import React, { Dispatch, SetStateAction, useState } from 'react';
+
+import toast from 'react-hot-toast';
 import { useEventContext } from '@/pages/ing/create';
-import React, { Dispatch, SetStateAction } from 'react';
 
 interface StepProps {
   setStep: Dispatch<SetStateAction<number>>;
@@ -7,40 +9,62 @@ interface StepProps {
 
 const BasicInfoForm = ({ setStep }: StepProps) => {
   const { eventInfo, setEventInfo } = useEventContext();
+  const [dateError, setDateError] = useState<string | null>(null);
   const dateRegex = /^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/;
 
   const isValidDateFormat = (dateString: string): boolean => {
-    // 형식 검사
-    if (!dateRegex.test(dateString)) {
-      return false;
-    }
+    return dateRegex.test(dateString);
+  };
 
-    // 날짜 파싱
-    const [year, month, day] = dateString.split('-').map(Number);
-    const inputDate = new Date(year, month - 1, day); // 월은 0-indexed
-
-    // 유효한 날짜인지 확인 (예: 2023/02/31 같은 날짜 방지)
-    if (
-      inputDate.getFullYear() !== year ||
-      inputDate.getMonth() !== month - 1 ||
-      inputDate.getDate() !== day
-    ) {
-      return false;
-    }
-
-    // 오늘 날짜
+  const isDateAfterToday = (dateString: string): boolean => {
+    const inputDate = new Date(dateString);
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // 시간 부분을 제거
-
-    // 입력된 날짜가 오늘 이후인지 확인
+    today.setHours(0, 0, 0, 0);
     return inputDate > today;
+  };
+
+  const isDateAtLeastTwoDaysAfter = (dateString: string): boolean => {
+    const inputDate = new Date(dateString);
+    const twoDaysFromNow = new Date();
+    twoDaysFromNow.setDate(twoDaysFromNow.getDate() + 2);
+    twoDaysFromNow.setHours(0, 0, 0, 0);
+    return inputDate >= twoDaysFromNow;
+  };
+
+  const validateDate = (dateString: string): string | null => {
+    if (!isValidDateFormat(dateString)) {
+      return '날짜 형식이 올바르지 않습니다. YYYY-MM-DD 형식으로 입력해주세요.';
+    }
+    if (!isDateAfterToday(dateString)) {
+      return '과거 날짜를 선택할 수 없습니다.';
+    }
+    if (!isDateAtLeastTwoDaysAfter(dateString)) {
+      return '이벤트 날짜는 최소 현재 날짜로부터 2일 이후여야 합니다.';
+    }
+    return null;
+  };
+
+  const handleDateBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const dateValue = e.target.value;
+    if (dateValue) {
+      const error = validateDate(dateValue);
+      setDateError(error);
+      if (error) {
+        toast.error(error);
+      }
+    } else {
+      setDateError(null);
+    }
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEventInfo({ ...eventInfo, endDate: e.target.value });
+    setDateError(null); // 입력 중에는 에러 메시지를 지웁니다.
   };
 
   const canGoNext = () => {
     return (
-      eventInfo.title !== '' &&
-      eventInfo.endDate !== '' &&
-      isValidDateFormat(eventInfo.endDate)
+      eventInfo.title !== '' && eventInfo.endDate !== '' && dateError === null
     );
   };
 
@@ -82,19 +106,16 @@ const BasicInfoForm = ({ setStep }: StepProps) => {
           </label>
           <input
             className={`appearance-none border ${
-              !eventInfo.endDate
+              !eventInfo.endDate || dateError === null
                 ? 'border-[rgba(136,136,136,0.4)]'
-                : isValidDateFormat(eventInfo.endDate)
-                ? 'border-[rgba(229,183,183,0.4)]'
                 : 'border-[rgba(255,68,68,0.4)]'
             } rounded-lg w-full p-[18px] text-lg tracking-tighter leading-tight font-extralight font-['Pretendard'] text-black/60 text-left focus:outline-none`}
             id="eventDate"
             type="text"
             value={eventInfo.endDate}
             placeholder="YYYY-MM-DD"
-            onChange={(e) =>
-              setEventInfo({ ...eventInfo, endDate: e.target.value })
-            }
+            onChange={handleDateChange}
+            onBlur={handleDateBlur}
           />
         </div>
         <div className="w-full">

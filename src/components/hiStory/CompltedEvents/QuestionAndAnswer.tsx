@@ -1,12 +1,9 @@
-import 'react-h5-audio-player/lib/styles.css';
-
 import React, { useEffect, useState } from 'react';
 import {
   useDeleteQuestionBookmark,
   useSetQuestionBookmark,
 } from '@/hooks/api/useBookmark';
 
-import AudioPlayer from 'react-h5-audio-player';
 import BookmarkIcon from '@/assets/icon/BookmarkIcon';
 import ChevronRightIcon from '@/assets/icon/ChevronRightIcon.svg';
 import { EmotionType } from '@/types/emotion';
@@ -103,17 +100,20 @@ const QuestionAndAnswer = ({
   const renderAnswer = (type: string) => {
     switch (type) {
       case 'TEXT':
-        return <p className="leading-[24px]">{question.myAnswer}</p>;
+        return <p className="leading-[20px]">{question.myAnswer}</p>;
       case 'IMAGE':
         return (
-          <div className="relative w-full h-72 mb-3.5">
-            <Image
-              // src={question.fileUrl}
-              src="/image/LandingFlower.png"
-              alt="answer"
-              fill
-              className="object-cover"
-            />
+          <div className="my-3">
+            {question.myAnswer || ''}
+            <div className="relative w-full h-80 mb-3.5 my-[10px]">
+              <Image
+                src={question.fileUrl}
+                // src="/image/LandingFlower.png"
+                alt="answer"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
         );
       case 'VOICE':
@@ -122,14 +122,7 @@ const QuestionAndAnswer = ({
             className="w-full mb-3.5 my-3"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* <audio
-              src="https://chycdn.s3.ap-northeast-2.amazonaws.com/DayDream/3602426060/0/0/0/0bebb2a1-514b-4399-8b5f-10393f6d253e.mp3"
-              // src={question.fileUrl}
-              loop
-              controls
-              id="s3-audio-file"
-            ></audio> */}
-            {question.myAnswer}
+            {question.myAnswer || ''}
             <WaveformForPlay
               // src="https://chycdn.s3.ap-northeast-2.amazonaws.com/DayDream/3602426060/0/0/0/0bebb2a1-514b-4399-8b5f-10393f6d253e.mp3"
               url={question.fileUrl}
@@ -169,7 +162,7 @@ const QuestionAndAnswer = ({
                 height={24}
               />
             </div>
-            <span className="font-pretendard-200 self-center text-[14px] flex-grow leading-[24px]">
+            <span className="font-pretendard-200 self-center text-[14px] flex-grow leading-[20px]">
               {question.content}
             </span>
           </div>
