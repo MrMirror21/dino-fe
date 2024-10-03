@@ -1,14 +1,17 @@
-import { useGetEvent } from '@/hooks/api/useEvent';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import ProgressBar from './ProgressBar';
+
 import DateChanger from '../DateChanger';
-import QuestionList from './QuestionList';
-import QuestionModal from './QuestionModal';
-import { getProgressAndButtonColor } from '@/utils/emotionColor';
 import { EmotionType } from '@/types/emotion';
 import Image from 'next/image';
+import Loading from '../Loading';
+import ProgressBar from './ProgressBar';
+import QuestionList from './QuestionList';
+import QuestionModal from './QuestionModal';
 import { QuestionType } from '@/types/event';
 import { formatDate } from '@/utils/event';
+import { getProgressAndButtonColor } from '@/utils/emotionColor';
+import { useGetEvent } from '@/hooks/api/useEvent';
+
 interface FunnelDispenserProps {
   eventId: number;
   setStep: Dispatch<SetStateAction<number>>;
@@ -21,39 +24,44 @@ const EventPage = ({ eventId, setStep }: FunnelDispenserProps) => {
   >(undefined);
   const today = new Date();
   const [currentDay, setCurrentDay] = useState(today);
-  const questionsOfToday = data?.data?.questionContent.filter(
-    (question: QuestionType) => question.questionDate == formatDate(currentDay),
-  );
+
   useEffect(() => {
     setCurrentDay(today);
+    setSelectedQuestion(undefined);
   }, [eventId]);
+
+  const questionsOfToday =
+    data?.data?.questionContent?.filter(
+      (question: QuestionType) =>
+        question.questionDate === formatDate(currentDay),
+    ) || [];
+
+  if (!isSuccess || !data) return <Loading />; // 또는 로딩 컴포넌트를 표시
 
   return (
     <>
-      <Image src={data?.data?.fileUrl} alt="growth" width={220} height={300} />
+      <Image src={data.data.fileUrl} alt="growth" width={220} height={300} />
       <ProgressBar
-        answerNum={data?.data?.totalAnswerCount}
-        totalNum={data?.data?.totalQuestionCount}
-        endColor={getProgressAndButtonColor(data?.data?.emotion as EmotionType)}
+        answerNum={data.data.totalAnswerCount}
+        totalNum={data.data.totalQuestionCount}
+        endColor={getProgressAndButtonColor(data.data.emotion as EmotionType)}
       />
       <DateChanger
-        event={data?.data}
+        event={data.data}
         today={today}
         currentDay={currentDay}
         setCurrentDay={setCurrentDay}
       />
-      {data && (
-        <QuestionList
-          setChosenEvent={setSelectedQuestion}
-          questionList={questionsOfToday}
-        />
-      )}
+      <QuestionList
+        setChosenEvent={setSelectedQuestion}
+        questionList={questionsOfToday}
+      />
       {selectedQuestion && (
         <QuestionModal
           selectedQuestion={selectedQuestion}
           onClose={setSelectedQuestion}
           eventId={eventId}
-          questionId={selectedQuestion?.questionId}
+          questionId={selectedQuestion.questionId}
         />
       )}
     </>
