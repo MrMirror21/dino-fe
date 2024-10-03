@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import Loading from './Loading';
 import { tokenUtils } from '@/utils/tokenUtils';
 import { useRouter } from 'next/router';
 import { useValidateToken } from '@/hooks/api/useAuth';
@@ -78,7 +79,6 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     }
   }, [data, isError, router]);
 
-  if (isLoading) return <div>Loading...</div>;
-
+  if (isLoading) return <Loading />;
   return <>{children}</>;
 }

@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import CustomCalendar from '@/components/dream/CustomCalendar';
 import Header from '@/components/Day/Header';
+import Loading from '@/components/Loading';
 import NavBar from '@/components/common/NavBar';
 import QuestionAndAnswer from '@/components/hiStory/CompltedEvents/QuestionAndAnswer';
 import { QuestionContentType } from '@/types/question';
@@ -66,7 +67,7 @@ const DreamPage = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (isError) {

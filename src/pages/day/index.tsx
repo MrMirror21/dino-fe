@@ -1,13 +1,14 @@
 // main/index
 import React, { Suspense } from 'react';
-import Header from '../../components/Day/Header';
-import NavBar from '@/components/common/NavBar';
-import EventPage from '@/components/Day/EventPage';
 import {
   getBackGroundStyle,
   getProgressAndButtonColor,
 } from '@/utils/emotionColor';
+
 import { EmotionType } from '@/types/emotion';
+import EventPage from '@/components/Day/EventPage';
+import Header from '../../components/Day/Header';
+import NavBar from '@/components/common/NavBar';
 import NextTriButtonIcon from '@/assets/icon/NextTriButtonIcon';
 import PrevTriButtonIcon from '@/assets/icon/PrevTriButtonIcon';
 import SlideMenu from '@/components/Day/SideMenu';
@@ -53,7 +54,7 @@ export default function MainPage<Props>({}) {
               <PrevTriButtonIcon
                 inactive={!prevEventId}
                 color={getProgressAndButtonColor(
-                  data?.data?.[currentIndex].emotion as EmotionType,
+                  data?.data?.[currentIndex]?.emotion as EmotionType,
                 )}
               />
             </button>
@@ -74,7 +75,7 @@ export default function MainPage<Props>({}) {
               <NextTriButtonIcon
                 inactive={!nextEventId}
                 color={getProgressAndButtonColor(
-                  data?.data?.[currentIndex].emotion as EmotionType,
+                  data?.data?.[currentIndex]?.emotion as EmotionType,
                 )}
               />
             </button>

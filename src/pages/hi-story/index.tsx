@@ -8,10 +8,13 @@ import {
 import ChevronRightIcon from '@/assets/icon/ChevronRightIcon.svg';
 import CompletedEventThumbnail from '@/components/hiStory/CompletedEventThumbnail';
 import Header from '@/components/Day/Header';
+import Loading from '@/components/Loading';
 import NavBar from '@/components/common/NavBar';
 import NotExist from '@/components/hiStory/NotExist';
 import { QuestionContentType } from '@/types/question';
 import SavedQuestionThumbnail from '@/components/hiStory/SavedQuestionThumbnail';
+import { mockCompletedEventList } from '@/utils/dummy';
+import { tokenUtils } from '@/utils/tokenUtils';
 import { useRouter } from 'next/router';
 
 const HiStoryPage = () => {
@@ -25,6 +28,7 @@ const HiStoryPage = () => {
   const [questionThumbnailList, setQuestionThumbnailList] = useState<
     QuestionContentType[]
   >([]);
+  const examUser = tokenUtils.getUserName();
 
   const {
     data: savedQuestionsData,
@@ -59,6 +63,10 @@ const HiStoryPage = () => {
   }, [savedQuestionsData]);
 
   useEffect(() => {
+    if (examUser === '송민석') {
+      setCompletedEventList(mockCompletedEventList);
+      return;
+    }
     if (completedEventsData) {
       setCompletedEventList(completedEventsData.data);
     }
@@ -66,7 +74,7 @@ const HiStoryPage = () => {
 
   // 로딩
   if (isSavedQuestionsLoading || isCompletedEventsLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   // 예외처리

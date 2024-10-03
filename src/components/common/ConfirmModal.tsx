@@ -1,6 +1,6 @@
-import React from 'react';
 import ApproveIcon from '@/assets/icon/ApproveIcon.svg';
 import CloseIconWithCircle from '@/assets/icon/CloseIconWithCircle.svg';
+import React from 'react';
 
 interface ModalProps {
   isOpen: boolean;

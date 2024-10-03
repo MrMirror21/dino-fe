@@ -1,4 +1,5 @@
 import { CompleteEventType } from '@/types/hiStory';
+import Image from 'next/image';
 import moment from 'moment';
 
 interface Props {
@@ -32,8 +33,13 @@ const CompletedEventThumbnail = ({ eventList, onEventClick }: Props) => {
               </span>
             </div>
 
-            <div className="flex-grow mt-1 bg-slate-200 flex items-center justify-center">
-              식물~
+            <div className="w-full flex items-center justify-center h-full">
+              <Image
+                alt="event-plant"
+                src={event.fileUrl}
+                width={130}
+                height={130}
+              />
             </div>
           </div>
         ))}

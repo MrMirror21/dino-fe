@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 import { CompleteEventType } from '@/types/hiStory';
 import CompletedEventThumbnail from '@/components/hiStory/CompletedEventThumbnail';
 import Header from '@/components/Day/Header';
+import Loading from '@/components/Loading';
 import NavBar from '@/components/common/NavBar';
 import NotExist from '@/components/hiStory/NotExist';
 import { mockCompletedEventList } from '@/utils/dummy';
+import { tokenUtils } from '@/utils/tokenUtils';
 import { useGetCompletedEvents } from '@/hooks/api/useHiStory';
 import { useRouter } from 'next/router';
 
@@ -15,18 +17,23 @@ const CompletedEventsPage = () => {
     CompleteEventType[]
   >([]);
   const { data, isLoading, isSuccess, isError } = useGetCompletedEvents();
+  const isExam = tokenUtils.getUserName() === '송민석';
 
   const handleEventClick = (eventId: number) => {
     router.push(`/hi-story/completed-events/${eventId}`);
   };
 
   useEffect(() => {
-    // if (data) {
-    //   setCompletedEventList(data.data);
-    // }
-    setCompletedEventList(mockCompletedEventList);
+    if (isExam) {
+      setCompletedEventList(mockCompletedEventList);
+      return;
+    }
+    if (data?.isSuccess) {
+      setCompletedEventList(data.data);
+    }
   }, [data]);
 
+  if (isLoading) return <Loading />;
   return (
     <div
       className="flex flex-col w-full h-screen"
@@ -44,7 +51,7 @@ const CompletedEventsPage = () => {
             onEventClick={handleEventClick}
           />
         ) : (
-          <NotExist title="완료된 이벤트가" />
+          <NotExist title="완료된 이벤트가" isFlower={true} />
         )}
       </div>
       <NavBar />

@@ -112,20 +112,20 @@ const EventDetailPage = () => {
           </div>
 
           <div className="flex flex-col items-center justify-center my-4">
-            {event.memo && (
-              <div className="mb-5 text-center w-3/5">
+            <div className="mb-5 text-center w-3/5 h-[32px] max-h-[32px]">
+              {event.memo && (
                 <span
                   className="text-[12px] font-pretendard-200 text-[#969A9C]"
                   style={{
                     whiteSpace: 'pre-wrap',
-                    lineHeight: '1',
+                    lineHeight: '1.5',
                     display: 'block',
                   }}
                 >
                   {event.memo}
                 </span>
-              </div>
-            )}
+              )}
+            </div>
             <Image
               src={event.fileUrl}
               alt="식물 이미지..."

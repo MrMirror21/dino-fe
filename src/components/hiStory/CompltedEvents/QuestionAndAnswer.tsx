@@ -1,13 +1,17 @@
+import 'react-h5-audio-player/lib/styles.css';
+
 import React, { useEffect, useState } from 'react';
 import {
   useDeleteQuestionBookmark,
   useSetQuestionBookmark,
 } from '@/hooks/api/useBookmark';
 
+import AudioPlayer from 'react-h5-audio-player';
 import BookmarkIcon from '@/assets/icon/BookmarkIcon';
 import ChevronRightIcon from '@/assets/icon/ChevronRightIcon.svg';
 import { EmotionType } from '@/types/emotion';
 import Image from 'next/image';
+import Loading from '@/components/Loading';
 import { QuestionContentType } from '@/types/question';
 import { getProgressAndButtonColor } from '@/utils/emotionColor';
 import moment from 'moment';
@@ -101,23 +105,24 @@ const QuestionAndAnswer = ({
         return <p className="leading-[24px]">{question.myAnswer}</p>;
       case 'IMAGE':
         return (
-          <Image
-            // src={question.fileUrl}
-            src="/image/LandingFlower.png"
-            alt="answer"
-            width={200}
-            height={200}
-          />
+          <Image src={question.fileUrl} alt="answer" width={220} height={220} />
         );
       case 'VOICE':
         return (
-          <div className="w-full">
-            <audio
+          <div className="w-full mb-3.5" onClick={(e) => e.stopPropagation()}>
+            {/* <audio
               src="https://chycdn.s3.ap-northeast-2.amazonaws.com/DayDream/3602426060/0/0/0/0bebb2a1-514b-4399-8b5f-10393f6d253e.mp3"
+              // src={question.fileUrl}
               loop
               controls
               id="s3-audio-file"
-            ></audio>
+            ></audio> */}
+            <AudioPlayer
+              // src="https://chycdn.s3.ap-northeast-2.amazonaws.com/DayDream/3602426060/0/0/0/0bebb2a1-514b-4399-8b5f-10393f6d253e.mp3"
+              src={question.fileUrl}
+              volume={0.5}
+              loop
+            />
           </div>
         );
       default:
@@ -125,6 +130,7 @@ const QuestionAndAnswer = ({
     }
   };
 
+  if (isSetBookmarkPending || isDeleteBookmarkPending) return <Loading />;
   return (
     <div className="w-[calc(100%-40px)] mx-auto">
       {title && (
