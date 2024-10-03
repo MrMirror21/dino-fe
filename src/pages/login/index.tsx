@@ -1,4 +1,3 @@
-import KakaoLogin from '@/components/login/KakaoLogin';
 import Landing from '@/components/login/Landing';
 
 const LoginPage = () => {

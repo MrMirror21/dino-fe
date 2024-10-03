@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import { useRequest } from '@/api/apiHandler';
 import { useRouter } from 'next/router';
-const KakaoLogin = () => {
+const StartEvent = () => {
   const router = useRouter();
 
-  const handleLogin = () => {
-    router.push('https://www.khu-dino.n-e.kr/oauth2/authorization/kakao');
+  const handleStart = () => {
+    router.push('/ing/create');
   };
 
   const backgroundStyle = {
@@ -14,12 +14,10 @@ const KakaoLogin = () => {
           linear-gradient(168deg, rgba(251, 243, 231, 0.20) 0%, rgba(185, 206, 215, 0.20) 47.11%, rgba(235, 219, 244, 0.20) 100%)
         `,
   };
-  const textStyle = {
-    color: 'rgba(138, 186, 221, 0.6)',
-  };
+
   return (
     <div
-      className="h-screen max-h-screen flex flex-col justify-between items-center"
+      className="h-full flex flex-col justify-between items-center"
       style={backgroundStyle}
     >
       {/* 중앙 컨텐츠 */}
@@ -29,35 +27,29 @@ const KakaoLogin = () => {
             alt="landing-flower"
             width={113}
             height={113}
-            src="/image/LandingFlower.png"
+            src="/image/notExistFlower.png"
           />
         </div>
-        <div className="flex mt-6">
-          <span className="text-[#8ABADD] text-[28px] font-edensor">
-            Daydream
+        <div className="flex mt-[18px]">
+          <span className="text-[#8ABADD] text-[20px] font-pretendard-300">
+            지금, 무엇을 기다리고 있나요?
           </span>
         </div>
       </div>
 
       {/* 하단 버튼 */}
       <div
-        className="w-[calc(100%-40px)] h-[52px] rounded-[10px] overflow-hidden mb-8 cursor-pointer"
+        className="w-[calc(100%-40px)] rounded-[10px] h-[52px] flex text-center items-center justify-center cursor-pointer mb-10"
         style={{
+          background: 'rgba(255, 255, 255, 0.60)',
           boxShadow: '0px 2px 20px 0px rgba(136, 136, 136, 0.12)',
         }}
-        onClick={handleLogin}
+        onClick={handleStart}
       >
-        <div className="relative w-full h-full">
-          <Image
-            src="/image/kakao.png"
-            alt="Kakao Login"
-            layout="fill"
-            objectFit="cover"
-          />
-        </div>
+        <span className="text-[16px] font-pretendard-500">시작하기</span>
       </div>
     </div>
   );
 };
 
-export default KakaoLogin;
+export default StartEvent;
