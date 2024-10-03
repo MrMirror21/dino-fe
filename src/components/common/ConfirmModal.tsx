@@ -1,7 +1,6 @@
 import React from 'react';
 import ApproveIcon from '@/assets/icon/ApproveIcon.svg';
-import CloseIcon from '@/assets/icon/CloseIcon.svg';
-import DeleteIcon from '@/assets/icon/DeleteIcon.svg';
+import CloseIconWithCircle from '@/assets/icon/CloseIconWithCircle.svg';
 
 interface ModalProps {
   isOpen: boolean;
@@ -16,7 +15,10 @@ const ConfirmModal = ({
   content,
   onConfirm,
 }: ModalProps) => {
-  const handleApprove = () => {};
+  const handleApprove = () => {
+    onConfirm;
+    setIsOpen(false);
+  };
   return (
     <div>
       <div className="relative h-screen ">
@@ -34,15 +36,15 @@ const ConfirmModal = ({
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex flex-col gap-2 bg-white px-3 py-4 w-[calc(100vw-40px)] rounded-[10px] shadow-lg mb-4">
+            <div className="flex flex-col gap-3 items-center bg-white py-5 w-[calc(100vw-40px)] rounded-[10px] shadow-lg mb-4 text-[#000] text-center font-pretendard-light text-base tracking-[-0.64px]">
               {content}
-              <div>
+              <div className="flex flex-row items-center gap-2">
+                <div onClick={() => setIsOpen(false)}>
+                  <CloseIconWithCircle />
+                </div>
                 <div onClick={handleApprove}>
                   <ApproveIcon />
                 </div>
-
-                <CloseIcon />
-                <DeleteIcon />
               </div>
             </div>
           </div>
