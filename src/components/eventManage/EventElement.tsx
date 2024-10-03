@@ -1,5 +1,5 @@
 import { PanInfo, useMotionValue, motion } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { Children, ReactElement, useState } from 'react';
 
 const DRAG_BUFFER = 80; // 페이지 이동을 유발하는 드래그 길이
 
@@ -18,7 +18,11 @@ const SPRING_OPTIONS = {
   damping: 50,
 };
 
-const EventElement = () => {
+interface Props {
+  children: ReactElement;
+}
+
+const EventElement = ({ children }: Props) => {
   const [dragStartX, setDragStartX] = useState(0);
   const [page, setPage] = useState(0);
   const [width, setWidth] = useState<number>(0);
@@ -50,7 +54,6 @@ const EventElement = () => {
   return (
     <>
       <div className="w-[400px] overflow-hidden">
-        ㅇㅇ
         <div className="w-[4000px] bg-white overflow-hidden -translate-x-[100px]">
           <motion.div
             drag="x"
@@ -67,15 +70,15 @@ const EventElement = () => {
             dragElastic={0.2}
             className="flex items-center justify-start overflow-hidden mb-5"
           >
-            <div className="w-[100px] bg-red-500">삭제</div>
+            <div className="w-[100px] h-[200px] flex items-center justify-center bg-black rounded-md text-white text-center font-light text-base leading-tight tracking-tighter">
+              삭제
+            </div>
             {slides.map((slide, idx) => (
               <div
                 key={idx}
-                className="w-[400px] flex flex-row gap-[30px] bg-blue-500 items-center justify-center overflow-hidden"
+                className="w-[400px] flex gap-[30px items-center justify-center overflow-hidden"
               >
-                <motion.div transition={SPRING_OPTIONS}>
-                  <div className="w-[100px] bg-blue-500">{slide.text}</div>
-                </motion.div>
+                <motion.div transition={SPRING_OPTIONS}>{children}</motion.div>
               </div>
             ))}
           </motion.div>
