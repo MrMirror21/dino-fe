@@ -5,6 +5,7 @@ import CameraModalPro from './CameraModalPro';
 import { QuestionType } from '@/types/event';
 import { MediaType, MyAnswer } from '@/types/answerType';
 import { usePostAnswer } from '@/hooks/api/useQuestion';
+import ConfirmModal from '../common/ConfirmModal';
 interface QuestionModalProps {
   selectedQuestion: QuestionType | undefined;
   onClose: Dispatch<SetStateAction<QuestionType | undefined>>;
@@ -20,6 +21,7 @@ const QuestionModal = ({
 }: QuestionModalProps) => {
   const [isCameraSelectOn, setIsCameraSelectOn] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const { mutate, error } = usePostAnswer();
   const toggleModal = () => {
     onClose(undefined);
@@ -88,7 +90,7 @@ const QuestionModal = ({
             isCameraSelectOn={isCameraSelectOn}
             selectedImage={selectedImage}
             setSelectedImage={setSelectedImage}
-            onSubmit={handleSubmit}
+            onSubmit={() => setIsSubmit(true)}
           />
         </div>
         {isCameraSelectOn && (
@@ -136,12 +138,19 @@ const QuestionModal = ({
           </div>
         )}
       </div>
-
       {isCameraOn && (
         <CameraModalPro
           selectImage={setSelectedImage}
           closeCameraSelect={() => setIsCameraSelectOn(false)}
           onClose={() => setIsCameraOn(false)}
+        />
+      )}
+      {isSubmit && (
+        <ConfirmModal
+          content="이대로 저장하시겠습니까?"
+          isOpen={isSubmit}
+          setIsOpen={setIsSubmit}
+          onConfirm={handleSubmit}
         />
       )}
     </div>

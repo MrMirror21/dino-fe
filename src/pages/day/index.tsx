@@ -67,8 +67,8 @@ export default function MainPage<Props>({}) {
                 {data?.data?.[currentIndex]?.title}
               </span>
               <span className="font-pretendard-200 text-[12px] text-[#969A9C] text-center">
-                {data?.data?.[currentIndex]?.startDate.toString()} -{' '}
-                {data?.data?.[currentIndex]?.endDate.toString()}
+                {data?.data?.[currentIndex]?.startDate?.toString()} -{' '}
+                {data?.data?.[currentIndex]?.endDate?.toString()}
               </span>
             </div>
             <button onClick={handleNextClick} disabled={!nextEventId}>

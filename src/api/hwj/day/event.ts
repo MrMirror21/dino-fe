@@ -19,3 +19,8 @@ export async function createEvent(
   const response = await api.post(`/event`, newEvent);
   return response.data;
 }
+
+export async function deleteEvent(eventId: number): Promise<ServerResponse> {
+  const response = await api.delete(`/event${eventId}`);
+  return response.data;
+}

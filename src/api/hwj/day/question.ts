@@ -11,7 +11,7 @@ export async function postAnswer({
 }: PostAnswerRequest): Promise<ServerResponse> {
   const formData = createFormData(answer, mediaFile);
   const response = await api.post(
-    `/event/${eventId}/question/${questionId}`,
+    `/answer/${eventId}/question/${questionId}`,
     formData,
   );
   return response.data;

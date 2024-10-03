@@ -6,11 +6,11 @@ export function createFormData(
 ): MyFormData {
   const formData = new FormData() as MyFormData;
 
-  // myAnswer JSON 추가
-  const myAnswerBlob = new Blob([JSON.stringify({ myAnswer })], {
-    type: 'application/json',
-  });
-  formData.append('myAnswer', myAnswerBlob, 'myAnswer.json');
+  // myAnswer 객체를 JSON 문자열로 변환하여 추가
+  formData.append(
+    'myAnswer',
+    new Blob([JSON.stringify(myAnswer)], { type: 'application/json' }),
+  );
 
   // mediaFile 추가 (있는 경우)
   if (mediaFile) {

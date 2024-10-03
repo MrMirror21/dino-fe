@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactElement, SetStateAction } from 'react';
+import React, { Dispatch, ReactElement, SetStateAction, useState } from 'react';
 import YellowEmoIcon from '@/assets/icon/event/yellowEmoIcon.svg';
 import BlueEmoIcon from '@/assets/icon/event/blueEmoIcon.svg';
 import PinkEmoIcon from '@/assets/icon/event/pinkEmoIcon.svg';
@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { usePostEvent } from '@/hooks/api/useEvent';
 import { EmotionType } from '@/types/emotion';
 import { getEmotionColor } from '@/utils/emotionColor';
+import ConfirmModal from '@/components/common/ConfirmModal';
 
 interface StepProps {
   setStep: Dispatch<SetStateAction<number>>;
@@ -51,6 +52,7 @@ const EmotionCard = ({ children, emotion, keyword }: EmotionCardProps) => {
 };
 
 const EmotionSelectForm = ({ setStep }: StepProps) => {
+  const [isSubmit, setIsSubmit] = useState(false);
   const { eventInfo } = useEventContext();
   const router = useRouter();
   const { mutate, isSuccess, error } = usePostEvent();
@@ -101,12 +103,20 @@ const EmotionSelectForm = ({ setStep }: StepProps) => {
           이전
         </button>
         <button
-          onClick={handleCreate}
+          onClick={() => setIsSubmit(true)}
           className="w-full shadow-[0_2px_20px_rgba(136,136,136,0.12)] rounded-lg bg-white/80 text-base tracking-tighter leading-tight font-light font-['Pretendard'] text-black/60 h-[52px] "
         >
           생성하기
         </button>
       </div>
+      {isSubmit && (
+        <ConfirmModal
+          content="생성하시겠습니까?"
+          isOpen={isSubmit}
+          setIsOpen={setIsSubmit}
+          onConfirm={handleCreate}
+        />
+      )}
     </div>
   );
 };
