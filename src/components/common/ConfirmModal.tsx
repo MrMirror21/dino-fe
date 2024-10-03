@@ -1,6 +1,7 @@
+import React, { useState } from 'react';
+
 import ApproveIcon from '@/assets/icon/ApproveIcon.svg';
 import CloseIconWithCircle from '@/assets/icon/CloseIconWithCircle.svg';
-import React from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -15,16 +16,34 @@ const ConfirmModal = ({
   content,
   onConfirm,
 }: ModalProps) => {
-  const handleApprove = () => {
-    onConfirm();
-    setIsOpen(false);
+  const [isCloseDisabled, setIsCloseDisabled] = useState<boolean>(false);
+  const [isConfirmDisabled, setIsConfirmDisabled] = useState<boolean>(false);
+
+  const handleClose = () => {
+    if (!isCloseDisabled) {
+      setIsCloseDisabled(true);
+      setIsOpen(false);
+      // 모달이 완전히 닫힌 후 버튼을 다시 활성화
+      setTimeout(() => setIsCloseDisabled(false), 300);
+    }
   };
+
+  const handleApprove = () => {
+    if (!isConfirmDisabled) {
+      setIsConfirmDisabled(true);
+      onConfirm();
+      setIsOpen(false);
+      // 모달이 완전히 닫힌 후 버튼을 다시 활성화
+      setTimeout(() => setIsConfirmDisabled(false), 300);
+    }
+  };
+
   return (
     <div>
-      <div className="relative h-screen ">
+      <div className="relative h-screen">
         <div
-          onClick={() => setIsOpen(false)}
-          className={`fixed inset-0 bg-black transition-opacity duration-1000 ease-in-out flex flex-col ${
+          onClick={() => !isCloseDisabled && setIsOpen(false)}
+          className={`fixed inset-0 bg-black transition-opacity duration-300 ease-in-out flex flex-col ${
             isOpen ? 'bg-opacity-50' : 'bg-opacity-0 pointer-events-none'
           }`}
         >
@@ -39,12 +58,28 @@ const ConfirmModal = ({
             <div className="flex flex-col gap-3 items-center bg-white py-5 w-[calc(100vw-40px)] rounded-[10px] shadow-lg mb-4 text-[#000] text-center font-pretendard-light text-base tracking-[-0.64px]">
               {content}
               <div className="flex flex-row items-center gap-2">
-                <div onClick={() => setIsOpen(false)}>
+                <button
+                  onClick={handleClose}
+                  disabled={isCloseDisabled}
+                  className={`transition-opacity duration-300 ${
+                    isCloseDisabled
+                      ? 'opacity-50 cursor-not-allowed'
+                      : 'opacity-100'
+                  }`}
+                >
                   <CloseIconWithCircle />
-                </div>
-                <div onClick={handleApprove}>
+                </button>
+                <button
+                  onClick={handleApprove}
+                  disabled={isConfirmDisabled}
+                  className={`transition-opacity duration-300 ${
+                    isConfirmDisabled
+                      ? 'opacity-50 cursor-not-allowed'
+                      : 'opacity-100'
+                  }`}
+                >
                   <ApproveIcon />
-                </div>
+                </button>
               </div>
             </div>
           </div>

@@ -1,18 +1,26 @@
 import Image from 'next/image';
 import { QuestionContentType } from '@/types/question';
+import { useRouter } from 'next/router';
 
 interface Props {
   questionList: QuestionContentType[];
 }
 
 const SavedQuestionThumbnail = ({ questionList }: Props) => {
+  const router = useRouter();
+
+  const handleRoute = () => {
+    router.push('/hi-story/saved-questions');
+  };
+
   return (
     <div className="flex flex-col w-full items-center">
       {questionList.map((question, index) => (
         <div
           key={index}
-          className="w-[calc(100%-40px)] py-4 mb-[12px] rounded-[10px] bg-white"
+          className="w-[calc(100%-40px)] py-4 mb-[12px] rounded-[10px] bg-white cursor-pointer"
           style={{ boxShadow: '0px 2px 16px 0px rgba(68, 68, 68, 0.12)' }}
+          onClick={handleRoute}
         >
           <div className="w-full flex flex-col items-center justify-center px-[10px]">
             <div className="w-full items-center flex">

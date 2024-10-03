@@ -134,6 +134,9 @@ const HiStoryPage = () => {
             {completedEventList && completedEventList.length > 0 ? (
               <CompletedEventThumbnail
                 eventList={completedEventList.slice(0, 4)}
+                onEventClick={(eventId) => {
+                  router.push(`/hi-story/completed-events/${eventId}`);
+                }}
               />
             ) : (
               <NotExist title="완료된 이벤트가" />

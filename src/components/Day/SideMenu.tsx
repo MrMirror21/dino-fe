@@ -181,24 +181,26 @@ const SlideMenu = ({ isOpen, setIsOpen }: SlideMenuProps) => {
           <div>회원탈퇴</div>
         </div>
       </div>
-      <ConfirmModal
-        isOpen={isOpenModal}
-        setIsOpen={setIsOpenModal}
-        content={
-          <div className="py-3 w-[calc(100%-56px)] flex flex-col gap-3 items-center mt-3.5">
-            <span className="text-[#000] text-center font-pretendard-300 text-base tracking-[-0.64px]">
-              이름을 변경하시겠습니까?
-            </span>
-            <input
-              type="text"
-              value={newName || ''}
-              onChange={(e) => setNewName(e.target.value)}
-              className="border rounded-lg px-2 w-full h-[52px] bg-[#E9E9E9] text-center"
-            />
-          </div>
-        }
-        onConfirm={confirmNameChange}
-      />
+      {isOpenModal && (
+        <ConfirmModal
+          isOpen={isOpenModal}
+          setIsOpen={setIsOpenModal}
+          content={
+            <div className="py-3 w-[calc(100%-56px)] flex flex-col gap-3 items-center mt-3.5">
+              <span className="text-[#000] text-center font-pretendard-300 text-base tracking-[-0.64px]">
+                이름을 변경하시겠습니까?
+              </span>
+              <input
+                type="text"
+                value={newName || ''}
+                onChange={(e) => setNewName(e.target.value)}
+                className="border rounded-lg px-2 w-full h-[52px] bg-[#E9E9E9] text-center"
+              />
+            </div>
+          }
+          onConfirm={confirmNameChange}
+        />
+      )}
     </div>
   );
 };

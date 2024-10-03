@@ -34,6 +34,7 @@ const Loading = () => {
               width={80}
               height={80}
               className="z-[9999]"
+              priority
             />
           </div>
         </div>
