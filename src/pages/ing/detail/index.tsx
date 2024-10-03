@@ -84,8 +84,7 @@ export default function MainPage<Props>({}) {
         </div>
         {isSuccess && (
           <EventPage
-            currentIndex={currentIndex}
-            event={data}
+            eventId={data?.data?.[currentIndex]?.eventId}
             setStep={setCurrentIndex}
           />
         )}
