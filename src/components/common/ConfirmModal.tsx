@@ -5,7 +5,7 @@ import React from 'react';
 interface ModalProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  content: string;
+  content: string | React.ReactNode;
   onConfirm: () => void;
 }
 
@@ -16,7 +16,7 @@ const ConfirmModal = ({
   onConfirm,
 }: ModalProps) => {
   const handleApprove = () => {
-    onConfirm;
+    onConfirm();
     setIsOpen(false);
   };
   return (

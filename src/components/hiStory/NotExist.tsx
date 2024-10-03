@@ -10,7 +10,7 @@ const NotExist = ({ title, isFlower = false }: Props) => {
       <div className="mt-7 mb-[152px] flex items-center justify-center flex-col">
         {isFlower && (
           <Image
-            src="/image/LandingFlower.png"
+            src="/image/notExistFlower.png"
             alt="flower"
             width={100}
             height={100}
@@ -21,7 +21,7 @@ const NotExist = ({ title, isFlower = false }: Props) => {
           className="font-pretendard-300 text-[16px]"
           style={{ color: 'rgba(0,0,0,0.6)' }}
         >
-          {title} 없습니다.
+          {title} 없습니다
         </span>
       </div>
     </div>

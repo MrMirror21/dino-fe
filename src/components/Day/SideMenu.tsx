@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import CloseIcon from '@/assets/icon/CloseIcon.svg';
+import ConfirmModal from '../common/ConfirmModal';
 import Image from 'next/image';
 import MenuIcon from '@/assets/icon/Menu.svg';
 import { tokenUtils } from '@/utils/tokenUtils';
+import { useChangeName } from '@/hooks/api/useUser';
 
 interface SlideMenuProps {
   isOpen: boolean;
@@ -12,6 +14,19 @@ interface SlideMenuProps {
 const SlideMenu = ({ isOpen, setIsOpen }: SlideMenuProps) => {
   const [userName, setUserName] = useState<string | null>(null);
   const [onAlarm, setOnAlarm] = useState<boolean>(false);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [newName, setNewName] = useState<string | null>(null);
+
+  const {
+    mutate: changeUserName,
+    isPending,
+    isSuccess,
+    isError,
+  } = useChangeName();
+
+  const handleNameChange = () => {
+    setIsOpenModal(true);
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -27,12 +42,37 @@ const SlideMenu = ({ isOpen, setIsOpen }: SlideMenuProps) => {
     const body = encodeURIComponent(
       '안녕하세요, 다음과 관련하여 문의드립니다:',
     );
-
     window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_blank');
   };
+
+  const confirmNameChange = () => {
+    if (newName?.trim()) {
+      changeUserName(
+        { nickname: newName.trim() },
+        {
+          onSuccess: () => {
+            setUserName(newName.trim());
+            tokenUtils.setUserName(newName.trim());
+            setIsOpenModal(false);
+          },
+          onError: (error) => {
+            console.error('이름 변경 실패:', error);
+          },
+        },
+      );
+    } else {
+      setIsOpenModal(false);
+    }
+  };
+
   useEffect(() => {
-    if (!tokenUtils.getUserName()) window.location.reload();
-    setUserName(tokenUtils.getUserName());
+    const storedName = tokenUtils.getUserName();
+    if (!storedName) {
+      window.location.reload();
+    } else {
+      setUserName(storedName);
+      setNewName(storedName);
+    }
   }, []);
 
   return (
@@ -72,7 +112,10 @@ const SlideMenu = ({ isOpen, setIsOpen }: SlideMenuProps) => {
         <div className="w-full h-[1px] mb-8 bg-gray-300" />
         <div className="">
           <ul className="space-y-2">
-            <div className="flex h-14 px-5 py-3 rounded bg-white justify-between items-center self-stretch">
+            <div
+              className="flex h-14 px-5 py-3 rounded bg-white justify-between items-center self-stretch"
+              onClick={handleNameChange}
+            >
               <div className="text-[#888] font-pretendard-300 text-xs leading-5 tracking-[-0.48px]">
                 이름 변경하기
               </div>
@@ -138,6 +181,24 @@ const SlideMenu = ({ isOpen, setIsOpen }: SlideMenuProps) => {
           <div>회원탈퇴</div>
         </div>
       </div>
+      <ConfirmModal
+        isOpen={isOpenModal}
+        setIsOpen={setIsOpenModal}
+        content={
+          <div className="py-3 w-[calc(100%-56px)] flex flex-col gap-3 items-center mt-3.5">
+            <span className="text-[#000] text-center font-pretendard-300 text-base tracking-[-0.64px]">
+              이름을 변경하시겠습니까?
+            </span>
+            <input
+              type="text"
+              value={newName || ''}
+              onChange={(e) => setNewName(e.target.value)}
+              className="border rounded-lg px-2 w-full h-[52px] bg-[#E9E9E9] text-center"
+            />
+          </div>
+        }
+        onConfirm={confirmNameChange}
+      />
     </div>
   );
 };

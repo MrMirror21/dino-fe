@@ -1,10 +1,10 @@
+import { useEffect, useState } from 'react';
+
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
-interface Props {
-  handleStart: () => void;
-}
-
-const Landing = ({ handleStart }: Props) => {
+const Landing = () => {
+  const [showButton, setShowButton] = useState(false);
   const backgroundStyle = {
     background: `
           radial-gradient(56.98% 56.98% at 50% 43.02%, rgba(178, 202, 213, 0.20) 0%, rgba(255, 255, 255, 0.00) 100%), 
@@ -14,6 +14,21 @@ const Landing = ({ handleStart }: Props) => {
   const textStyle = {
     color: 'rgba(138, 186, 221, 0.6)',
   };
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowButton(true);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleLogin = () => {
+    router.push('https://www.khu-dino.n-e.kr/oauth2/authorization/kakao');
+  };
+
   return (
     <div
       className="h-screen max-h-screen flex flex-col justify-between items-center"
@@ -43,14 +58,22 @@ const Landing = ({ handleStart }: Props) => {
 
       {/* 하단 버튼 */}
       <div
-        className="w-[calc(100%-40px)] rounded-[10px] h-[52px] flex text-center items-center justify-center cursor-pointer mb-8"
+        className={`w-[calc(100%-40px)] h-[52px] rounded-[10px] overflow-hidden mb-8 cursor-pointer transition-opacity duration-1000 ${
+          showButton ? 'opacity-100' : 'opacity-0'
+        }`}
         style={{
-          background: 'rgba(255, 255, 255, 0.60)',
           boxShadow: '0px 2px 20px 0px rgba(136, 136, 136, 0.12)',
         }}
-        onClick={handleStart}
+        onClick={handleLogin}
       >
-        <span className="text-[16px] font-pretendard-500">시작하기</span>
+        <div className="relative w-full h-full">
+          <Image
+            src="/image/kakao.png"
+            alt="Kakao Login"
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
       </div>
     </div>
   );

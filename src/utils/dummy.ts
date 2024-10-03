@@ -7,7 +7,6 @@ export const mockCompletedEventList: CompleteEventType[] = [
     eventId: 1,
     title: '예소 중간발표!',
     category: '프로젝트',
-    // memo: '떨린다 발표~~',
     eventStatus: 'termination',
     startDate: '2024-05-30',
     endDate: '2024-07-10',

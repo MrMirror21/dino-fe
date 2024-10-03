@@ -10,6 +10,7 @@ import { CompleteEventType } from '@/types/hiStory';
 import { EmotionType } from '@/types/emotion';
 import Header from '@/components/Day/Header';
 import Image from 'next/image';
+import Loading from '@/components/Loading';
 import NavBar from '@/components/common/NavBar';
 import NextTriButtonIcon from '@/assets/icon/NextTriButtonIcon';
 import PrevTriButtonIcon from '@/assets/icon/PrevTriButtonIcon';
@@ -41,11 +42,15 @@ const EventDetailPage = () => {
   const [eventList, setEventList] = useState<CompleteEventType[]>([]);
   const [eventDetail, setEventDetail] = useState<EventDetailType | null>(null);
   const [loading, setLoading] = useState(true);
+  const [imageLoading, setImageLoading] = useState(true);
 
   const fetchData = async (eventId: number) => {
+    setLoading(true);
+    setImageLoading(true);
     setEventDetail(
       mockEventDetailList.find((event) => event.eventId === eventId) || null,
     );
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -80,7 +85,7 @@ const EventDetailPage = () => {
     if (nextEventId) router.push(`/hi-story/completed-events/${nextEventId}`);
   };
 
-  if (!event) return <div>Loading...</div>;
+  if (!event) return <Loading />;
   return (
     <div
       className="flex flex-col w-full h-screen"
@@ -126,13 +131,14 @@ const EventDetailPage = () => {
                 </span>
               )}
             </div>
-            <Image
-              src={event.fileUrl}
-              alt="식물 이미지..."
-              className="mb-[30px]"
-              width={228}
-              height={214}
-            />
+            <div className="w-[220px] h-[220px] mb-[30px] relative">
+              <Image
+                src={event.fileUrl}
+                alt="식물 이미지..."
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
             <ProgressBar
               answerNum={event.totalAnswerCount}
               totalNum={event.totalQuestionCount}

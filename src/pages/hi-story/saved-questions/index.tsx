@@ -4,13 +4,21 @@ import Header from '@/components/Day/Header';
 import { MonthAllEventsType } from '@/types/hiStory';
 import MonthlyEventGroup from '@/components/hiStory/CompltedEvents/MonthlyEventGroup';
 import NavBar from '@/components/common/NavBar';
+import NotExist from '@/components/hiStory/NotExist';
+import { mockAllEventList } from '@/utils/dummy';
+import { tokenUtils } from '@/utils/tokenUtils';
 import { useGetSavedQuestions } from '@/hooks/api/useHiStory';
 
 const SavedQuestionsPage = () => {
   const [allEventList, setAllEventList] = useState<MonthAllEventsType[]>([]);
   const { data, isLoading, isSuccess, isError } = useGetSavedQuestions();
+  const examUser = tokenUtils.getUserName() === '송민석';
 
   useEffect(() => {
+    if (examUser) {
+      setAllEventList(mockAllEventList);
+      return;
+    }
     if (data?.isSuccess && data.data.length > 0) {
       setAllEventList(data.data);
     }
@@ -27,6 +35,9 @@ const SavedQuestionsPage = () => {
     >
       <Header />
       <div className="flex-1 overflow-y-auto pb-[68px] mb-8">
+        {allEventList.length === 0 && (
+          <NotExist title="저장한 질문이" isFlower={true} />
+        )}
         {allEventList.map((event) => (
           <MonthlyEventGroup key={event.groupByDate.toString()} event={event} />
         ))}

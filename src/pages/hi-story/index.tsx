@@ -1,4 +1,5 @@
 import { CompleteEventType, MonthAllEventsType } from '@/types/hiStory';
+import { mockAllEventList, mockCompletedEventList } from '@/utils/dummy';
 import { useEffect, useState } from 'react';
 import {
   useGetCompletedEvents,
@@ -13,7 +14,6 @@ import NavBar from '@/components/common/NavBar';
 import NotExist from '@/components/hiStory/NotExist';
 import { QuestionContentType } from '@/types/question';
 import SavedQuestionThumbnail from '@/components/hiStory/SavedQuestionThumbnail';
-import { mockCompletedEventList } from '@/utils/dummy';
 import { tokenUtils } from '@/utils/tokenUtils';
 import { useRouter } from 'next/router';
 
@@ -28,7 +28,7 @@ const HiStoryPage = () => {
   const [questionThumbnailList, setQuestionThumbnailList] = useState<
     QuestionContentType[]
   >([]);
-  const examUser = tokenUtils.getUserName();
+  const examUser = tokenUtils.getUserName() === '송민석';
 
   const {
     data: savedQuestionsData,
@@ -57,13 +57,17 @@ const HiStoryPage = () => {
   }, [savedQuestionList]);
 
   useEffect(() => {
+    if (examUser) {
+      setSavedQuestionList(mockAllEventList);
+      return;
+    }
     if (savedQuestionsData?.isSuccess) {
       setSavedQuestionList(savedQuestionsData.data);
     }
   }, [savedQuestionsData]);
 
   useEffect(() => {
-    if (examUser === '송민석') {
+    if (examUser) {
       setCompletedEventList(mockCompletedEventList);
       return;
     }

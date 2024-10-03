@@ -37,8 +37,8 @@ const CompletedEventThumbnail = ({ eventList, onEventClick }: Props) => {
               <Image
                 alt="event-plant"
                 src={event.fileUrl}
-                width={130}
-                height={130}
+                width={120}
+                height={120}
               />
             </div>
           </div>
