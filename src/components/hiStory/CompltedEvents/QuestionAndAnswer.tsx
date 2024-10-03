@@ -105,7 +105,15 @@ const QuestionAndAnswer = ({
         return <p className="leading-[24px]">{question.myAnswer}</p>;
       case 'IMAGE':
         return (
-          <Image src={question.fileUrl} alt="answer" width={220} height={220} />
+          <div className="relative w-full h-72 mb-3.5">
+            <Image
+              // src={question.fileUrl}
+              src="/image/LandingFlower.png"
+              alt="answer"
+              fill
+              className="object-cover"
+            />
+          </div>
         );
       case 'VOICE':
         return (
