@@ -1,14 +1,15 @@
 import React, {
-  useState,
-  useRef,
-  useEffect,
   Dispatch,
   SetStateAction,
+  useEffect,
+  useRef,
+  useState,
 } from 'react';
-import WaveSurfer from 'wavesurfer.js';
+
+import ApproveIcon from '@/assets/icon/ApproveIcon.svg';
 import PlayButtonIcon from '@/assets/icon/PlayButtonIcon.svg';
 import ResetButtonIcon from '@/assets/icon/ResetIcon.svg';
-import ApproveIcon from '@/assets/icon/ApproveIcon.svg';
+import WaveSurfer from 'wavesurfer.js';
 
 interface WaveformProps {
   url: string;
@@ -90,10 +91,6 @@ const Waveform = ({
       setAudioUrl(null);
     }
   };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="flex flex-col items-center w-full bg-transparent">

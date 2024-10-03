@@ -13,6 +13,7 @@ import { EmotionType } from '@/types/emotion';
 import Image from 'next/image';
 import Loading from '@/components/Loading';
 import { QuestionContentType } from '@/types/question';
+import { WaveformForPlay } from '@/components/Day/Waveform';
 import { getProgressAndButtonColor } from '@/utils/emotionColor';
 import moment from 'moment';
 import { useRouter } from 'next/router';
@@ -117,7 +118,10 @@ const QuestionAndAnswer = ({
         );
       case 'VOICE':
         return (
-          <div className="w-full mb-3.5" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="w-full mb-3.5 my-3"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* <audio
               src="https://chycdn.s3.ap-northeast-2.amazonaws.com/DayDream/3602426060/0/0/0/0bebb2a1-514b-4399-8b5f-10393f6d253e.mp3"
               // src={question.fileUrl}
@@ -125,11 +129,10 @@ const QuestionAndAnswer = ({
               controls
               id="s3-audio-file"
             ></audio> */}
-            <AudioPlayer
+            {question.myAnswer}
+            <WaveformForPlay
               // src="https://chycdn.s3.ap-northeast-2.amazonaws.com/DayDream/3602426060/0/0/0/0bebb2a1-514b-4399-8b5f-10393f6d253e.mp3"
-              src={question.fileUrl}
-              volume={0.5}
-              loop
+              url={question.fileUrl}
             />
           </div>
         );
