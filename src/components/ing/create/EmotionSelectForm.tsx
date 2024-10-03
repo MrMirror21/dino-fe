@@ -1,16 +1,24 @@
-import React, { Dispatch, ReactElement, SetStateAction, useState } from 'react';
-import YellowEmoIcon from '@/assets/icon/event/yellowEmoIcon.svg';
+import React, {
+  Dispatch,
+  ReactElement,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
+
 import BlueEmoIcon from '@/assets/icon/event/blueEmoIcon.svg';
-import PinkEmoIcon from '@/assets/icon/event/pinkEmoIcon.svg';
-import OrangeEmoIcon from '@/assets/icon/event/orangeEmoIcon.svg';
-import GreenEmoIcon from '@/assets/icon/event/greenEmoIcon.svg';
-import PurpleEmoIcon from '@/assets/icon/event/purpleEmoIcon.svg';
-import { useEventContext } from '@/pages/ing/create';
-import { useRouter } from 'next/router';
-import { usePostEvent } from '@/hooks/api/useEvent';
-import { EmotionType } from '@/types/emotion';
-import { getEmotionColor } from '@/utils/emotionColor';
 import ConfirmModal from '@/components/common/ConfirmModal';
+import { EmotionType } from '@/types/emotion';
+import GreenEmoIcon from '@/assets/icon/event/greenEmoIcon.svg';
+import Loading from '@/components/Loading';
+import OrangeEmoIcon from '@/assets/icon/event/orangeEmoIcon.svg';
+import PinkEmoIcon from '@/assets/icon/event/pinkEmoIcon.svg';
+import PurpleEmoIcon from '@/assets/icon/event/purpleEmoIcon.svg';
+import YellowEmoIcon from '@/assets/icon/event/yellowEmoIcon.svg';
+import { getEmotionColor } from '@/utils/emotionColor';
+import { useEventContext } from '@/pages/ing/create';
+import { usePostEvent } from '@/hooks/api/useEvent';
+import { useRouter } from 'next/router';
 
 interface StepProps {
   setStep: Dispatch<SetStateAction<number>>;
@@ -55,16 +63,27 @@ const EmotionSelectForm = ({ setStep }: StepProps) => {
   const [isSubmit, setIsSubmit] = useState(false);
   const { eventInfo } = useEventContext();
   const router = useRouter();
-  const { mutate, isSuccess, error } = usePostEvent();
-  const handleCreate = () => {
-    mutate(eventInfo);
+
+  const { mutate, isSuccess, error, isPending } = usePostEvent();
+
+  useEffect(() => {
+    if (isSuccess) {
+      router.push('/day');
+    }
+  }, [isSuccess, router]);
+
+  useEffect(() => {
     if (error) {
       alert('이벤트 생성에 실패했습니다. 다시 시도해주세요.');
-      console.log(error);
-      return;
+      console.error(error);
     }
-    isSuccess && router.push('/day');
+  }, [error]);
+
+  const handleCreate = () => {
+    mutate(eventInfo);
   };
+
+  if (isPending) return <Loading />;
   return (
     <div className="flex flex-col items-center justify-start w-full px-5">
       <div className="w-full mb-5">
