@@ -81,6 +81,7 @@ export interface QuestionType {
   questionDate: string; // "yyyy-MM-dd" 형식
   isAnswer: boolean;
   isPriority: boolean;
+  eventTitle?: string;
   content: string;
   myAnswer: string;
   answeredAt: string; // "yyyy-MM-dd" 형식

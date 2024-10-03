@@ -1,10 +1,11 @@
 'use client';
 
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
-import { motion, PanInfo, useMotionValue } from 'framer-motion';
+import { PanInfo, motion, useMotionValue } from 'framer-motion';
+
 import DDayCounter from './Day/DDayCounter';
-import { EventType } from '../types/event';
 import { EmotionType } from '@/types/emotion';
+import { EventType } from '../types/event';
 import { getProgressAndButtonColor } from '@/utils/emotionColor';
 import { stringToDate } from '@/utils/event';
 
@@ -57,10 +58,18 @@ export default function DateChanger({
   currentDay,
   setCurrentDay,
 }: DateChangerProps) {
-  const period =
-    stringToDate(event?.endDate).getDate() -
-    stringToDate(event?.startDate).getDate();
-  const dateArr = getDateRange(currentDay, period);
+  const startDate = stringToDate(event?.startDate);
+  const endDate = stringToDate(event?.endDate);
+
+  const period = Math.ceil(
+    (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
+  );
+
+  const dateArr = useMemo(
+    () => getDateRange(currentDay, period),
+    [currentDay, period],
+  );
+
   const [dragStartX, setDragStartX] = useState(0);
   const [page, setPage] = useState(0);
   const [width, setWidth] = useState<number>(0);
@@ -123,6 +132,7 @@ export default function DateChanger({
           dragElastic={0.2}
           className="flex gap-x-8 items-center justify-center mb-5"
         >
+          {/* {dateArr.length === 0 && <div>dd</div>} */}
           {dateArr.map((day) => (
             <motion.div
               style={

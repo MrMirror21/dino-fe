@@ -10,13 +10,14 @@ import { EmotionType } from '@/types/emotion';
 import Image from 'next/image';
 import Loading from '@/components/Loading';
 import { QuestionContentType } from '@/types/question';
+import { QuestionType } from '@/types/event';
 import { WaveformForPlay } from '@/components/Day/Waveform';
 import { getProgressAndButtonColor } from '@/utils/emotionColor';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 
 interface Props {
-  question: QuestionContentType;
+  question: QuestionContentType | QuestionType;
   title?: string; // /dream 페이지에서 사용
   isRepresent?: boolean;
   emotion?: EmotionType;
@@ -137,7 +138,7 @@ const QuestionAndAnswer = ({
   if (isSetBookmarkPending || isDeleteBookmarkPending) return <Loading />;
   return (
     <div className="w-[calc(100%-40px)] mx-auto">
-      {title && (
+      {title && title !== 'isMainPage' && (
         <div className="w-full flex justify-center">
           <div className="w-[calc(100%-24px)] h-[20px] mb-3">
             <span className="font-pretendard-400 text-[#888] text-[14px]">
