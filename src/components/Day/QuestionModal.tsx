@@ -1,11 +1,13 @@
 import { MediaType, MyAnswer } from '@/types/answerType';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import AudioRecord from './AudioRecord';
 import CameraModalPro from './CameraModalPro';
 import ConfirmModal from '../common/ConfirmModal';
+import Landing from '../login/Landing';
 import { QuestionType } from '@/types/event';
 import { usePostAnswer } from '@/hooks/api/useQuestion';
+import { useRouter } from 'next/router';
 
 interface QuestionModalProps {
   selectedQuestion: QuestionType | undefined;
@@ -23,7 +25,8 @@ const QuestionModal = ({
   const [isCameraSelectOn, setIsCameraSelectOn] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-  const { mutate, error } = usePostAnswer();
+  const { mutate, error, isSuccess, isPending } = usePostAnswer();
+  const router = useRouter();
   const toggleModal = () => {
     onClose(undefined);
   };
@@ -56,6 +59,13 @@ const QuestionModal = ({
       mediaFile: file,
     });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      router.push('/day');
+    }
+  }, [isSuccess]);
+  if (isPending) return <Landing />;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
