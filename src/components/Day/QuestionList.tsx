@@ -13,7 +13,7 @@ interface EventCardProps {
 interface EventListProps {
   setChosenEvent: Dispatch<SetStateAction<QuestionType | undefined>>;
   questionList: Array<QuestionType>;
-  isToday: boolean;
+  isFuture: boolean;
 }
 
 const EventCard = ({ children }: EventCardProps) => {
@@ -23,14 +23,14 @@ const EventCard = ({ children }: EventCardProps) => {
 const QuestionList = ({
   setChosenEvent,
   questionList,
-  isToday,
+  isFuture,
 }: EventListProps) => {
   const handleQuestionClick = (question: QuestionType) => {
     !question.isAnswer && setChosenEvent(question);
   };
   return (
     <div className="max-h-120 overflow-scroll">
-      {!isToday ? (
+      {!isFuture ? (
         questionList.length > 0 ? (
           <div>
             <EventCard>
