@@ -34,7 +34,7 @@ const QuestionList = ({
         questionList.length > 0 ? (
           <div>
             <EventCard>
-              <div className="flex gap-2 px-3 py-4 w-full rounded-[10px] shadow-[0_2px_16px_rgba(68,68,68,0.12)] break-keep">
+              <div className="flex gap-2 px-3 py-4 w-full bg-white rounded-[10px] shadow-[0_2px_16px_rgba(68,68,68,0.12)] break-keep">
                 <p className="text-[#BAD7EC] font-['edensor'] text-2xl leading-[20px] tracking-[-1px] flex justify-start">
                   Q.
                 </p>
@@ -64,7 +64,7 @@ const QuestionList = ({
             ) : (
               <div className="" onClick={() => handleQuestionClick(question)}>
                 <EventCard>
-                  <div className="flex gap-2 px-3 py-4 w-full rounded-[10px] shadow-[0_2px_16px_rgba(68,68,68,0.12)] break-keep">
+                  <div className="flex gap-2 px-3 py-4 w-full bg-white rounded-[10px] shadow-[0_2px_16px_rgba(68,68,68,0.12)] break-keep">
                     <p className="text-[#BAD7EC] font-['edensor'] text-2xl leading-[20px] tracking-[-1px] flex justify-start">
                       Q.
                     </p>
@@ -74,12 +74,12 @@ const QuestionList = ({
                   </div>
                 </EventCard>
                 <EventCard>
-                  <div className="flex flex-col items-center gap-2 px-3 py-4 w-[calc(100vw-40px)] shadow-[0_2px_16px_rgba(68,68,68,0.12)] rounded-[10px]">
+                  <div className="flex flex-col items-center gap-2 px-3 py-4 w-[calc(100vw-40px)] bg-white shadow-[0_2px_16px_rgba(68,68,68,0.12)] rounded-[10px]">
                     <div className="flex flex-row justify-start gap-2 w-full">
                       <h2 className="text-[#BAD7EC] font-['edensor'] text-2xl leading-[20px] tracking-[-1px]">
                         A.
                       </h2>
-                      <p className="flex flex-row text-[#000] font-pretendard-300 text-sm leading-[20px] tracking-[-1px]">
+                      <p className="flex flex-row text-[#888] text-[14px] font-pretendard-200 text-sm leading-[20px] tracking-[-1px]">
                         {question.isAnswer
                           ? question.myAnswer
                           : '답변 작성하기'}

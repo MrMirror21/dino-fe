@@ -18,10 +18,11 @@ import { useRouter } from 'next/router';
 
 interface Props {
   question: QuestionContentType | QuestionType;
-  title?: string; // /dream 페이지에서 사용
+  title?: string;
   isRepresent?: boolean;
   emotion?: EmotionType;
   isAvailBookmark?: boolean;
+  isSelect?: boolean;
 }
 
 const QuestionAndAnswer = ({
@@ -30,58 +31,36 @@ const QuestionAndAnswer = ({
   isRepresent = false,
   emotion,
   isAvailBookmark = false,
+  isSelect = false,
 }: Props) => {
   const router = useRouter();
   const [showAnswer, setShowAnswer] = useState(false);
   const [isBookmark, setIsBookmark] = useState(false);
 
-  const {
-    mutate: setBookmark,
-    isPending: isSetBookmarkPending,
-    isSuccess: isSetBookmarkSuccess,
-    isError: isSetBookmarkError,
-  } = useSetQuestionBookmark(question.questionId);
-
-  const {
-    mutate: deleteBookmark,
-    isPending: isDeleteBookmarkPending,
-    isSuccess: isDeleteBookmarkSuccess,
-    isError: isDeleteBookmarkError,
-  } = useDeleteQuestionBookmark(question.questionId);
+  const { mutate: setBookmark, isPending: isSetBookmarkPending } =
+    useSetQuestionBookmark(question.questionId);
+  const { mutate: deleteBookmark, isPending: isDeleteBookmarkPending } =
+    useDeleteQuestionBookmark(question.questionId);
 
   const toggleIsBookmark = (e: React.MouseEvent) => {
-    e.stopPropagation(); // 이벤트 전파 중지
-
+    e.stopPropagation();
     if (isBookmark) {
       deleteBookmark(undefined, {
-        onSuccess: (data) => {
-          console.log('Success to delete bookmark', data);
-          setIsBookmark(false);
-        },
-        onError: (error) => {
-          console.error('Failed to delete bookmark', error);
-          setIsBookmark(true);
-        },
+        onSuccess: () => setIsBookmark(false),
+        onError: () => setIsBookmark(true),
       });
-    } // if(!isBookmark)
-    else {
+    } else {
       setBookmark(undefined, {
-        onSuccess: (data) => {
-          console.log('Success to set bookmark', data);
-          setIsBookmark(true);
-        },
-        onError: (error) => {
-          console.error('Failed to set bookmark', error);
-          setIsBookmark(false);
-        },
+        onSuccess: () => setIsBookmark(true),
+        onError: () => setIsBookmark(false),
       });
     }
   };
 
   useEffect(() => {
-    setShowAnswer(!!title);
+    setShowAnswer(!!title || isSelect);
     setIsBookmark(question.isPriority);
-  }, [question, title]);
+  }, [question, title, isSelect]);
 
   const backgroundStyle =
     isRepresent && emotion
@@ -96,6 +75,7 @@ const QuestionAndAnswer = ({
       : {
           backgroundColor: '#FFF',
           boxShadow: '0px 2px 16px 0px rgba(68, 68, 68, 0.12)',
+          ...(isSelect ? { border: '2px solid #BAD7EC' } : {}),
         };
 
   const renderAnswer = (type: string) => {
@@ -109,7 +89,6 @@ const QuestionAndAnswer = ({
             <div className="relative w-full h-80 mb-3.5 my-[10px]">
               <Image
                 src={question.fileUrl}
-                // src="/image/LandingFlower.png"
                 alt="answer"
                 fill
                 className="object-cover"
@@ -124,10 +103,7 @@ const QuestionAndAnswer = ({
             onClick={(e) => e.stopPropagation()}
           >
             {question.myAnswer || ''}
-            <WaveformForPlay
-              // src="https://chycdn.s3.ap-northeast-2.amazonaws.com/DayDream/3602426060/0/0/0/0bebb2a1-514b-4399-8b5f-10393f6d253e.mp3"
-              url={question.fileUrl}
-            />
+            <WaveformForPlay url={question.fileUrl} />
           </div>
         );
       default:
@@ -136,6 +112,7 @@ const QuestionAndAnswer = ({
   };
 
   if (isSetBookmarkPending || isDeleteBookmarkPending) return <Loading />;
+
   return (
     <div className="w-[calc(100%-40px)] mx-auto">
       {title && title !== 'isMainPage' && (
@@ -151,7 +128,7 @@ const QuestionAndAnswer = ({
       <div
         className={`w-full h-auto mb-2.5 py-4 self-center rounded-[10px] relative`}
         style={backgroundStyle}
-        onClick={() => !title && setShowAnswer(!showAnswer)}
+        onClick={() => !title && !isSelect && setShowAnswer(!showAnswer)}
       >
         <div className="w-full flex flex-col items-start justify-center px-[10px]">
           <div className="w-full flex">
@@ -168,7 +145,7 @@ const QuestionAndAnswer = ({
             </span>
           </div>
 
-          {question.isAnswer && (showAnswer || !!title) && (
+          {question.isAnswer && (showAnswer || !!title || isSelect) && (
             <>
               <div
                 className={`w-full flex ${isAvailBookmark ? 'mb-2' : 'mb-3.5'}`}
@@ -193,10 +170,7 @@ const QuestionAndAnswer = ({
                   <BookmarkIcon isMarked={isBookmark} />
                 </div>
               ) : (
-                <div
-                  className="absolute bottom-2 right-3.5"
-                  onClick={toggleIsBookmark}
-                >
+                <div className="absolute bottom-1.5 right-3.5">
                   <div className="text-[#6D6D6D] text-[10px] leading-5 font-pretendard-200 flex gap-1">
                     <span>
                       {moment(question.answeredAt.toString()).format(
@@ -212,7 +186,6 @@ const QuestionAndAnswer = ({
         </div>
       </div>
 
-      {/* /dream 페이지에서 답변하지 않은 경우 메인으로 라우팅 하는 UI 필요 */}
       {title && !question.isAnswer && (
         <div
           className={`w-full h-auto mb-2.5 py-[13px] self-center rounded-[10px]`}

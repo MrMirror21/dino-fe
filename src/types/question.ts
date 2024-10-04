@@ -12,3 +12,8 @@ export interface QuestionContentType {
   fileUrl: string;
   type: AnswerType;
 }
+
+export interface SelectRepresentativeRequest {
+  eventId: Number;
+  questionId: Number;
+}

@@ -1,8 +1,10 @@
-import { useDeleteEvent } from '@/hooks/api/useEvent';
-import { PanInfo, useMotionValue, motion } from 'framer-motion';
-import { useRouter } from 'next/router';
+import { PanInfo, motion, useMotionValue } from 'framer-motion';
 import React, { Children, ReactElement, useState } from 'react';
+
 import ConfirmModal from '../common/ConfirmModal';
+import Loading from '../Loading';
+import { useDeleteEvent } from '@/hooks/api/useEvent';
+import { useRouter } from 'next/router';
 
 const DRAG_BUFFER = 80; // 페이지 이동을 유발하는 드래그 길이
 
@@ -34,13 +36,13 @@ const EventElement = ({ children, eventId }: Props) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const router = useRouter();
-  const { mutate } = useDeleteEvent();
+  const { mutate, isPending } = useDeleteEvent();
 
   const handleDelete = () => {
-    alert('삭제')
-    mutate(eventId)
-    router.push('/ing')
-  }
+    alert('삭제');
+    mutate(eventId);
+    router.push('/ing');
+  };
 
   const onDragStart = (
     event: MouseEvent | TouchEvent | PointerEvent,
@@ -74,6 +76,8 @@ const EventElement = ({ children, eventId }: Props) => {
     }
     setIsDragging(false);
   };
+
+  if (isPending) return <Loading />;
   return (
     <>
       <div className="w-[400px] overflow-hidden">
@@ -109,7 +113,14 @@ const EventElement = ({ children, eventId }: Props) => {
           </motion.div>
         </div>
       </div>
-      {isDelete && <ConfirmModal content="삭제하시겠습니까?" isOpen={isDelete} setIsOpen={setIsDelete} onConfirm={handleDelete}/>}
+      {isDelete && (
+        <ConfirmModal
+          content="삭제하시겠습니까?"
+          isOpen={isDelete}
+          setIsOpen={setIsDelete}
+          onConfirm={handleDelete}
+        />
+      )}
     </>
   );
 };

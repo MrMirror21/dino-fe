@@ -1,22 +1,59 @@
-import Header from '@/components/Day/Header';
-import { useGetEvent } from '@/hooks/api/useEvent';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { formatDate, stringToDate } from '../../utils/event';
-import { QuestionType } from '../../types/event';
+
+import Header from '@/components/Day/Header';
+import Image from 'next/image';
+import Loading from '@/components/Loading';
 import QuestionAndAnswer from '@/components/hiStory/CompltedEvents/QuestionAndAnswer';
 import { QuestionContentType } from '@/types/question';
+import { QuestionType } from '../../types/event';
+import { selectRepresentative } from '@/api/hwj/day/question';
+import { useGetEvent } from '@/hooks/api/useEvent';
+import { useRouter } from 'next/router';
+import { useSelectRepresentative } from '@/hooks/api/useQuestion';
 
 const DayDreamPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { data, isSuccess, error } = useGetEvent(Number(id));
-  const [representiveQuestion, setRepresentiveQuestion] = useState<
-    Number | undefined
-  >(undefined);
-  console.log(id);
-  console.log(data);
+  const {
+    data,
+    isSuccess: getSuccess,
+    error,
+    isLoading: getLoading,
+  } = useGetEvent(Number(id));
+  const [representativeQuestion, setRepresentativeQuestion] =
+    useState<Number | null>(null);
+  const {
+    mutate,
+    isPending: submitLoading,
+    isSuccess: submitSuccess,
+  } = useSelectRepresentative();
+
+  const handleQuestionSelect = (questionId: number) => {
+    setRepresentativeQuestion(questionId);
+  };
+
+  const handleSubmit = () => {
+    if (representativeQuestion !== null) {
+      mutate({ eventId: Number(id), questionId: representativeQuestion });
+    }
+  };
+
+  useEffect(() => {
+    console.log(representativeQuestion);
+  }, [representativeQuestion]);
+
+  useEffect(() => {
+    setRepresentativeQuestion(null);
+  }, []);
+
+  useEffect(() => {
+    if (submitSuccess) {
+      router.push(`/day`);
+    }
+  }, [submitSuccess]);
+
+  if (getLoading || submitLoading) return <Loading />;
   return (
     <div
       className="flex flex-col w-full h-screen"
@@ -49,10 +86,28 @@ const DayDreamPage = () => {
           대표질문 선택하기
         </div>
         {data?.data?.questionContent.map((question: QuestionContentType) => (
-          <QuestionAndAnswer question={question} />
+          <div
+            key={question.questionId}
+            onClick={() => handleQuestionSelect(question.questionId)}
+          >
+            <QuestionAndAnswer
+              question={question}
+              isSelect={representativeQuestion === question.questionId}
+            />
+          </div>
         ))}
         <div className="fixed px-5 bottom-5 w-full">
-          <button className={`w-full py-[13px] rounded-[10px] ${!representiveQuestion ? 'bg-[#E9E9E9]' : 'bg-[#8ABADD]'}`}>선택 완료</button>
+          <button
+            onClick={handleSubmit}
+            className={`w-full py-[13px] rounded-[10px] font-pretendard-300 text-[16px] ${
+              representativeQuestion === null
+                ? 'bg-[#E9E9E9]'
+                : 'bg-[#8ABADD] text-white'
+            }`}
+            disabled={representativeQuestion === null}
+          >
+            선택 완료
+          </button>
         </div>
       </div>
     </div>

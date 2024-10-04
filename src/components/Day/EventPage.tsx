@@ -1,4 +1,6 @@
+import ConfirmModal, { ConfirmEndingModal } from '../common/ConfirmModal';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { calculatePeriod, formatDate } from '@/utils/event';
 
 import DateChanger from '../DateChanger';
 import { EmotionType } from '@/types/emotion';
@@ -8,11 +10,9 @@ import ProgressBar from './ProgressBar';
 import QuestionList from './QuestionList';
 import QuestionModal from './QuestionModal';
 import { QuestionType } from '@/types/event';
-import { calculatePeriod, formatDate } from '@/utils/event';
 import { getProgressAndButtonColor } from '@/utils/emotionColor';
-import { useGetEvent } from '@/hooks/api/useEvent';
 import { stringToDate } from '../../utils/event';
-import ConfirmModal, { ConfirmEndingModal } from '../common/ConfirmModal';
+import { useGetEvent } from '@/hooks/api/useEvent';
 import { useRouter } from 'next/router';
 
 interface FunnelDispenserProps {
@@ -33,11 +33,11 @@ const EventPage = ({ eventId, setStep }: FunnelDispenserProps) => {
       (question: QuestionType) =>
         question.questionDate === formatDate(currentDay),
     ) || [];
-  const isEnding = false
-   //today == stringToDate(data?.data?.endDate) &&
-   // questionsOfToday.every(
-   //   (question: QuestionType) => question.isAnswer === true,
-   // );
+  const isEnding =
+    today == stringToDate(data?.data?.endDate) &&
+    questionsOfToday.every(
+      (question: QuestionType) => question.isAnswer === true,
+    );
 
   useEffect(() => {
     setCurrentDay(today);

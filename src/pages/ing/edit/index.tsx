@@ -1,17 +1,19 @@
-import React, { useContext, useState } from 'react';
 import {
   EventEditType,
   EventListType,
   EventPostRequest,
   EventType,
 } from '@/types/event';
+import React, { useContext, useEffect, useState } from 'react';
+import { useEditEvent, useGetEvent } from '@/hooks/api/useEvent';
+
+import ConfirmModal from '@/components/common/ConfirmModal';
 import FunnelDispenser from '@/components/ing/create/FunnelDispenser';
 import Header from '@/components/Day/Header';
+import Loading from '@/components/Loading';
 import NavBar from '@/components/common/NavBar';
 import { isValidDateFormat } from '@/utils/event';
 import { useRouter } from 'next/router';
-import { useEditEvent, useGetEvent } from '@/hooks/api/useEvent';
-import ConfirmModal from '@/components/common/ConfirmModal';
 
 export interface EventContextType {
   eventInfo: EventPostRequest;
@@ -40,7 +42,7 @@ const EditPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const { data, error } = useGetEvent(Number(id));
-  const { mutate, isSuccess } = useEditEvent();
+  const { mutate, isSuccess, isPending } = useEditEvent();
   const [eventInfo, setEventInfo] = useState<EventEditType>({
     eventId: Number(id),
     title: data?.data?.title,
@@ -53,10 +55,17 @@ const EditPage = () => {
     return true;
   };
 
-  const handleSubmit = async () => {
-    await mutate(eventInfo);
-    router.push('/ing/detail');
+  useEffect(() => {
+    if (isSuccess) {
+      router.push('/ing/detail');
+    }
+  }, [isSuccess, router]);
+
+  const handleSubmit = () => {
+    mutate(eventInfo);
   };
+
+  if (isPending) return <Loading />;
   return (
     <>
       <div className="flex flex-col items-center justify-start w-full h-screen">
@@ -163,7 +172,14 @@ const EditPage = () => {
           </div>
         )}
         <NavBar />
-        {isSubmit && <ConfirmModal content="저장하시겠습니까?" isOpen={isSubmit} setIsOpen={setIsSubmit} onConfirm={()=>handleSubmit}/>}
+        {isSubmit && (
+          <ConfirmModal
+            content="저장하시겠습니까?"
+            isOpen={isSubmit}
+            setIsOpen={setIsSubmit}
+            onConfirm={() => handleSubmit}
+          />
+        )}
       </div>
     </>
   );
