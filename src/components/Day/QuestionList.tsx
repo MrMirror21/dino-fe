@@ -59,7 +59,7 @@ const QuestionList = ({
         <>
           {questionList.map((question) =>
             question.isAnswer ? (
-              <div className="flex text-left">
+              <div className="flex text-left w-full">
                 <QuestionAndAnswer
                   question={question}
                   isAvailBookmark={true}

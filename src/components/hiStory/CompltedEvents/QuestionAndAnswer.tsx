@@ -81,7 +81,7 @@ const QuestionAndAnswer = ({
   const renderAnswer = (type: string) => {
     switch (type) {
       case 'TEXT':
-        return <p className="leading-[20px]">{question.myAnswer}</p>;
+        return <p className="leading-[20px] w-full">{question.myAnswer}</p>;
       case 'IMAGE':
         return (
           <div className="my-3">

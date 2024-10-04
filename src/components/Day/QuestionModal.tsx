@@ -65,8 +65,8 @@ const QuestionModal = ({
       router.push('/day');
     }
   }, [isSuccess]);
-  if (isPending) return <Landing />;
 
+  if (isPending) return <Landing />;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
