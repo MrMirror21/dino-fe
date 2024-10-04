@@ -1,11 +1,12 @@
+import { MediaType, MyAnswer } from '@/types/answerType';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import AudioRecord from './AudioRecord';
 import CameraModalPro from './CameraModalPro';
-import { QuestionType } from '@/types/event';
-import { MediaType, MyAnswer } from '@/types/answerType';
-import { usePostAnswer } from '@/hooks/api/useQuestion';
 import ConfirmModal from '../common/ConfirmModal';
+import { QuestionType } from '@/types/event';
+import { usePostAnswer } from '@/hooks/api/useQuestion';
+
 interface QuestionModalProps {
   selectedQuestion: QuestionType | undefined;
   onClose: Dispatch<SetStateAction<QuestionType | undefined>>;
@@ -74,13 +75,15 @@ const QuestionModal = ({
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex flex-row gap-2 bg-white px-3 py-4 w-[calc(100vw-40px)] rounded-[10px] shadow-lg mb-4 break-keep">
-            <h2 className="text-[#BAD7EC] font-edensor text-2xl leading-[20px] tracking-[-1px] flex justify-start">
-              Q.
-            </h2>
-            <p className="text-[#000] font-pretendard text-sm font-extralight leading-[20px] tracking-[-1px] text-left">
-              {selectedQuestion?.content}
-            </p>
+          <div className="flex-1 overflow-y-auto px-5 pt-5 pb-20">
+            <div className="flex flex-row gap-2 bg-white px-3 py-4 w-full rounded-[10px] shadow-lg mb-4 break-keep">
+              <h2 className="text-[#BAD7EC] font-edensor text-2xl leading-[20px] tracking-[-1px] flex justify-start">
+                Q.
+              </h2>
+              <p className="text-[#000] font-pretendard text-sm font-extralight leading-[20px] tracking-[-1px] text-left">
+                {selectedQuestion?.content}
+              </p>
+            </div>
           </div>
           <AudioRecord
             answer={myAnswer}
