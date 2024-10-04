@@ -4,6 +4,7 @@ import Image from 'next/image';
 import QuestionAndAnswer from '../hiStory/CompltedEvents/QuestionAndAnswer';
 import { QuestionType } from '@/types/event';
 import { WaveformForPlay } from './Waveform';
+import { tokenUtils } from '@/utils/tokenUtils';
 
 interface EventCardProps {
   children: ReactElement;
@@ -46,7 +47,7 @@ const QuestionList = ({
           </div>
         ) : (
           <div className="text-black/60 text-center font-pretendard-300 text-base tracking-tighter">
-            오늘은 님을 기다리는 질문이 없습니다
+            오늘은 {tokenUtils.getUserName()}님을 기다리는 질문이 없습니다
           </div>
         )
       ) : (
