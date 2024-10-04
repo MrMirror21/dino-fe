@@ -75,15 +75,13 @@ const QuestionModal = ({
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex-1 overflow-y-auto px-5 pt-5 pb-20">
-            <div className="flex flex-row gap-2 bg-white px-3 py-4 w-full rounded-[10px] shadow-lg mb-4 break-keep">
-              <h2 className="text-[#BAD7EC] font-edensor text-2xl leading-[20px] tracking-[-1px] flex justify-start">
-                Q.
-              </h2>
-              <p className="text-[#000] font-pretendard text-sm font-extralight leading-[20px] tracking-[-1px] text-left">
-                {selectedQuestion?.content}
-              </p>
-            </div>
+          <div className="flex flex-row gap-2 bg-white px-3 py-4 w-[calc(100vw-40px)] rounded-[10px] shadow-lg mb-4 break-keep">
+            <h2 className="text-[#BAD7EC] font-edensor text-2xl leading-[20px] tracking-[-1px] flex justify-start">
+              Q.
+            </h2>
+            <p className="text-[#000] font-pretendard text-sm font-extralight leading-[20px] tracking-[-1px] text-left">
+              {selectedQuestion?.content}
+            </p>
           </div>
           <AudioRecord
             answer={myAnswer}
