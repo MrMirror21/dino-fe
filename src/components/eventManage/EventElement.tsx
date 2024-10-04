@@ -1,5 +1,5 @@
 import { PanInfo, motion, useMotionValue } from 'framer-motion';
-import React, { Children, ReactElement, useState } from 'react';
+import React, { Children, ReactElement, useEffect, useState } from 'react';
 
 import ConfirmModal from '../common/ConfirmModal';
 import Loading from '../Loading';
@@ -36,13 +36,18 @@ const EventElement = ({ children, eventId }: Props) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const router = useRouter();
-  const { mutate, isPending } = useDeleteEvent();
+  const { mutate, isPending, isSuccess } = useDeleteEvent();
 
   const handleDelete = () => {
     alert('삭제');
     mutate(eventId);
-    router.push('/ing');
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      router.push('/ing');
+    }
+  }, [isSuccess]);
 
   const onDragStart = (
     event: MouseEvent | TouchEvent | PointerEvent,
