@@ -7,6 +7,7 @@ import {
 
 import { EmotionType } from '@/types/emotion';
 import EventPage from '@/components/Day/EventPage';
+import Header from '@/components/Day/Header';
 import NavBar from '@/components/common/NavBar';
 import NextTriButtonIcon from '@/assets/icon/NextTriButtonIcon';
 import PrevTriButtonIcon from '@/assets/icon/PrevTriButtonIcon';
@@ -14,7 +15,6 @@ import SlideMenu from '@/components/Day/SideMenu';
 import { useGetEvents } from '@/hooks/api/useEvent';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Header from '@/components/Day/Header';
 
 interface Props {}
 
@@ -84,7 +84,9 @@ export default function DetailPage<Props>({}) {
               />
             </button>
           </div>
-          <div>{data?.data?.[currentIndex]?.memo}</div>
+          <div className="font-pretendard-200 text-[12px] text-[#969A9C]">
+            {data?.data?.[currentIndex]?.memo}
+          </div>
         </div>
         {isSuccess && (
           <EventPage
