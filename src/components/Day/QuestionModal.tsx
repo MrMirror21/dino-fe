@@ -58,24 +58,17 @@ const QuestionModal = ({
   };
 
   return (
-    <div className="relative h-screen ">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
+        className="absolute inset-0 bg-black bg-opacity-50"
         onClick={toggleModal}
-        className={`fixed inset-0 bg-black transition-opacity duration-1000 ease-in-out flex flex-col ${
-          selectedQuestion
-            ? 'bg-opacity-50'
-            : 'bg-opacity-0 pointer-events-none'
-        }`}
+      />
+      <div
+        className="relative bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col"
+        onClick={(e) => e.stopPropagation()}
       >
-        <div
-          className={`flex-1 transform transition-all duration-300 absolute top-1/2 left-1/2 -translate-x-1/2 ${
-            selectedQuestion
-              ? '-translate-y-1/2 opacity-100'
-              : 'translate-y-full opacity-0'
-          }`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex flex-row gap-2 bg-white px-3 py-4 w-[calc(100vw-40px)] rounded-[10px] shadow-lg mb-4 break-keep">
+        <div className="overflow-y-auto flex-grow p-4">
+          <div className="flex flex-row gap-2 bg-white px-3 py-4 rounded-[10px] shadow-lg mb-4 break-keep">
             <h2 className="text-[#BAD7EC] font-edensor text-2xl leading-[20px] tracking-[-1px] flex justify-start">
               Q.
             </h2>
@@ -94,51 +87,41 @@ const QuestionModal = ({
             onSubmit={() => setIsSubmit(true)}
           />
         </div>
-        {isCameraSelectOn && (
-          <div
-            onClick={() => setIsCameraSelectOn(false)}
-            className={`fixed bottom-[60px] flex-1 inset-0 transition-opacity duration-1000 ease-in-out flex flex-col-reverse items-center ${
-              isCameraSelectOn
-                ? 'bg-opacity-50'
-                : 'bg-opacity-0 pointer-events-none'
-            }`}
-          >
-            <div
-              className={'flex flex-col-reverse'}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div
+      </div>
+      {isCameraSelectOn && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end justify-center">
+          <div className="bg-white w-full max-w-md rounded-t-lg">
+            <div className="p-4">
+              <button
+                onClick={() => setIsCameraOn(true)}
+                className="w-full py-3 mb-2 bg-gray-100 rounded-lg"
+              >
+                사진 찍기
+              </button>
+              <label
+                htmlFor="imgfile"
+                className="block w-full py-3 mb-2 bg-gray-100 rounded-lg text-center"
+              >
+                앨범에서 불러오기
+              </label>
+              <input
+                type="file"
+                name="imgfile"
+                id="imgfile"
+                onChange={handleFileChange}
+                className="hidden"
+                accept="image/*"
+              />
+              <button
                 onClick={() => setIsCameraSelectOn(false)}
-                className="flex items-center justify-center bg-white px-5 py-5 mb-10 w-[calc(100vw-40px)] rounded-[10px] shadow-lg text-[var(--0-Black-Color)] text-center font-['Pretendard-Regular'] text-base leading-[120%] tracking-[-0.64px]"
+                className="w-full py-3 bg-white rounded-lg"
               >
                 취소하기
-              </div>
-              <div className="flex flex-col items-center bg-white px-5 w-[calc(100vw-40px)] rounded-[10px] shadow-lg mb-4">
-                <div
-                  onClick={() => setIsCameraOn(true)}
-                  className="flex items-center justify-center w-full py-5 text-[var(--0-Black-Color)] text-center font-['Pretendard-Regular'] text-base leading-[120%] tracking-[-0.64px] border-b border-b-gray-300"
-                >
-                  사진 찍기
-                </div>
-                <label
-                  className="flex items-center justify-center w-full py-5 text-[var(--0-Black-Color)] text-center font-['Pretendard-Regular'] text-base leading-[120%] tracking-[-0.64px]"
-                  htmlFor="imgfile"
-                >
-                  앨범에서 불러오기
-                </label>
-                <input
-                  type="file"
-                  name="imgfile"
-                  id="imgfile"
-                  onChange={handleFileChange}
-                  style={{ display: 'none' }}
-                  accept="image/*"
-                />
-              </div>
+              </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
       {isCameraOn && (
         <CameraModalPro
           selectImage={setSelectedImage}

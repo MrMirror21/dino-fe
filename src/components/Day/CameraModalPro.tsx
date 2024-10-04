@@ -1,6 +1,7 @@
-import React from 'react';
-import { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+
 import { Camera } from 'react-camera-pro';
+import React from 'react';
 
 interface CameraRef {
   takePhoto: () => string;
