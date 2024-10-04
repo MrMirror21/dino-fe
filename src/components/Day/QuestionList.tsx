@@ -30,7 +30,7 @@ const QuestionList = ({
   };
   return (
     <div className="max-h-120 overflow-scroll">
-      {!isFuture ? (
+      {isFuture ? (
         questionList.length > 0 ? (
           <div>
             <EventCard>

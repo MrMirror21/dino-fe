@@ -69,10 +69,7 @@ const EventPage = ({ eventId, setStep }: FunnelDispenserProps) => {
       <QuestionList
         setChosenEvent={setSelectedQuestion}
         questionList={questionsOfToday}
-        isFuture={
-          (today.getMonth >= currentDay.getMonth) &&
-          (today.getDate() > currentDay.getDate())
-        }
+        isFuture={today < currentDay}
       />
       {selectedQuestion && (
         <QuestionModal
