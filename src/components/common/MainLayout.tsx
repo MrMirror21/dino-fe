@@ -1,9 +1,7 @@
 const MainLayout = (props: { children: React.ReactNode }) => {
   return (
-    <div>
-      <div
-        className="relative flex flex-col justify-center items-center max-w-[480px] mx-auto min-h-screen border bg-white overflow-hidden "
-      >
+    <div className="fixed inset-0 flex justify-center bg-white">
+      <div className="w-full max-w-[480px] h-full overflow-y-auto">
         {props.children}
       </div>
     </div>
