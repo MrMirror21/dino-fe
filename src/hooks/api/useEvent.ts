@@ -1,10 +1,11 @@
 import {
   createEvent,
   deleteEvent,
+  editEvent,
   getEvent,
   getEvents,
 } from '@/api/hwj/day/event';
-import { EventPostRequest } from '@/types/event';
+import { EventEditType, EventPostRequest } from '@/types/event';
 import {
   useMutation,
   useQuery,
@@ -34,6 +35,15 @@ export function useDeleteEvent() {
 
   return useMutation({
     mutationFn: (eventId: number) => deleteEvent(eventId),
+    onSuccess: () => QueryClient.invalidateQueries({ queryKey: ['event'] }),
+  });
+}
+
+export function useEditEvent() {
+  const QueryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (newEvent: EventEditType) => editEvent(newEvent),
     onSuccess: () => QueryClient.invalidateQueries({ queryKey: ['event'] }),
   });
 }

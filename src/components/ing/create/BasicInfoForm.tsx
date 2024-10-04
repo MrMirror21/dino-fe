@@ -73,7 +73,7 @@ const BasicInfoForm = ({ setStep }: StepProps) => {
       <div className="flex flex-col items-center justify-start w-full px-5">
         <div className="w-full mb-5">
           <label
-            className="block text-lg tracking-tighter leading-tight font-extralight font-['Pretendard'] text-black/60 text-left"
+            className="block text-xl tracking-tighter leading-tight font-pretendard-300 text-black/60 text-left"
             htmlFor="eventInfo"
           >
             이벤트 정보를 입력해주세요.
@@ -81,17 +81,17 @@ const BasicInfoForm = ({ setStep }: StepProps) => {
         </div>
         <div className="w-full mb-7">
           <label
-            className="block text-base tracking-tighter leading-tight font-extralight font-['Pretendard'] text-black/60 text-left mb-3"
+            className="block text-lg tracking-tighter leading-tight font-pretendard-300 text-black/60 text-left mb-3"
             htmlFor="eventName"
           >
             이벤트 이름을 입력해주세요.
           </label>
           <input
-            className="appearance-none border border-[rgba(136,136,136,0.4)] rounded-lg w-full p-[18px] text-lg tracking-tighter leading-tight font-extralight font-['Pretendard'] text-black/60 text-left focus:outline-none"
+            className="appearance-none border border-[rgba(136,136,136,0.4)] rounded-lg w-full p-[18px] text-lg tracking-tighter leading-tight font-pretendard-200 text-black/60 text-left focus:outline-none"
             id="eventName"
             type="text"
             value={eventInfo.title}
-            placeholder="S 디자인 에이전시 최종면접일"
+            placeholder="무엇을 기다리고 있나요?"
             onChange={(e) =>
               setEventInfo({ ...eventInfo, title: e.target.value })
             }
@@ -99,44 +99,44 @@ const BasicInfoForm = ({ setStep }: StepProps) => {
         </div>
         <div className="w-full mb-7">
           <label
-            className="block text-base tracking-tighter leading-tight font-extralight font-['Pretendard'] text-black/60 text-left mb-3"
+            className="block text-lg tracking-tighter leading-tight font-pretendard-300 text-black/60 text-left mb-3"
             htmlFor="eventDate"
           >
-            이벤트 날짜를 입력해주세요.
+            이벤트 날짜를 입력해주세요. (YYYY-MM-DD)
           </label>
           <input
             className={`appearance-none border ${
               !eventInfo.endDate || dateError === null
                 ? 'border-[rgba(136,136,136,0.4)]'
                 : 'border-[rgba(255,68,68,0.4)]'
-            } rounded-lg w-full p-[18px] text-lg tracking-tighter leading-tight font-extralight font-['Pretendard'] text-black/60 text-left focus:outline-none`}
+            } rounded-lg w-full p-[18px] text-lg tracking-tighter leading-tight font-pretendard-200 text-black/60 text-left focus:outline-none`}
             id="eventDate"
             type="text"
             value={eventInfo.endDate}
-            placeholder="YYYY-MM-DD"
+            placeholder="언제 그 특별한 순간이 찾아올까요?"
             onChange={handleDateChange}
             onBlur={handleDateBlur}
           />
         </div>
         <div className="w-full">
           <label
-            className="block text-base tracking-tighter leading-tight font-extralight font-['Pretendard'] text-black/60 text-left mb-3"
+            className="block text-lg tracking-tighter leading-tight font-pretendard-300 text-black/60 text-left mb-3"
             htmlFor="additionalInfo"
           >
             추가로 메모하실 내용을 입력해주세요. (선택)
           </label>
           <input
-            className="appearance-none border border-[rgba(136,136,136,0.4)] rounded-lg w-full p-[18px] text-lg tracking-tighter leading-tight font-extralight font-['Pretendard'] text-black/60 text-left focus:outline-none"
+            className="appearance-none border border-[rgba(136,136,136,0.4)] rounded-lg w-full p-[18px] text-lg tracking-tighter leading-tight font-pretendard-200 text-black/60 text-left focus:outline-none"
             id="additionalInfo"
             type="text"
             value={eventInfo.memo}
-            placeholder="daydreamer,"
+            placeholder="기다리는 것을 더 자세히 설명해줄 수 있나요?"
             onChange={(e) =>
               setEventInfo({ ...eventInfo, memo: e.target.value })
             }
           />
         </div>
-        <div className="w-full text-md tracking-tighter leading-tight font-extralight font-['Pretendard'] text-black/60 text-left mt-2 pl-2">
+        <div className="w-full text-md tracking-tighter leading-tight font-pretendard-200 text-black/60 text-left mt-2 pl-2">
           Tip. 자세하게 입력 할수록 좋은 질문이 생성됩니다!
         </div>
       </div>
@@ -144,7 +144,7 @@ const BasicInfoForm = ({ setStep }: StepProps) => {
         <div className="absolute bottom-[100px] w-full px-5 flex items-center jusify-center">
           <button
             onClick={() => setStep(2)}
-            className="w-full shadow-[0_2px_20px_rgba(136,136,136,0.12)] rounded-lg bg-white/80 text-base tracking-tighter leading-tight font-light font-['Pretendard'] text-black/60 h-[52px] "
+            className="w-full shadow-[0_2px_20px_rgba(136,136,136,0.12)] rounded-lg bg-white/80 text-base tracking-tighter leading-tight font-pretendard-300 text-black/60 h-[52px] "
           >
             다음
           </button>

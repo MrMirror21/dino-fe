@@ -1,5 +1,5 @@
 // main/index
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useMemo } from 'react';
 import {
   getBackGroundStyle,
   getProgressAndButtonColor,
@@ -18,12 +18,12 @@ import Header from '@/components/Day/Header';
 
 interface Props {}
 
-export default function MainPage<Props>({}) {
+export default function DetailPage<Props>({}) {
   const { data, isSuccess, error } = useGetEvents();
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [currentEventId, setCurrentEventId] = useState(0);
   const prevEventId =
     currentIndex > 0 ? data?.data[currentIndex - 1].eventId : null;
   const nextEventId =
@@ -37,6 +37,10 @@ export default function MainPage<Props>({}) {
   const handleNextClick = () => {
     nextEventId && setCurrentIndex(currentIndex + 1);
   };
+
+  useEffect(() => {
+    setCurrentEventId(data?.data?.[currentIndex].eventId);
+  }, [data]);
 
   return (
     <>
@@ -90,7 +94,21 @@ export default function MainPage<Props>({}) {
         )}
         <div className="absolute bottom-[100px] w-full px-5 flex items-center jusify-center">
           <button
-            onClick={() => router.push('/ing/edit')}
+            onClick={() => {
+              const eventId = data?.data?.[currentIndex]?.eventId;
+              if (eventId !== undefined) {
+                router.push(
+                  {
+                    pathname: '/ing/edit',
+                    query: { id: eventId },
+                  },
+                  '/ing/edit',
+                );
+              } else {
+                console.error('Event ID is undefined');
+                // 사용자에게 에러 메시지를 표시하거나 다른 처리를 할 수 있습니다.
+              }
+            }}
             className="w-full relative shadow-[0_2px_20px_rgba(136,136,136,0.12)] rounded-lg bg-white/80 h-[52px] text-[#8ABADD] text-center font-pretendard text-base font-light leading-[120%] tracking-[-0.64px]"
           >
             수정하기

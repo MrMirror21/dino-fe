@@ -47,7 +47,7 @@ const EmotionCard = ({ children, emotion, keyword }: EmotionCardProps) => {
     >
       {children}
       <div
-        className={`mt-[15px] text-center font-['Pretendard'] text-sm ${
+        className={`mt-[15px] text-center font-pretendard-200 text-sm ${
           eventInfo.emotion === keyword
             ? 'font-normal text-black'
             : 'font-extralight text-black/80'
@@ -88,7 +88,7 @@ const EmotionSelectForm = ({ setStep }: StepProps) => {
     <div className="flex flex-col items-center justify-start w-full px-5">
       <div className="w-full mb-5">
         <label
-          className="block text-lg tracking-tighter leading-tight font-extralight font-['Pretendard'] text-black/60 text-left"
+          className="block text-xl tracking-tighter leading-tight font-pretendard-200 text-black/60 text-left"
           htmlFor="eventInfo"
         >
           어떤 마음으로 기다리고 있나요?
@@ -117,13 +117,13 @@ const EmotionSelectForm = ({ setStep }: StepProps) => {
       <div className="absolute bottom-[100px] w-full flex gap-1.5 items-center jusify-center px-5">
         <button
           onClick={() => setStep(2)}
-          className="w-full shadow-[0_2px_20px_rgba(136,136,136,0.12)] rounded-lg bg-white/80 text-base tracking-tighter leading-tight font-light font-['Pretendard'] text-black/60 h-[52px] "
+          className="w-full shadow-[0_2px_20px_rgba(136,136,136,0.12)] rounded-lg bg-white/80 text-base tracking-tighter leading-tight font-pretendard-300 text-black/60 h-[52px] "
         >
           이전
         </button>
         <button
           onClick={() => setIsSubmit(true)}
-          className="w-full shadow-[0_2px_20px_rgba(136,136,136,0.12)] rounded-lg bg-white/80 text-base tracking-tighter leading-tight font-light font-['Pretendard'] text-black/60 h-[52px] "
+          className="w-full shadow-[0_2px_20px_rgba(136,136,136,0.12)] rounded-lg bg-white/80 text-base tracking-tighter leading-tight font-pretendard-300 text-black/60 h-[52px] "
         >
           생성하기
         </button>

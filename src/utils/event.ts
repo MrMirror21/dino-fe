@@ -74,3 +74,43 @@ export function stringToDate(dateString: string): Date {
   }
   return new Date();
 }
+
+
+export const isValidDateFormat = (dateString: string): boolean => {
+  const dateRegex = /^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/;
+  // 형식 검사
+  if (!dateRegex.test(dateString)) {
+    return false;
+  }
+
+  // 날짜 파싱
+  const [year, month, day] = dateString.split('-').map(Number);
+  const inputDate = new Date(year, month - 1, day); // 월은 0-indexed
+
+  // 유효한 날짜인지 확인 (예: 2023/02/31 같은 날짜 방지)
+  if (
+    inputDate.getFullYear() !== year ||
+    inputDate.getMonth() !== month - 1 ||
+    inputDate.getDate() !== day
+  ) {
+    return false;
+  }
+
+  // 오늘 날짜
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // 시간 부분을 제거
+
+  // 입력된 날짜가 오늘 이후인지 확인
+  return inputDate > today;
+};
+
+export function calculatePeriod(startDateString: string, endDateString: string): number {
+  const startDate = stringToDate(startDateString);
+  const endDate = stringToDate(endDateString);
+
+  // 밀리초 단위로 차이를 계산한 후, 일 단위로 변환
+  const differenceInTime = endDate.getTime() - startDate.getTime();
+  const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+
+  return differenceInDays;
+}

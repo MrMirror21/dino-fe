@@ -1,47 +1,43 @@
 import React from 'react';
 import EventElement from '../eventManage/EventElement';
+import { useRouter } from 'next/router';
 
 interface EventCardProps {
   eventId: number;
   title: string;
-  category: string; // 테마 (카테고리)
-  eventStatus: string; // 이벤트 상태(종료/진행)
+  category?: string; // 테마 (카테고리)
+  eventStatus?: string; // 이벤트 상태(종료/진행)
   startDate: string; // 'yyyy-MM-dd' 형식
   memo?: string;
   endDate: string; // 'yyyy-MM-dd' 형식
   fileUrl: string; // 성장 파일 CDN 주소 반환
-  step: string;
-  progress: number; // 진척률 % [전체 답변 갯수 / 전체 질문 갯수] * 100
+  step?: string;
+  progress?: number; // 진척률 % [전체 답변 갯수 / 전체 질문 갯수] * 100
 }
 
 const EventCard: React.FC<EventCardProps> = ({
+  eventId,
   title,
-  category,
-  eventStatus,
   startDate,
   endDate,
   memo,
-  step,
-  progress,
   fileUrl,
 }) => {
-  const statusText = eventStatus === 'execution' ? '진행 중' : '종료';
-  const formattedProgress = Math.round(progress);
-
+  const router = useRouter();
   return (
-    <EventElement>
-      <div className="flex items-center justify-center w-full h-[200px] bg-white p-6 rounded-lg shadow-md max-w-md">
+    <EventElement eventId={eventId}>
+      <div className="flex items-center justify-center w-[350px] h-[200px] bg-white p-6 rounded-lg shadow-md max-w-md">
         <div className="flex flex-col justify-between h-full flex-grow mr-4">
           <div>
-            <div className="text-[#000] font-pretendard text-sm font-extralight tracking-[-0.56px]">
+            <div className="text-[#000] font-pretendard-200 text-sm tracking-[-0.56px]">
               {startDate.replace(/-/g, '.')} -{' '}
               {endDate.slice(5).replace(/-/g, '.')}
             </div>
-            <h2 className="text-[#000] font-pretendard text-xl font-light tracking-[-0.8px] break-keep">
+            <h2 className="text-[#000] font-pretendard-300 text-xl tracking-[-0.8px] break-keep">
               {title}
             </h2>
           </div>
-          <p className="max-w-40 text-[10px] font-pretendard font-extralight tracking-[-0.4px] break-keep">
+          <p className="max-w-40 text-[10px] font-pretendard-200 tracking-[-0.4px] break-keep">
             {memo || ''}
           </p>
         </div>
