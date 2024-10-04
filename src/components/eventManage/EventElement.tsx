@@ -45,7 +45,7 @@ const EventElement = ({ children, eventId }: Props) => {
 
   useEffect(() => {
     if (isSuccess) {
-      router.push('/ing');
+      window.location.reload();
     }
   }, [isSuccess]);
 
