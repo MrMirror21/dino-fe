@@ -30,6 +30,11 @@ const QuestionList = ({
   };
   return (
     <div className="max-h-120 overflow-scroll">
+      {!isFuture && questionList.length == 0 && (
+        <div className="text-black/60 text-center font-pretendard-300 text-base tracking-tighter">
+          오늘은 {tokenUtils.getUserName()}님을 기다리는 질문이 없습니다
+        </div>
+      )}
       {isFuture ? (
         questionList.length > 0 ? (
           <div>
